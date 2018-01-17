@@ -55,4 +55,18 @@ class AuthController extends Controller
     {
         return ApiResponse::fail('密码错误');
     }
+
+    /**
+     * 退出登录
+     * @param Request $request
+     * @return ApiResponse
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return ApiResponse::success(null);
+    }
 }

@@ -7,6 +7,7 @@ use App\Components\Errors;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -58,6 +59,11 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof AuthenticationException) {
             return ApiResponse::fail(Errors::notLogin());
+        }
+
+        if ($exception instanceof HttpException) {
+//            return parent::render($request, $exception);
+            return ApiResponse::fail("请求失败：HttpException[{$exception->getStatusCode()}]", $exception->getStatusCode());
         }
 
         return ApiResponse::fail($exception->getMessage(), $code);

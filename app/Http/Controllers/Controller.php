@@ -24,7 +24,7 @@ class Controller extends BaseController
     {
         return $model->where(function(Builder $query) use ($request, $keys) {
             foreach ($keys as $key) {
-                $val = $request->input($key);
+                $val = $request->input($key, '');
                 if ($val === '') {
                     continue;
                 }

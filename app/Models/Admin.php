@@ -26,6 +26,10 @@ class Admin extends Authenticatable
         'username', 'password', 'name',
     ];
 
+    protected $hidden = [
+        'password', 'remember_token', 'deleted_at'
+    ];
+
     /**
      * 关联角色组
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

@@ -21,9 +21,11 @@ Route::group(array(
     'namespace' => 'Admin',
 ), function() {
 
-    Route::get('login', 'AuthController@login');
     Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
+    Route::get('logout', 'AuthController@logout');
+
+    // 获取菜单
+    Route::get('menu', 'HomeController@menu')->middleware(['auth:admin']);
 
     Route::group(array(
         'middleware' => ['admin'],
