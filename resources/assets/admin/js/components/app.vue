@@ -7,13 +7,26 @@
 
             <el-menu
                     :default-active="modulePath"
-                    class="navbar-first"
+                    class="navbar-module"
                     mode="horizontal"
                     @select="onSelectModule"
                     background-color="#545c64"
                     text-color="#fff"
                     active-text-color="#ffd04b">
                 <el-menu-item v-for="menu in menus" :index="menu.name" :key="menu.name">{{menu.title}}</el-menu-item>
+            </el-menu>
+
+            <el-menu
+                    class="navbar-control"
+                    mode="horizontal"
+                    background-color="#545c64"
+                    text-color="#fff"
+                    @select="onSelectControl"
+                    active-text-color="#ffd04b">
+                <el-submenu index="control-user" v-if="user.id">
+                    <template slot="title">{{user.name}}</template>
+                    <el-menu-item index="logout">退出登录</el-menu-item>
+                </el-submenu>
             </el-menu>
         </el-header>
 
@@ -65,19 +78,36 @@
             menus() {return this.$store.state.menus;},
             verticalMenus() {return this.$store.state.verticalMenus;},
             modulePath() {return this.$store.state.modulePath;},
+            user() {return this.$store.state.user;},
         },
         router,
         methods: {
             onSelectModule(index) {
                 this.$store.commit('changeModule', index);
             },
+            onSelectControl(index) {
+                switch (index) {
+                    case 'logout':
+                        this.logout();break;
+                }
+            },
+            logout() {
+                let self = this;
+                this.$http.get('/logout').then(resp => {
+                    if (resp.data.code === 0) {
+                        self.$store.commit('afterLogout');// 置空菜单
+                        self.$router.push({path: '/login'});
+                    }
+                });
+            },
             globalHttpResponse() {
                 let self = this;
                 this.$http.interceptors.response.use(resp => {
                     switch (resp.data.code) {
                         case -10001:
-                            self.$store.commit('setMenus', {});// 置空菜单
-                            this.$router.push({path: '/login'});break;
+                            self.$store.commit('afterLogout');// 置空菜单
+                            self.$router.push({path: '/login'});
+                            break;
                     }
 
                     return resp;
@@ -103,7 +133,18 @@
             color: #FFF;
         }
 
-        .navbar-first{float: left;}
+        .navbar-module{float: left;}
+        .navbar-control{
+            float: right;
+
+            .el-menu-item{
+                min-width: auto;
+            }
+        }
+    }
+
+    .el-main {
+        padding: 0;
     }
 
     .el-footer {

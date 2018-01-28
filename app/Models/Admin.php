@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
@@ -12,22 +11,25 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $name
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property \Carbon\Carbon $deleted_at
  * @property AdminRole[]|\Illuminate\Database\Eloquent\Collection $roles
+ * @property string $roles_text
+ * @property array $attributes
  */
 class Admin extends Authenticatable
 {
 
     const GUARD = 'admin';
 
-    use SoftDeletes;
-
     protected $fillable = [
         'username', 'password', 'name',
     ];
 
     protected $hidden = [
-        'password', 'remember_token', 'deleted_at'
+        'password', 'remember_token'
+    ];
+
+    protected $appends = [
+        'roles_text',
     ];
 
     /**
@@ -39,4 +41,16 @@ class Admin extends Authenticatable
         return $this->belongsToMany(AdminRole::class, 'admin_groups', 'admin_id', 'role_id');
     }
 
+    /**
+     * 获取所属角色
+     * @return string
+     */
+    public function getRolesTextAttribute()
+    {
+        if (isset($this->roles)) {
+            return implode('、', array_column($this->roles->toArray(), 'name'));
+        }
+
+        return '无';
+    }
 }

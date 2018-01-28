@@ -11,18 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    
-    return view('welcome');
-});
-
 Route::group(array(
-    'domain' => 'admin-l.lbog.cn',
+    'domain' => env('DOMAIN_ADMIN'),
     'namespace' => 'Admin',
 ), function() {
 
+    Route::get('test', 'HomeController@test');
+
     Route::post('login', 'AuthController@login');
     Route::get('logout', 'AuthController@logout');
+
+    Route::get('', 'HomeController@index');
 
     // 获取菜单
     Route::get('menu', 'HomeController@menu')->middleware(['auth:admin']);
@@ -32,7 +31,7 @@ Route::group(array(
     ), function() {
 
         Route::resources([
-            'permission/user' => 'Permission\UserController'
+            'permission/user' => 'Permission\UserController',
         ]);
     });
 });

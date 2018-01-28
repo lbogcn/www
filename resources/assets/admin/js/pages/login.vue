@@ -39,8 +39,9 @@
                 this.$http.post('/login', this.form).then(resp => {
                     if (resp.data.code === 0) {
                         self.$store.commit('loadMenus', self);
-                        self.$message({message: '登录成功', type: 'success',});
+                        self.$store.commit('setUser', resp.data.data.user);
                         self.$router.back(-1);
+                        self.$message({message: '登录成功', type: 'success',});
                     }
                 });
             }

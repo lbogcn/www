@@ -6,6 +6,7 @@ use App\Components\ApiResponse;
 use App\Components\Errors;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -64,6 +65,10 @@ class Handler extends ExceptionHandler
         if ($exception instanceof HttpException) {
 //            return parent::render($request, $exception);
             return ApiResponse::fail("请求失败：HttpException[{$exception->getStatusCode()}]", $exception->getStatusCode());
+        }
+
+        if ($exception instanceof ModelNotFoundException) {
+            return ApiResponse::fail(Errors::modelNotFound());
         }
 
         return ApiResponse::fail($exception->getMessage(), $code);

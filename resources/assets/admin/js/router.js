@@ -8,6 +8,8 @@ export default new Router({
         {path: '/home/dashboard', component: require('./pages/home/dashboard'),},
         {path: '/process_center/user/server', component: require('./pages/process_center/user/server'),},
 
+        {path: '/control/permission/user', component: require('./pages/control/permission/user'),},
+
         {path: '/login', component: require('./pages/login'),},
 
         // 默认跳首页（404）

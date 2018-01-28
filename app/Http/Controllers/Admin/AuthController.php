@@ -42,7 +42,11 @@ class AuthController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        return ApiResponse::success(null);
+        $data = array(
+            'user' => $user
+        );
+
+        return ApiResponse::success($data);
     }
 
     /**

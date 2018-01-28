@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use App\Providers\RouteServiceProvider;
-use App\Services\PermissionImportService;
+use Eloquent;
 
 /**
  * @property int id
- * @property string node
- * @property string route
+ * @property string $group
+ * @property string $node
+ * @property string $route
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property AdminMenu[]|\Illuminate\Database\Eloquent\Collection $menus
  */
-class AdminNode extends \Eloquent
+class AdminNode extends Eloquent
 {
 
     /**
@@ -21,7 +21,9 @@ class AdminNode extends \Eloquent
      *
      * @var array
      */
-    protected $fillable = ['node', 'route'];
+    protected $fillable = [
+        'node', 'route', 'group'
+    ];
 
     /**
      * 菜单

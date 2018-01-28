@@ -30,4 +30,16 @@ class Errors
         return [-10002, $msg];
     }
 
+    /**
+     * 记录不存在
+     * @param string|null $msg
+     * @return array
+     */
+    public static function modelNotFound($msg = null)
+    {
+        $msg = is_null($msg) ? trans('errors.' . snake_case(__FUNCTION__)) : $msg;
+
+        return [-10003, $msg];
+    }
+
 }
