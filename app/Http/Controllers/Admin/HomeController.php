@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Components\ApiResponse;
-use App\Components\RbacNode;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Auth;
@@ -42,15 +41,6 @@ class HomeController extends Controller
             'data' => $data
         );
         return ApiResponse::success($data);
-    }
-
-    public function test(RbacNode $rbacNode)
-    {
-        if (!config('app.debug')) {
-            abort(404);
-        }
-
-        return $rbacNode->update();
     }
 
 }

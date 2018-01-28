@@ -1,24 +1,24 @@
 <template>
-    <div id="permission-user" class="page">
-        <h2 class="page-header">用户管理</h2>
+    <div id="permission-node" class="page">
+        <h2 class="page-header">节点管理</h2>
 
         <el-row>
             <el-col class="text-right">
                 <el-button type="primary" size="mini" @click="searchDialogVisible = true">搜索</el-button>
                 <el-button type="success" size="mini" @click="handleCreate">新建</el-button>
+                <el-button type="danger" size="mini" @click="handleSync">一键同步</el-button>
             </el-col>
         </el-row>
 
         <el-row>
             <el-col>
                 <el-table :data="paginate.data" stripe>
-                    <el-table-column prop="username" label="用户名"></el-table-column>
-                    <el-table-column prop="name" label="姓名"></el-table-column>
-                    <el-table-column prop="roles_text" label="所属角色"></el-table-column>
+                    <el-table-column prop="group" label="所在组"></el-table-column>
+                    <el-table-column prop="node" label="名称"></el-table-column>
+                    <el-table-column prop="route" label="路由"></el-table-column>
                     <el-table-column prop="created_at" label="创建时间"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="small">角色</el-button>
                             <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="small">编辑</el-button>
                             <el-button @click="handleDelete(scope.$index, scope.row)" type="text" size="small">删除</el-button>
                         </template>
@@ -35,16 +35,18 @@
 
         <el-dialog :visible.sync="userDialogVisible" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
             <el-form ref="form" label-width="80px">
-                <el-form-item label="用户名">
-                    <el-input v-model="storeData.username" :disabled="!!storeData.id"></el-input>
+                <el-form-item label="所在组">
+                    <el-select v-model="storeData.group" filterable allow-create clearable>
+                        <el-option v-for="item in groups" :key="item.group" :value="item.group" :label="item.group"></el-option>
+                    </el-select>
                 </el-form-item>
 
-                <el-form-item label="姓名">
-                    <el-input v-model="storeData.name"></el-input>
+                <el-form-item label="名称">
+                    <el-input v-model="storeData.node"></el-input>
                 </el-form-item>
 
-                <el-form-item label="密码">
-                    <el-input v-model="storeData.password" type="password" :placeholder="!!storeData.id ? '若无需修改请留空' : ''"></el-input>
+                <el-form-item label="路由">
+                    <el-input v-model="storeData.route"></el-input>
                 </el-form-item>
             </el-form>
 
@@ -55,8 +57,10 @@
 
         <el-dialog :visible.sync="searchDialogVisible" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
             <el-form ref="form" label-width="80px">
-                <el-form-item label="用户名">
-                    <el-input v-model="searchForm.username"></el-input>
+                <el-form-item label="所在组">
+                    <el-select v-model="searchForm.group" clearable>
+                        <el-option v-for="item in groups" :key="item.group" :value="item.group" :label="item.group"></el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
 
@@ -82,14 +86,23 @@
                 storeData: {},
                 searchDialogVisible: false,
                 searchForm: {
-                    username: null
+                    group: null
                 },
+                groups: []
             };
         },
         methods: {
+            init() {
+                let self = this;
+                this.$http.get('/permission/node/init').then(resp => {
+                    if (resp.data.code === 0) {
+                        self.groups = resp.data.data.groups;
+                    }
+                });
+            },
             search() {
                 let self = this;
-                let action = '/permission/user?' + qs.stringify({
+                let action = '/permission/node?' + qs.stringify({
                     search: this.searchForm,
                     page: this.paginate.current_page,
                 });
@@ -104,7 +117,7 @@
             handleDelete(index, row) {
                 let self = this;
                 this.$confirm('确认删除？').then(() => {
-                    this.$http.delete('/permission/user/' + row.id).then(resp => {
+                    this.$http.delete('/permission/node/' + row.id).then(resp => {
                         if (resp.data.code === 0) {
                             self.paginate.data.splice(index, 1);
                             self.$message({type: 'success', message: '删除成功!'});
@@ -114,7 +127,7 @@
             },
             handleCreate() {
                 this.storeData = {
-                    username: null, name: null, password: null
+                    group: '', node: null, route: null
                 };
                 this.userDialogVisible = true;
             },
@@ -133,14 +146,36 @@
                 };
 
                 if (this.storeData.id) {
-                    this.$http.put('/permission/user/' + this.storeData.id, this.storeData).then(cbk);
+                    this.$http.put('/permission/node/' + this.storeData.id, this.storeData).then(cbk);
                 } else {
-                    this.$http.post('/permission/user', this.storeData).then(cbk);
+                    this.$http.post('/permission/node', this.storeData).then(cbk);
                 }
+            },
+            handleSync() {
+                let self = this;
+                this.$confirm('此操作将清除所有未知节点并覆盖所有已知节点，是否继续?', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    self.$http.get('/permission/node/sync').then(resp => {
+                        if (resp.data.code === 0) {
+                            let data = resp.data.data;
+                            let msgs = [
+                                '新增节点个数' + data.c,
+                                '更新节点个数' + data.u,
+                                '删除节点个数' + data.d,
+                            ];
+
+                            self.$message({type: 'success', message: '同步成功！' + msgs.join('；') + ''});
+                        }
+                    });
+                }).catch(() => {});
             }
         },
         mounted() {
             this.$http.defaults.loadTarget = '.wrapper';
+            this.init();
             this.search();
         }
     };

@@ -30,8 +30,13 @@ Route::group(array(
         'middleware' => ['admin'],
     ), function() {
 
+        Route::get('permission/node/init', 'Permission\NodeController@init');
+        Route::get('permission/node/sync', 'Permission\NodeController@sync');
+
         Route::resources([
             'permission/user' => 'Permission\UserController',
+            'permission/role' => 'Permission\RoleController',
+            'permission/node' => 'Permission\NodeController',
         ]);
     });
 });

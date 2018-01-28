@@ -53,8 +53,8 @@ class RbacNode
             $adminNode->group = $node['group'];
             $adminNode->node = $node['node'];
             $adminNode->route = $node['route'];
+            $counts['u'] += $adminNode->isDirty() ? 1 : 0;
             $adminNode->saveOrFail();
-            $counts['u']++;
         }
 
         // 写入新节点

@@ -9,6 +9,8 @@ export default new Router({
         {path: '/process_center/user/server', component: require('./pages/process_center/user/server'),},
 
         {path: '/control/permission/user', component: require('./pages/control/permission/user'),},
+        {path: '/control/permission/role', component: require('./pages/control/permission/role'),},
+        {path: '/control/permission/node', component: require('./pages/control/permission/node'),},
 
         {path: '/login', component: require('./pages/login'),},
 

@@ -124,6 +124,7 @@
 <style lang="less">
     .el-header {
         background-color: #545c64;
+        padding: 0;
 
         .brand{
             float: left;
@@ -136,6 +137,7 @@
         .navbar-module{float: left;}
         .navbar-control{
             float: right;
+            margin-right: 20px;
 
             .el-menu-item{
                 min-width: auto;
