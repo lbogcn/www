@@ -22,6 +22,75 @@ class Rbac
     }
 
     /**
+     * 获取菜单
+     * @return array
+     */
+    public function getMenu(): array
+    {
+        if (!Session::has('menus') || config('app.debug')) {
+            $this->admin->load('roles');
+            $allMenus = (new RbacMenu())->getAll();
+            $userRoleIds = array_column($this->admin->roles->toArray(), 'id');
+            $menus = $this->formatUserMenus($allMenus, $userRoleIds);
+
+            Session::put('menus', $menus);
+        }
+
+        return Session::get('menus');
+    }
+
+    /**
+     * 格式化菜单
+     * @param array $allMenus
+     * @param array $userRoleIds
+     * @return array
+     */
+    private function formatUserMenus(array $allMenus, array $userRoleIds)
+    {
+        $menus = array_column($allMenus, null, 'name');
+        foreach ($menus as $name => $menu) {
+            if (!$this->checkRoleMenu($menu, $userRoleIds)) {
+                unset($menus[$name]);
+                continue;
+            }
+
+            if (isset($menu['roles'])) {
+                unset($menu['roles']);
+            }
+
+            if (isset($menu['childs'])) {
+                $menu['childs'] = $this->formatUserMenus($menu['childs'], $userRoleIds);
+            }
+
+            $menus[$name] = $menu;
+        }
+
+        return $menus;
+    }
+
+    /**
+     * 验证用户是否有权限访问菜单
+     * @param $menu
+     * @param $userRoleIds
+     * @return bool
+     */
+    private function checkRoleMenu($menu, $userRoleIds)
+    {
+        if (isset($menu['roles']) && is_array($menu['roles'])) {
+            $menuRoleIds = array_column($menu['roles'], 'id');
+            foreach ($userRoleIds as $userRoleId) {
+                if (in_array($userRoleId, $menuRoleIds)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * 验证权限
      * @param \Illuminate\Routing\Route $route
      * @return bool

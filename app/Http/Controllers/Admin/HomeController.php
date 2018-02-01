@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Components\ApiResponse;
-use App\Http\Controllers\Admin\Permission\MenuController;
+use App\Components\Rbac;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Auth;
@@ -28,18 +28,15 @@ class HomeController extends Controller
     {
         /** @var Admin $admin */
         $admin = Auth::guard(Admin::GUARD)->user();
-        $user = $admin->toArray();
+        $rbac = new Rbac($admin);
 
         $data = array(
-            $admin->roles
+            'menus' => $rbac->getMenu(),
+            'user' => array(
+                'name' => $admin->name,
+            ),
         );
 
-        $menus = config('menu');
-        $data = array(
-            'menus' => $menus,
-            'user' => $user,
-            'data' => $data
-        );
         return ApiResponse::success($data);
     }
 

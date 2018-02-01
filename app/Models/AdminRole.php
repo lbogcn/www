@@ -10,6 +10,7 @@ use Eloquent;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property AdminNode|\Illuminate\Database\Eloquent\Collection $permissions
+ * @property AdminVisibleMenu|\Illuminate\Database\Eloquent\Collection $menus
  */
 class AdminRole extends Eloquent
 {
@@ -25,5 +26,13 @@ class AdminRole extends Eloquent
         return $this->belongsToMany(AdminNode::class, 'admin_permissions', 'role_id', 'node_id');
     }
 
+    /**
+     * 关联菜单
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function menus()
+    {
+        return $this->hasMany(AdminVisibleMenu::class, 'role_id', 'id');
+    }
 
 }

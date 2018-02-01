@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin\Permission;
 
 use App\Components\ApiResponse;
+use App\Components\RbacMenu;
 use App\Http\Controllers\Controller;
 use App\Models\AdminRole;
 use App\Models\AdminVisibleMenu;
 use DB;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -23,11 +23,12 @@ class MenuController extends Controller
 
     /**
      * 列表
+     * @param RbacMenu $rbacMenu
      * @return ApiResponse
      */
-    public function index()
+    public function index(RbacMenu $rbacMenu)
     {
-        $menu = $this->format(config('menu'));
+        $menu = $rbacMenu->getAll();
         $roles = AdminRole::select(['id', 'role'])->get();
 
         $data = array(
@@ -47,7 +48,7 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, array(
-            'role_id' => ['required', 'array'],
+            'role_id' => ['array'],
             'route' => ['required']
         ));
 
@@ -86,58 +87,6 @@ class MenuController extends Controller
         DB::commit();
 
         return ApiResponse::success(null);
-    }
-
-    /**
-     * 格式化
-     * @param $menus
-     * @param string $parent
-     * @return array
-     */
-    private function format($menus, $parent = ''): array
-    {
-        $rows = array();
-
-        foreach ($menus as $menu) {
-            $route = "{$parent}/{$menu['name']}";
-            $menu['route'] = $route;
-
-            if (isset($this->visibleMenuGroups()[$route])) {
-                $menu['roles'] = $this->visibleMenuGroups()[$route];
-            }
-
-            if (isset($menu['childs'])) {
-                $menu['childs'] = $this->format($menu['childs'], $route);
-            }
-
-            $rows[] = $menu;
-        }
-
-        return $rows;
-    }
-
-    /**
-     * 获取菜单
-     * @return array
-     */
-    private function visibleMenuGroups()
-    {
-        static $groups = [];
-        static $loaded = false;
-
-        if (!$loaded) {
-            $loaded = true;
-            $menus = AdminVisibleMenu::with(['role' => function(Relation $query) {$query->select(['id', 'role']);}])->get();
-            foreach ($menus as $menu) {
-                if (!isset($groups[$menu->route])) {
-                    $groups[$menu->route] = [];
-                }
-
-                $groups[$menu->route][] = $menu->role;
-            }
-        }
-
-        return $groups;
     }
 
 }

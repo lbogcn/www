@@ -23,7 +23,7 @@
                     text-color="#fff"
                     @select="onSelectControl"
                     active-text-color="#ffd04b">
-                <el-submenu index="control-user" v-if="user.id">
+                <el-submenu index="control-user" v-if="user.name">
                     <template slot="title">{{user.name}}</template>
                     <el-menu-item index="logout">退出登录</el-menu-item>
                 </el-submenu>
