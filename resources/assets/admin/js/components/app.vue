@@ -40,7 +40,7 @@
                         active-text-color="#ffd04b">
 
                     <template v-for="menu in verticalMenus">
-                        <el-submenu v-if="!menu.is_link" :index="menu.name">
+                        <el-submenu v-if="menu.childs" :index="menu.name">
                             <template slot="title">
                                 <i v-if="menu.icon" :class="menu.icon"></i>
                                 <span>{{menu.title}}</span>
@@ -49,7 +49,7 @@
                             <el-menu-item v-for="child in menu.childs" :key="child.name" :index="'/' + modulePath + '/' + menu.name + '/' + child.name">{{child.title}}</el-menu-item>
                         </el-submenu>
 
-                        <el-menu-item v-if="menu.is_link" :index="'/' + modulePath + '/' + menu.name">
+                        <el-menu-item v-if="!menu.childs" :index="'/' + modulePath + '/' + menu.name">
                             <i v-if="menu.icon" :class="menu.icon"></i>
                             <span>{{menu.title}}</span>
                         </el-menu-item>

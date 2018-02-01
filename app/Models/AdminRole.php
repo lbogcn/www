@@ -5,7 +5,8 @@ namespace App\Models;
 use Eloquent;
 
 /**
- * @property int id
+ * @property int $id
+ * @property string $role
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property AdminNode|\Illuminate\Database\Eloquent\Collection $permissions

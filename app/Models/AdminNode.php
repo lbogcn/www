@@ -11,7 +11,6 @@ use Eloquent;
  * @property string $route
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property AdminMenu[]|\Illuminate\Database\Eloquent\Collection $menus
  */
 class AdminNode extends Eloquent
 {
@@ -24,14 +23,5 @@ class AdminNode extends Eloquent
     protected $fillable = [
         'node', 'route', 'group'
     ];
-
-    /**
-     * 菜单
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function menus()
-    {
-        return $this->hasMany(AdminMenu::class, 'node_id');
-    }
 
 }

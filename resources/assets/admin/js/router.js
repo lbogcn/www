@@ -11,6 +11,7 @@ export default new Router({
         {path: '/control/permission/user', component: require('./pages/control/permission/user'),},
         {path: '/control/permission/role', component: require('./pages/control/permission/role'),},
         {path: '/control/permission/node', component: require('./pages/control/permission/node'),},
+        {path: '/control/permission/menu', component: require('./pages/control/permission/menu'),},
 
         {path: '/login', component: require('./pages/login'),},
 

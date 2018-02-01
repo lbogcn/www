@@ -37,6 +37,7 @@ Route::group(array(
             'permission/user' => 'Permission\UserController',
             'permission/role' => 'Permission\RoleController',
             'permission/node' => 'Permission\NodeController',
+            'permission/menu' => 'Permission\MenuController',
         ]);
     });
 });

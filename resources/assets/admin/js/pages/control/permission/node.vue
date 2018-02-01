@@ -34,7 +34,7 @@
         </el-row>
 
         <el-dialog :visible.sync="userDialogVisible" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
-            <el-form ref="form" label-width="80px">
+            <el-form size="small" ref="form" label-width="80px">
                 <el-form-item label="所在组">
                     <el-select v-model="storeData.group" filterable allow-create clearable>
                         <el-option v-for="item in groups" :key="item.group" :value="item.group" :label="item.group"></el-option>
@@ -56,7 +56,7 @@
         </el-dialog>
 
         <el-dialog :visible.sync="searchDialogVisible" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
-            <el-form ref="form" label-width="80px">
+            <el-form size="small" ref="form" label-width="80px">
                 <el-form-item label="所在组">
                     <el-select v-model="searchForm.group" clearable>
                         <el-option v-for="item in groups" :key="item.group" :value="item.group" :label="item.group"></el-option>

@@ -5,7 +5,7 @@
                 <span>登录</span>
             </div>
             <div class="text item">
-                <el-form label-width="60px">
+                <el-form size="small" label-width="60px">
                     <el-form-item label="账号">
                         <el-input v-model="form.username"></el-input>
                     </el-form-item>

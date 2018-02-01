@@ -32,7 +32,7 @@
         </el-row>
 
         <el-dialog :visible.sync="userDialogVisible" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
-            <el-form ref="form" label-width="80px">
+            <el-form size="small" ref="form" label-width="80px">
                 <el-form-item label="角色">
                     <el-input v-model="storeData.role" :disabled="!!storeData.id"></el-input>
                 </el-form-item>
