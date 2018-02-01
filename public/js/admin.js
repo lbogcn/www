@@ -3630,6 +3630,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3641,8 +3655,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 per_page: 0,
                 total: 0
             },
-            userDialogVisible: false,
-            storeData: {}
+            dialogVisibleUser: false,
+            storeData: {},
+
+            dialogVisiblePermission: false,
+            storeDataPermission: {
+                node_id: []
+            },
+            permissionsGroups: {}
         };
     },
 
@@ -3676,18 +3696,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.storeData = {
                 role: null, name: null
             };
-            this.userDialogVisible = true;
+            this.dialogVisibleUser = true;
         },
         handleEdit: function handleEdit(index, row) {
             this.storeData = JSON.parse(JSON.stringify(row));
-            this.userDialogVisible = true;
+            this.dialogVisibleUser = true;
         },
         handleStore: function handleStore() {
             var self = this;
             var cbk = function cbk(resp) {
                 if (resp.data.code === 0) {
                     self.$message({ type: 'success', message: '保存成功!' });
-                    self.userDialogVisible = false;
+                    self.dialogVisibleUser = false;
                     self.search();
                 }
             };
@@ -3697,6 +3717,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else {
                 this.$http.post('/permission/role', this.storeData).then(cbk);
             }
+        },
+        handleShowPermission: function handleShowPermission(row) {
+            var self = this;
+            this.$http.get('/permission/role/' + row.id + '/permission').then(function (resp) {
+                if (resp.data.code === 0) {
+                    var data = resp.data.data;
+
+                    self.storeDataPermission.role_id = row.id;
+                    self.storeDataPermission.node_id = data.role_permission_id;
+                    self.permissionsGroups = data.groups;
+                    self.dialogVisiblePermission = true;
+                }
+            });
+        },
+        handleStorePermission: function handleStorePermission() {
+            var self = this;
+            this.$http.post('/permission/role/' + this.storeDataPermission.role_id + '/permission', this.storeDataPermission).then(function (resp) {
+                if (resp.data.code === 0) {
+                    self.$message({ type: 'success', message: '保存成功!' });
+                    self.search();
+                    self.dialogVisiblePermission = false;
+                }
+            });
         }
     },
     mounted: function mounted() {
@@ -5524,7 +5567,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.checkbox-permission-item.el-checkbox.el-checkbox {\n  margin-left: 0;\n  margin-right: 15px;\n}\n", ""]);
 
 // exports
 
@@ -48556,7 +48599,7 @@ var render = function() {
                                 attrs: { type: "text", size: "small" },
                                 on: {
                                   click: function($event) {
-                                    _vm.handleEdit(scope.$index, scope.row)
+                                    _vm.handleShowPermission(scope.row)
                                   }
                                 }
                               },
@@ -48636,20 +48679,20 @@ var render = function() {
         {
           staticClass: "default-dialog",
           attrs: {
-            visible: _vm.userDialogVisible,
+            visible: _vm.dialogVisibleUser,
             "modal-append-to-body": false,
             "close-on-click-modal": false
           },
           on: {
             "update:visible": function($event) {
-              _vm.userDialogVisible = $event
+              _vm.dialogVisibleUser = $event
             }
           }
         },
         [
           _c(
             "el-form",
-            { ref: "form", attrs: { size: "small", "label-width": "80px" } },
+            { attrs: { size: "small", "label-width": "80px" } },
             [
               _c(
                 "el-form-item",
@@ -48702,6 +48745,82 @@ var render = function() {
                 {
                   attrs: { type: "primary", size: "mini" },
                   on: { click: _vm.handleStore }
+                },
+                [_vm._v("保存")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            visible: _vm.dialogVisiblePermission,
+            "modal-append-to-body": false,
+            "close-on-click-modal": false,
+            width: "600px"
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogVisiblePermission = $event
+            }
+          }
+        },
+        [
+          _c(
+            "el-form",
+            { attrs: { size: "small", "label-width": "120px" } },
+            _vm._l(_vm.permissionsGroups, function(permissions, group) {
+              return _c(
+                "el-form-item",
+                { key: group, attrs: { label: group } },
+                [
+                  _c(
+                    "el-checkbox-group",
+                    {
+                      model: {
+                        value: _vm.storeDataPermission.node_id,
+                        callback: function($$v) {
+                          _vm.$set(_vm.storeDataPermission, "node_id", $$v)
+                        },
+                        expression: "storeDataPermission.node_id"
+                      }
+                    },
+                    _vm._l(permissions, function(permission) {
+                      return _c(
+                        "el-checkbox",
+                        {
+                          key: permission.id,
+                          staticClass: "checkbox-permission-item",
+                          attrs: { label: permission.id }
+                        },
+                        [_vm._v(_vm._s(permission.node))]
+                      )
+                    })
+                  )
+                ],
+                1
+              )
+            })
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary", size: "mini" },
+                  on: { click: _vm.handleStorePermission }
                 },
                 [_vm._v("保存")]
               )
@@ -48907,7 +49026,7 @@ var render = function() {
         [
           _c(
             "el-form",
-            { ref: "form", attrs: { size: "small", "label-width": "80px" } },
+            { attrs: { size: "small", "label-width": "80px" } },
             [
               _c(
                 "el-form-item",
@@ -49009,7 +49128,7 @@ var render = function() {
         [
           _c(
             "el-form",
-            { ref: "form", attrs: { size: "small", "label-width": "80px" } },
+            { attrs: { size: "small", "label-width": "80px" } },
             [
               _c(
                 "el-form-item",
@@ -49454,7 +49573,7 @@ var render = function() {
         [
           _c(
             "el-form",
-            { ref: "form", attrs: { size: "small", "label-width": "80px" } },
+            { attrs: { size: "small", "label-width": "80px" } },
             [
               _c(
                 "el-form-item",
@@ -49565,7 +49684,7 @@ var render = function() {
         [
           _c(
             "el-form",
-            { ref: "form", attrs: { size: "small", "label-width": "80px" } },
+            { attrs: { size: "small", "label-width": "80px" } },
             [
               _c(
                 "el-form-item",

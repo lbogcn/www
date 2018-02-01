@@ -18,10 +18,12 @@ Route::group(array(
 
     Route::get('test', 'HomeController@test');
 
+    // 入口
+    Route::get('', 'HomeController@index');
+
+    // 登入登出
     Route::post('login', 'AuthController@login');
     Route::get('logout', 'AuthController@logout');
-
-    Route::get('', 'HomeController@index');
 
     // 获取菜单
     Route::get('menu', 'HomeController@menu')->middleware(['auth:admin']);
@@ -36,6 +38,7 @@ Route::group(array(
         Route::resources([
             'permission/user' => 'Permission\UserController',
             'permission/role' => 'Permission\RoleController',
+            'permission/role.permission' => 'Permission\RolePermissionController',
             'permission/node' => 'Permission\NodeController',
             'permission/menu' => 'Permission\MenuController',
         ]);
