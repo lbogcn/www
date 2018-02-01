@@ -46,6 +46,7 @@ class Kernel extends HttpKernel
         'admin' => [
             'auth:' . Admin::GUARD,
             'rbac:' . Admin::GUARD,
+            'admin_operation_log:' . Admin::GUARD,
         ]
     ];
 
@@ -65,5 +66,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
         'rbac' => \App\Http\Middleware\Permission::class,
+        'admin_operation_log' => \App\Http\Middleware\OperationLog::class
     ];
 }

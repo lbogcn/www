@@ -4,14 +4,14 @@
 
         <el-row>
             <el-col class="text-right">
-                <el-button type="primary" size="mini" @click="searchDialogVisible = true">搜索</el-button>
+                <el-button type="primary" size="mini" @click="dialogVisibleSearch = true">搜索</el-button>
                 <el-button type="success" size="mini" @click="handleCreate">新建</el-button>
             </el-col>
         </el-row>
 
         <el-row>
             <el-col>
-                <el-table :data="paginate.data" stripe>
+                <el-table size="small" :data="paginate.data" stripe>
                     <el-table-column prop="username" label="用户名"></el-table-column>
                     <el-table-column prop="name" label="姓名"></el-table-column>
                     <el-table-column prop="roles_text" label="所属角色"></el-table-column>
@@ -33,7 +33,7 @@
             </el-col>
         </el-row>
 
-        <el-dialog :visible.sync="userDialogVisible" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
+        <el-dialog :visible.sync="dialogVisibleUser" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
             <el-form size="small" label-width="80px">
                 <el-form-item label="用户名">
                     <el-input v-model="storeData.username" :disabled="!!storeData.id"></el-input>
@@ -53,7 +53,7 @@
             </span>
         </el-dialog>
 
-        <el-dialog :visible.sync="searchDialogVisible" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
+        <el-dialog :visible.sync="dialogVisibleSearch" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
             <el-form size="small" label-width="80px">
                 <el-form-item label="用户名">
                     <el-input v-model="searchForm.username"></el-input>
@@ -96,9 +96,9 @@
                     per_page: 0,
                     total: 0,
                 },
-                userDialogVisible: false,
+                dialogVisibleUser: false,
                 storeData: {},
-                searchDialogVisible: false,
+                dialogVisibleSearch: false,
                 searchForm: {
                     username: null
                 },
@@ -122,7 +122,7 @@
 
                 this.$http.get(action).then(resp => {
                     if (resp.data.code === 0) {
-                        self.searchDialogVisible = false;
+                        self.dialogVisibleSearch = false;
                         self.paginate = resp.data.data.paginate;
                     }
                 });
@@ -142,18 +142,18 @@
                 this.storeData = {
                     username: null, name: null, password: null
                 };
-                this.userDialogVisible = true;
+                this.dialogVisibleUser = true;
             },
             handleEdit(index, row) {
                 this.storeData = JSON.parse(JSON.stringify(row));
-                this.userDialogVisible = true;
+                this.dialogVisibleUser = true;
             },
             handleStore() {
                 let self = this;
                 let cbk = function(resp) {
                     if (resp.data.code === 0) {
                         self.$message({type: 'success', message: '保存成功!'});
-                        self.userDialogVisible = false;
+                        self.dialogVisibleUser = false;
                         self.search();
                     }
                 };

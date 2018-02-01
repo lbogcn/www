@@ -12,7 +12,7 @@
 
         <el-row>
             <el-col>
-                <el-table :data="paginate.data" stripe>
+                <el-table size="small" :data="paginate.data" stripe>
                     <el-table-column prop="group" label="所在组"></el-table-column>
                     <el-table-column prop="node" label="名称"></el-table-column>
                     <el-table-column prop="route" label="路由"></el-table-column>
@@ -162,9 +162,9 @@
                         if (resp.data.code === 0) {
                             let data = resp.data.data;
                             let msgs = [
-                                '新增节点个数' + data.c,
-                                '更新节点个数' + data.u,
-                                '删除节点个数' + data.d,
+                                '新增节点' + data.c + '个',
+                                '更新节点' + data.u + '个',
+                                '删除节点' + data.d + '个',
                             ];
 
                             self.$message({type: 'success', message: '同步成功！' + msgs.join('；') + ''});

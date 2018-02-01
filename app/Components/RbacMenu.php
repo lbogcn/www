@@ -59,6 +59,8 @@ class RbacMenu
             $menus = AdminVisibleMenu::with(['role' => function(Relation $query) {$query->select(['id', 'role']);}])->get();
             /** @var AdminVisibleMenu $menu */
             foreach ($menus as $menu) {
+                if (empty($menu->role)) {continue;}
+
                 if (!isset($groups[$menu->route])) {
                     $groups[$menu->route] = [];
                 }

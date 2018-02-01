@@ -10,7 +10,7 @@
 
         <el-row>
             <el-col>
-                <el-table :data="paginate.data" stripe>
+                <el-table size="small" :data="paginate.data" stripe>
                     <el-table-column prop="role" label="角色"></el-table-column>
                     <el-table-column prop="name" label="描述"></el-table-column>
                     <el-table-column prop="created_at" label="创建时间"></el-table-column>

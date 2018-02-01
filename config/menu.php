@@ -37,7 +37,21 @@ return array(
                         'title' => '菜单管理'
                     )
                 )
-            )
+            ),
+            'log' => array(
+                'name' => 'log',
+                'title' => '日志管理',
+                'childs' => array(
+                    'error' => array(
+                        'name' => 'error',
+                        'title' => '错误日志',
+                    ),
+                    'operation' => array(
+                        'name' => 'operation',
+                        'title' => '操作日志',
+                    ),
+                ),
+            ),
         ),
     )
 );
