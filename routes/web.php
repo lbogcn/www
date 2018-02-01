@@ -37,6 +37,7 @@ Route::group(array(
 
         Route::resources([
             'permission/user' => 'Permission\UserController',
+            'permission/user.role' => 'Permission\UserRoleController',
             'permission/role' => 'Permission\RoleController',
             'permission/role.permission' => 'Permission\RolePermissionController',
             'permission/node' => 'Permission\NodeController',

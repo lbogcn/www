@@ -47,8 +47,13 @@ class Admin extends Authenticatable
      */
     public function getRolesTextAttribute()
     {
-        if (isset($this->roles)) {
-            return implode('、', array_column($this->roles->toArray(), 'name'));
+        if (isset($this->roles) && ($count = $this->roles->count()) > 0) {
+            $name = $this->roles->first()->name;
+            if ($count == 1) {
+                return $name;
+            } else {
+                return "{$name} 等{$count}个";
+            }
         }
 
         return '无';

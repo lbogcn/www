@@ -18,7 +18,7 @@
                     <el-table-column prop="created_at" label="创建时间"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="small">角色</el-button>
+                            <el-button @click="handleShowRole(scope.row)" type="text" size="small">角色</el-button>
                             <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="small">编辑</el-button>
                             <el-button @click="handleDelete(scope.$index, scope.row)" type="text" size="small">删除</el-button>
                         </template>
@@ -64,6 +64,24 @@
                 <el-button type="primary" size="mini" @click="search()">搜索</el-button>
             </span>
         </el-dialog>
+
+        <el-dialog :visible.sync="dialogVisibleRole" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
+            <el-form size="small" label-width="80px">
+                <el-form-item label="用户">
+                    <p>{{storeDataRole.user.username}} - {{storeDataRole.user.name}}</p>
+                </el-form-item>
+
+                <el-form-item label="角色">
+                    <el-checkbox-group v-model="storeDataRole.role_id">
+                        <el-checkbox v-for="role in roles" :label="role.id" :key="role.id" class="checkbox-permission-item">{{role.role}}</el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
+            </el-form>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" size="mini" @click="handleStoreRole">保存</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -84,6 +102,14 @@
                 searchForm: {
                     username: null
                 },
+
+                dialogVisibleRole: false,
+                storeDataRole: {
+                    user: {},
+                    user_id: null,
+                    role_id: [],
+                },
+                roles: [],
             };
         },
         methods: {
@@ -137,6 +163,30 @@
                 } else {
                     this.$http.post('/permission/user', this.storeData).then(cbk);
                 }
+            },
+            handleShowRole(row) {
+                let self = this;
+                this.$http.get('/permission/user/' + row.id + '/role').then(resp => {
+                    if (resp.data.code === 0) {
+                        let data = resp.data.data;
+
+                        self.storeDataRole.user = row;
+                        self.storeDataRole.user_id = row.id;
+                        self.storeDataRole.role_id = data.role_id;
+                        self.roles = data.roles;
+                        self.dialogVisibleRole = true;
+                    }
+                });
+            },
+            handleStoreRole() {
+                let self = this;
+                this.$http.post('/permission/user/' + this.storeDataRole.user_id + '/role', this.storeDataRole).then(resp => {
+                    if (resp.data.code === 0) {
+                        self.$message({type: 'success', message: '保存成功!'});
+                        self.search();
+                        self.dialogVisibleRole = false;
+                    }
+                });
             }
         },
         mounted() {
@@ -147,5 +197,8 @@
 </script>
 
 <style lang="less">
-
+    .checkbox-permission-item.el-checkbox.el-checkbox{
+        margin-left: 0;
+        margin-right: 15px;
+    }
 </style>
