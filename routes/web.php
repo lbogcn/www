@@ -43,6 +43,7 @@ Route::group(array(
             'permission/node' => 'Permission\NodeController',
             'permission/menu' => 'Permission\MenuController',
             'log/operation' => 'Log\OperationController',
+            'article' => 'ArticleController',
         ]);
     });
 });

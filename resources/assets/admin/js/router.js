@@ -6,7 +6,9 @@ Vue.use(Router);
 export default new Router({
     routes: [
         {path: '/home/dashboard', component: require('./pages/home/dashboard'),},
-        {path: '/process_center/user/server', component: require('./pages/process_center/user/server'),},
+
+        // 运营中心
+        {path: '/operation/content/article', component: require('./pages/operation/content/article'),},
 
         // 权限管理
         {path: '/control/permission/user', component: require('./pages/control/permission/user'),},

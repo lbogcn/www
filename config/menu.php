@@ -12,6 +12,23 @@ return array(
         ),
     ),
 
+    'operation' => array(
+        'name' => 'operation',
+        'title' => '运营中心',
+        'childs' => array(
+            'content' => array(
+                'name' => 'content',
+                'title' => '内容管理',
+                'childs' => array(
+                    'article' => array(
+                        'name' => 'article',
+                        'title' => '文章管理'
+                    ),
+                ),
+            ),
+        ),
+    ),
+
     'control' => array(
         'name' => 'control',
         'title' => '控制中心',

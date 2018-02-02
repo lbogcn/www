@@ -3688,7 +3688,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             var self = this;
-            this.$confirm('确认删除？').then(function () {
+            this.$confirm('确认删除？', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(function () {
                 _this.$http.delete('/permission/node/' + row.id).then(function (resp) {
                     if (resp.data.code === 0) {
                         self.paginate.data.splice(index, 1);
@@ -3861,7 +3865,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             var self = this;
-            this.$confirm('确认删除？').then(function () {
+            this.$confirm('确认删除？', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(function () {
                 _this.$http.delete('/permission/role/' + row.id).then(function (resp) {
                     if (resp.data.code === 0) {
                         self.paginate.data.splice(index, 1);
@@ -4069,7 +4077,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             var self = this;
-            this.$confirm('确认删除？').then(function () {
+            this.$confirm('确认删除？', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(function () {
                 _this.$http.delete('/permission/user/' + row.id).then(function (resp) {
                     if (resp.data.code === 0) {
                         self.paginate.data.splice(index, 1);
@@ -4210,6 +4222,134 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function mounted() {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/admin/js/pages/operation/content/article.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_qs__ = __webpack_require__("./node_modules/qs/lib/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_qs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_qs__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            paginate: {
+                data: [],
+                current_page: 1,
+                per_page: 0,
+                total: 0
+            },
+            storeData: {},
+            dialogVisibleSearch: false,
+            searchForm: {
+                author: null
+            }
+
+        };
+    },
+
+    methods: {
+        search: function search() {
+            var self = this;
+            var action = '/article?' + __WEBPACK_IMPORTED_MODULE_0_qs___default.a.stringify({
+                search: this.searchForm,
+                page: this.paginate.current_page
+            });
+
+            this.$http.get(action).then(function (resp) {
+                if (resp.data.code === 0) {
+                    self.dialogVisibleSearch = false;
+                    self.paginate = resp.data.data.paginate;
+                }
+            });
+        },
+        handleDelete: function handleDelete(index, row) {
+            var _this = this;
+
+            var self = this;
+            this.$confirm('确认删除？', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(function () {
+                _this.$http.delete('/article/' + row.id).then(function (resp) {
+                    if (resp.data.code === 0) {
+                        self.paginate.data.splice(index, 1);
+                        self.$message({ type: 'success', message: '删除成功!' });
+                    }
+                });
+            });
+        },
+        handleCreate: function handleCreate() {},
+        handleEdit: function handleEdit(index, row) {}
+    },
+    mounted: function mounted() {
+        this.$http.defaults.loadTarget = '.wrapper';
+        this.search();
+    }
 });
 
 /***/ }),
@@ -5751,6 +5891,21 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n}\n.text-left {\n  text-align: left;\n}\n.text-right {\n  text-align: right;\n}\n.text-center {\n  text-align: center;\n}\n.pull-left {\n  float: left;\n}\n.pull-right {\n  float: right;\n}\n.wrapper .page-header {\n  padding-bottom: 10px;\n  margin: 0 0 20px;\n  border-bottom: 1px solid #eee;\n}\n.wrapper .el-row {\n  margin-bottom: 15px;\n}\n.page {\n  padding: 20px;\n}\n.default-dialog .el-dialog {\n  width: 450px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-034a2f2b\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/less-loader/dist/cjs.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/admin/js/pages/operation/content/article.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -48540,6 +48695,277 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-034a2f2b\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/pages/operation/content/article.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "page", attrs: { id: "permission-user" } },
+    [
+      _c("h2", { staticClass: "page-header" }, [_vm._v("文章管理")]),
+      _vm._v(" "),
+      _c(
+        "el-row",
+        [
+          _c(
+            "el-col",
+            { staticClass: "text-right" },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary", size: "mini" },
+                  on: {
+                    click: function($event) {
+                      _vm.dialogVisibleSearch = true
+                    }
+                  }
+                },
+                [_vm._v("搜索")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "success", size: "mini" },
+                  on: { click: _vm.handleCreate }
+                },
+                [_vm._v("新建")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-row",
+        [
+          _c(
+            "el-col",
+            [
+              _c(
+                "el-table",
+                {
+                  attrs: { size: "small", data: _vm.paginate.data, stripe: "" }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: { prop: "title", label: "标题" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "author", label: "作者" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "image", label: "封面图片" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "excerpt", label: "摘要" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "weight", label: "权重" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", { attrs: { prop: "pv", label: "PV" } }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "display", label: "显示" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            scope.row.display === 1
+                              ? _c(
+                                  "el-tag",
+                                  { attrs: { size: "small", type: "success" } },
+                                  [_vm._v("显示")]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            scope.row.display !== 1
+                              ? _c(
+                                  "el-tag",
+                                  { attrs: { size: "small", type: "danger" } },
+                                  [_vm._v("隐藏")]
+                                )
+                              : _vm._e()
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "created_at", label: "创建时间" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { label: "操作" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { type: "text", size: "mini" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.handleEdit(scope.$index, scope.row)
+                                  }
+                                }
+                              },
+                              [_vm._v("编辑")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { type: "text", size: "mini" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.handleDelete(scope.$index, scope.row)
+                                  }
+                                }
+                              },
+                              [_vm._v("删除")]
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-row",
+        [
+          _c(
+            "el-col",
+            [
+              _c("el-pagination", {
+                staticClass: "pull-right",
+                attrs: {
+                  "current-page": _vm.paginate.current_page,
+                  "page-size": _vm.paginate.per_page,
+                  total: _vm.paginate.total,
+                  layout: "total, prev, pager, next"
+                },
+                on: {
+                  "update:currentPage": function($event) {
+                    _vm.$set(_vm.paginate, "current_page", $event)
+                  },
+                  "current-change": _vm.search
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          staticClass: "default-dialog",
+          attrs: {
+            visible: _vm.dialogVisibleSearch,
+            "modal-append-to-body": false,
+            "close-on-click-modal": false
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogVisibleSearch = $event
+            }
+          }
+        },
+        [
+          _c(
+            "el-form",
+            { attrs: { size: "small", "label-width": "80px" } },
+            [
+              _c(
+                "el-form-item",
+                { attrs: { label: "作者" } },
+                [
+                  _c("el-input", {
+                    model: {
+                      value: _vm.searchForm.author,
+                      callback: function($$v) {
+                        _vm.$set(_vm.searchForm, "author", $$v)
+                      },
+                      expression: "searchForm.author"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary", size: "mini" },
+                  on: {
+                    click: function($event) {
+                      _vm.search()
+                    }
+                  }
+                },
+                [_vm._v("搜索")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-034a2f2b", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-246300dc\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/pages/login.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50432,27 +50858,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-d58a227a", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-eacc428c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/pages/process_center/user/server.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    user-server\n")])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-eacc428c", module.exports)
   }
 }
 
@@ -53086,6 +53491,33 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ __webpack_exports__["a"] = (VueRouter);
 
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-034a2f2b\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/less-loader/dist/cjs.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/admin/js/pages/operation/content/article.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-034a2f2b\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/less-loader/dist/cjs.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/admin/js/pages/operation/content/article.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("a8dfa690", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-034a2f2b\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../../node_modules/less-loader/dist/cjs.js!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./article.vue", function() {
+     var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-034a2f2b\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../../node_modules/less-loader/dist/cjs.js!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./article.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 
@@ -65884,19 +66316,23 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/admin/js/pages/process_center/user/server.vue":
+/***/ "./resources/assets/admin/js/pages/operation/content/article.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-034a2f2b\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/less-loader/dist/cjs.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/admin/js/pages/operation/content/article.vue")
+}
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/admin/js/pages/operation/content/article.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-eacc428c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/pages/process_center/user/server.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-034a2f2b\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/pages/operation/content/article.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -65909,7 +66345,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/admin/js/pages/process_center/user/server.vue"
+Component.options.__file = "resources/assets/admin/js/pages/operation/content/article.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -65918,9 +66354,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-eacc428c", Component.options)
+    hotAPI.createRecord("data-v-034a2f2b", Component.options)
   } else {
-    hotAPI.reload("data-v-eacc428c", Component.options)
+    hotAPI.reload("data-v-034a2f2b", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -65945,7 +66381,10 @@ module.exports = Component.exports
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
-    routes: [{ path: '/home/dashboard', component: __webpack_require__("./resources/assets/admin/js/pages/home/dashboard.vue") }, { path: '/process_center/user/server', component: __webpack_require__("./resources/assets/admin/js/pages/process_center/user/server.vue") },
+    routes: [{ path: '/home/dashboard', component: __webpack_require__("./resources/assets/admin/js/pages/home/dashboard.vue") },
+
+    // 运营中心
+    { path: '/operation/content/article', component: __webpack_require__("./resources/assets/admin/js/pages/operation/content/article.vue") },
 
     // 权限管理
     { path: '/control/permission/user', component: __webpack_require__("./resources/assets/admin/js/pages/control/permission/user.vue") }, { path: '/control/permission/role', component: __webpack_require__("./resources/assets/admin/js/pages/control/permission/role.vue") }, { path: '/control/permission/node', component: __webpack_require__("./resources/assets/admin/js/pages/control/permission/node.vue") }, { path: '/control/permission/menu', component: __webpack_require__("./resources/assets/admin/js/pages/control/permission/menu.vue") },

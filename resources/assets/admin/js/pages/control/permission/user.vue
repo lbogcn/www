@@ -129,7 +129,11 @@
             },
             handleDelete(index, row) {
                 let self = this;
-                this.$confirm('确认删除？').then(() => {
+                this.$confirm('确认删除？', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
                     this.$http.delete('/permission/user/' + row.id).then(resp => {
                         if (resp.data.code === 0) {
                             self.paginate.data.splice(index, 1);
