@@ -34,7 +34,7 @@
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="small" @click="handleStore">保存</el-button>
+                <el-button type="primary" size="mini" @click="handleStore">保存</el-button>
             </span>
         </el-dialog>
     </div>

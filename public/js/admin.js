@@ -48611,7 +48611,7 @@ var render = function() {
                     _c(
                       "el-button",
                       {
-                        attrs: { type: "primary" },
+                        attrs: { size: "mini", type: "primary" },
                         on: { click: _vm.handleSubmit }
                       },
                       [_vm._v("登录")]
@@ -48745,7 +48745,7 @@ var render = function() {
               _c(
                 "el-button",
                 {
-                  attrs: { type: "primary", size: "small" },
+                  attrs: { type: "primary", size: "mini" },
                   on: { click: _vm.handleStore }
                 },
                 [_vm._v("保存")]
@@ -48841,7 +48841,7 @@ var render = function() {
                             _c(
                               "el-button",
                               {
-                                attrs: { type: "text", size: "small" },
+                                attrs: { type: "text", size: "mini" },
                                 on: {
                                   click: function($event) {
                                     _vm.handleShowPermission(scope.row)
@@ -48854,7 +48854,7 @@ var render = function() {
                             _c(
                               "el-button",
                               {
-                                attrs: { type: "text", size: "small" },
+                                attrs: { type: "text", size: "mini" },
                                 on: {
                                   click: function($event) {
                                     _vm.handleEdit(scope.$index, scope.row)
@@ -48867,7 +48867,7 @@ var render = function() {
                             _c(
                               "el-button",
                               {
-                                attrs: { type: "text", size: "small" },
+                                attrs: { type: "text", size: "mini" },
                                 on: {
                                   click: function($event) {
                                     _vm.handleDelete(scope.$index, scope.row)
@@ -49177,7 +49177,7 @@ var render = function() {
                             _c(
                               "el-button",
                               {
-                                attrs: { type: "text", size: "small" },
+                                attrs: { type: "text", size: "mini" },
                                 on: {
                                   click: function($event) {
                                     _vm.handleShowRole(scope.row)
@@ -49190,7 +49190,7 @@ var render = function() {
                             _c(
                               "el-button",
                               {
-                                attrs: { type: "text", size: "small" },
+                                attrs: { type: "text", size: "mini" },
                                 on: {
                                   click: function($event) {
                                     _vm.handleEdit(scope.$index, scope.row)
@@ -49203,7 +49203,7 @@ var render = function() {
                             _c(
                               "el-button",
                               {
-                                attrs: { type: "text", size: "small" },
+                                attrs: { type: "text", size: "mini" },
                                 on: {
                                   click: function($event) {
                                     _vm.handleDelete(scope.$index, scope.row)
@@ -50169,7 +50169,7 @@ var render = function() {
                             _c(
                               "el-button",
                               {
-                                attrs: { type: "text", size: "small" },
+                                attrs: { type: "text", size: "mini" },
                                 on: {
                                   click: function($event) {
                                     _vm.handleEdit(scope.$index, scope.row)
@@ -50182,7 +50182,7 @@ var render = function() {
                             _c(
                               "el-button",
                               {
-                                attrs: { type: "text", size: "small" },
+                                attrs: { type: "text", size: "mini" },
                                 on: {
                                   click: function($event) {
                                     _vm.handleDelete(scope.$index, scope.row)
