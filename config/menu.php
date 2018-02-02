@@ -24,6 +24,10 @@ return array(
                         'name' => 'article',
                         'title' => '文章管理'
                     ),
+                    'questionnaires' => array(
+                        'name' => 'questionnaires',
+                        'title' => '问卷管理',
+                    ),
                 ),
             ),
         ),

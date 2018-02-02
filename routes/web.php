@@ -44,6 +44,7 @@ Route::group(array(
             'permission/menu' => 'Permission\MenuController',
             'log/operation' => 'Log\OperationController',
             'article' => 'ArticleController',
+            'questionnaires' => 'QuestionnairesController',
         ]);
     });
 });
