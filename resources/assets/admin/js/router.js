@@ -10,6 +10,7 @@ export default new Router({
         // 运营中心
         {path: '/operation/content/article', component: require('./pages/operation/content/article'),},
         {path: '/operation/content/questionnaires', component: require('./pages/operation/content/questionnaires'),},
+        {path: '/operation/content/message', component: require('./pages/operation/content/message'),},
 
         // 权限管理
         {path: '/control/permission/user', component: require('./pages/control/permission/user'),},

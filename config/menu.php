@@ -28,6 +28,10 @@ return array(
                         'name' => 'questionnaires',
                         'title' => '问卷管理',
                     ),
+                    'message' => array(
+                        'name' => 'message',
+                        'title' => '留言管理',
+                    ),
                 ),
             ),
         ),

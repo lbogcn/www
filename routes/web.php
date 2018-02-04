@@ -45,6 +45,7 @@ Route::group(array(
             'log/operation' => 'Log\OperationController',
             'article' => 'ArticleController',
             'questionnaires' => 'QuestionnairesController',
+            'message' => 'MessageController',
         ]);
     });
 });
