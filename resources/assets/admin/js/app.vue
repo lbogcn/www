@@ -2,7 +2,7 @@
     <el-container>
         <el-header>
             <div class="brand">
-                Brand
+                {{appName}}
             </div>
 
             <el-menu
@@ -91,6 +91,7 @@
             verticalMenus() {return this.$store.state.verticalMenus;},
             modulePath() {return this.$store.state.modulePath;},
             user() {return this.$store.state.user;},
+            appName() {return this.$store.state.appName},
         },
         router,
         methods: {
@@ -170,7 +171,7 @@
 
     .container{
         position: fixed;
-        top: 62px;
+        top: 61px;
         left: 0;
         right: 0;
         bottom: 0;

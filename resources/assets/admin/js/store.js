@@ -9,6 +9,7 @@ export default new Vuex.Store({
         verticalMenus: {},
         modulePath: '',
         user: {},
+        appName: '',
     },
     mutations: {
         setMenus(state, menus) {
@@ -29,10 +30,11 @@ export default new Vuex.Store({
             state.verticalMenus = {};
         },
         loadMenus(state, app) {
-            app.$http.get('/menu').then(resp => {
+            app.$http.get('/init').then(resp => {
                 if (resp.data.code === 0) {
                     state.menus = resp.data.data.menus;
                     state.user = resp.data.data.user;
+                    state.appName = resp.data.data.app_name;
 
                     let route = app.$route.path;
                     let char = '/';

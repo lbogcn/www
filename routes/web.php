@@ -26,7 +26,7 @@ Route::group(array(
     Route::get('logout', 'AuthController@logout');
 
     // 获取菜单
-    Route::get('menu', 'HomeController@menu')->middleware(['auth:admin']);
+    Route::get('init', 'HomeController@init')->middleware(['auth:admin']);
 
     Route::group(array(
         'middleware' => ['admin'],

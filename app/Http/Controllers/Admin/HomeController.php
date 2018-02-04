@@ -21,10 +21,10 @@ class HomeController extends Controller
     }
 
     /**
-     * 获取菜单
+     * 获取初始化
      * @return ApiResponse
      */
-    public function menu()
+    public function init()
     {
         /** @var Admin $admin */
         $admin = Auth::guard(Admin::GUARD)->user();
@@ -35,6 +35,7 @@ class HomeController extends Controller
             'user' => array(
                 'name' => $admin->name,
             ),
+            'app_name' => config('app.name')
         );
 
         return ApiResponse::success($data);

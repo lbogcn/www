@@ -3215,6 +3215,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         user: function user() {
             return this.$store.state.user;
+        },
+        appName: function appName() {
+            return this.$store.state.appName;
         }
     },
     router: __WEBPACK_IMPORTED_MODULE_0__router__["a" /* default */],
@@ -6528,7 +6531,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.el-header {\n  background-color: #545c64;\n  padding: 0;\n}\n.el-header .brand {\n  float: left;\n  width: 201px;\n  text-align: center;\n  line-height: 60px;\n  color: #FFF;\n}\n.el-header .navbar-module {\n  float: left;\n}\n.el-header .navbar-control {\n  float: right;\n  margin-right: 20px;\n}\n.el-header .navbar-control .el-menu-item {\n  min-width: auto;\n}\n.el-main {\n  padding: 0;\n}\n.el-footer {\n  background-color: #B3C0D1;\n  color: #333;\n  text-align: center;\n  line-height: 60px;\n}\n.container {\n  position: fixed;\n  top: 62px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.wrapper {\n  margin-left: 3px;\n}\n.vertical-menu:not(.el-menu--collapse) {\n  width: 200px;\n}\n.vertical-menu:not(.el-menu--collapse) .menu-collapse {\n  text-align: right;\n  right: 20px;\n}\n.vertical-menu .menu-collapse {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  cursor: pointer;\n  color: #fff;\n  font-size: 24px;\n  padding: 5px 0;\n  text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n.el-header {\n  background-color: #545c64;\n  padding: 0;\n}\n.el-header .brand {\n  float: left;\n  width: 201px;\n  text-align: center;\n  line-height: 60px;\n  color: #FFF;\n}\n.el-header .navbar-module {\n  float: left;\n}\n.el-header .navbar-control {\n  float: right;\n  margin-right: 20px;\n}\n.el-header .navbar-control .el-menu-item {\n  min-width: auto;\n}\n.el-main {\n  padding: 0;\n}\n.el-footer {\n  background-color: #B3C0D1;\n  color: #333;\n  text-align: center;\n  line-height: 60px;\n}\n.container {\n  position: fixed;\n  top: 61px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.wrapper {\n  margin-left: 3px;\n}\n.vertical-menu:not(.el-menu--collapse) {\n  width: 200px;\n}\n.vertical-menu:not(.el-menu--collapse) .menu-collapse {\n  text-align: right;\n  right: 20px;\n}\n.vertical-menu .menu-collapse {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  cursor: pointer;\n  color: #fff;\n  font-size: 24px;\n  padding: 5px 0;\n  text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -51173,7 +51176,7 @@ var render = function() {
         "el-header",
         [
           _c("div", { staticClass: "brand" }, [
-            _vm._v("\n            Brand\n        ")
+            _vm._v("\n            " + _vm._s(_vm.appName) + "\n        ")
           ]),
           _vm._v(" "),
           _c(
@@ -68119,7 +68122,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
         menus: {},
         verticalMenus: {},
         modulePath: '',
-        user: {}
+        user: {},
+        appName: ''
     },
     mutations: {
         setMenus: function setMenus(state, menus) {
@@ -68140,10 +68144,11 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
             state.verticalMenus = {};
         },
         loadMenus: function loadMenus(state, app) {
-            app.$http.get('/menu').then(function (resp) {
+            app.$http.get('/init').then(function (resp) {
                 if (resp.data.code === 0) {
                     state.menus = resp.data.data.menus;
                     state.user = resp.data.data.user;
+                    state.appName = resp.data.data.app_name;
 
                     var route = app.$route.path;
                     var char = '/';
