@@ -24,8 +24,11 @@
                     @select="onSelectControl"
                     active-text-color="#ffd04b">
                 <el-submenu index="control-user" v-if="user.name">
-                    <template slot="title">{{user.name}}</template>
-                    <el-menu-item index="logout">退出登录</el-menu-item>
+                    <template slot="title">
+                        <i class="el-icon-lb-user"></i>
+                        <span>{{user.name}}</span>
+                    </template>
+                    <el-menu-item index="logout"><i class="el-icon-lb-logout"></i><span>退出登录</span></el-menu-item>
                 </el-submenu>
             </el-menu>
         </el-header>
