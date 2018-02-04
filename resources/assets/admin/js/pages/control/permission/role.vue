@@ -4,7 +4,7 @@
 
         <el-row>
             <el-col class="text-right">
-                <el-button type="success" size="mini" @click="handleCreate">新建</el-button>
+                <el-button-create @click="handleCreate">新建</el-button-create>
             </el-col>
         </el-row>
 

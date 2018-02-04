@@ -2,9 +2,14 @@ import Vue from 'vue';
 import ElementUI from 'element-ui'
 
 import http from './http';
-import App from './components/app';
+import App from './app';
 import store from './store';
+
+// 自定义组件
 import SearchForm from './components/search-form';
+import ElButtonSearch from './components/el-button-search';
+import ElButtonCreate from './components/el-button-create';
+import ElButtonDelete from './components/el-button-delete';
 
 import 'element-ui/lib/theme-chalk/index.css'
 import '../../font/iconfont.css';
@@ -15,6 +20,9 @@ Vue.use(ElementUI);
 Vue.prototype.$http = http;
 
 Vue.component('search-form', SearchForm);
+Vue.component('el-button-search', ElButtonSearch);
+Vue.component('el-button-create', ElButtonCreate);
+Vue.component('el-button-delete', ElButtonDelete);
 
 new Vue({
     el: '#app',

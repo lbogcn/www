@@ -4,7 +4,7 @@
 
         <el-row>
             <el-col class="text-right">
-                <el-button type="primary" size="mini" @click="searchFormData.visible = true">搜索</el-button>
+                <el-button-search @click="searchFormData.visible = true">搜索</el-button-search>
             </el-col>
         </el-row>
 
