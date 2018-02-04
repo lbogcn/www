@@ -65,6 +65,13 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./menu.json":
+/***/ (function(module, exports) {
+
+module.exports = {"home":{"name":"home","title":"首页","childs":{"dashboard":{"name":"dashboard","title":"仪表盘","icon":"el-icon-lb-dashboard"}}},"operation":{"name":"operation","title":"运营中心","childs":{"content":{"name":"content","title":"内容管理","icon":"el-icon-lb-fabuwenzhang","childs":{"article":{"name":"article","title":"文章管理","icon":"el-icon-lb-24"},"questionnaires":{"name":"questionnaires","title":"问卷管理","icon":"el-icon-lb-wenjuantiaocha"},"message":{"name":"message","title":"留言管理","icon":"el-icon-lb-liuyan"}}}}},"control":{"name":"control","title":"控制中心","childs":{"permission":{"name":"permission","title":"权限管理","icon":"el-icon-lb-permissions-list","childs":{"user":{"name":"user","title":"用户管理","icon":"el-icon-lb-yonghu"},"role":{"name":"role","title":"角色管理","icon":"el-icon-lb-jiaoseguanli"},"node":{"name":"node","title":"节点管理","icon":"el-icon-lb-quanxianguanli"},"menu":{"name":"menu","title":"菜单管理","icon":"el-icon-lb-caidan"}}},"log":{"name":"log","title":"日志管理","icon":"el-icon-lb-log","childs":{"error":{"name":"error","title":"错误日志","icon":"el-icon-lb-error"},"operation":{"name":"operation","title":"操作日志","icon":"el-icon-lb-caozuo"}}}}}}
+
+/***/ }),
+
 /***/ "./node_modules/async-validator/es/index.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -67083,6 +67090,51 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./resources/assets/admin/js recursive ^\\.\\/pages.*$":
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./pages/control/log/error": "./resources/assets/admin/js/pages/control/log/error.vue",
+	"./pages/control/log/error.vue": "./resources/assets/admin/js/pages/control/log/error.vue",
+	"./pages/control/log/operation": "./resources/assets/admin/js/pages/control/log/operation.vue",
+	"./pages/control/log/operation.vue": "./resources/assets/admin/js/pages/control/log/operation.vue",
+	"./pages/control/permission/menu": "./resources/assets/admin/js/pages/control/permission/menu.vue",
+	"./pages/control/permission/menu.vue": "./resources/assets/admin/js/pages/control/permission/menu.vue",
+	"./pages/control/permission/node": "./resources/assets/admin/js/pages/control/permission/node.vue",
+	"./pages/control/permission/node.vue": "./resources/assets/admin/js/pages/control/permission/node.vue",
+	"./pages/control/permission/role": "./resources/assets/admin/js/pages/control/permission/role.vue",
+	"./pages/control/permission/role.vue": "./resources/assets/admin/js/pages/control/permission/role.vue",
+	"./pages/control/permission/user": "./resources/assets/admin/js/pages/control/permission/user.vue",
+	"./pages/control/permission/user.vue": "./resources/assets/admin/js/pages/control/permission/user.vue",
+	"./pages/home/dashboard": "./resources/assets/admin/js/pages/home/dashboard.vue",
+	"./pages/home/dashboard.vue": "./resources/assets/admin/js/pages/home/dashboard.vue",
+	"./pages/login": "./resources/assets/admin/js/pages/login.vue",
+	"./pages/login.vue": "./resources/assets/admin/js/pages/login.vue",
+	"./pages/operation/content/article": "./resources/assets/admin/js/pages/operation/content/article.vue",
+	"./pages/operation/content/article.vue": "./resources/assets/admin/js/pages/operation/content/article.vue",
+	"./pages/operation/content/message": "./resources/assets/admin/js/pages/operation/content/message.vue",
+	"./pages/operation/content/message.vue": "./resources/assets/admin/js/pages/operation/content/message.vue",
+	"./pages/operation/content/questionnaires": "./resources/assets/admin/js/pages/operation/content/questionnaires.vue",
+	"./pages/operation/content/questionnaires.vue": "./resources/assets/admin/js/pages/operation/content/questionnaires.vue"
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = "./resources/assets/admin/js recursive ^\\.\\/pages.*$";
+
+/***/ }),
+
 /***/ "./resources/assets/admin/js/app.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -68018,25 +68070,34 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__menu_json__ = __webpack_require__("./menu.json");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__menu_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__menu_json__);
 
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
+// 通过菜单配置路由组件
+
+
+var routes = [];
+var genRoute = function genRoute(menus, parent) {
+    for (var module in menus) {
+        if (!menus[module].childs) {
+            routes.push({
+                path: parent + '/' + module,
+                component: __webpack_require__("./resources/assets/admin/js recursive ^\\.\\/pages.*$")("./pages" + parent + '/' + module)
+            });
+        } else {
+            genRoute(menus[module].childs, parent + '/' + module);
+        }
+    }
+};
+
+genRoute(__WEBPACK_IMPORTED_MODULE_2__menu_json___default.a, '');
+
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
-    routes: [{ path: '/home/dashboard', component: __webpack_require__("./resources/assets/admin/js/pages/home/dashboard.vue") },
-
-    // 运营中心
-    { path: '/operation/content/article', component: __webpack_require__("./resources/assets/admin/js/pages/operation/content/article.vue") }, { path: '/operation/content/questionnaires', component: __webpack_require__("./resources/assets/admin/js/pages/operation/content/questionnaires.vue") }, { path: '/operation/content/message', component: __webpack_require__("./resources/assets/admin/js/pages/operation/content/message.vue") },
-
-    // 权限管理
-    { path: '/control/permission/user', component: __webpack_require__("./resources/assets/admin/js/pages/control/permission/user.vue") }, { path: '/control/permission/role', component: __webpack_require__("./resources/assets/admin/js/pages/control/permission/role.vue") }, { path: '/control/permission/node', component: __webpack_require__("./resources/assets/admin/js/pages/control/permission/node.vue") }, { path: '/control/permission/menu', component: __webpack_require__("./resources/assets/admin/js/pages/control/permission/menu.vue") },
-
-    // 日志管理
-    { path: '/control/log/operation', component: __webpack_require__("./resources/assets/admin/js/pages/control/log/operation.vue") }, { path: '/control/log/error', component: __webpack_require__("./resources/assets/admin/js/pages/control/log/error.vue") }, { path: '/login', component: __webpack_require__("./resources/assets/admin/js/pages/login.vue") },
-
-    // 默认跳首页（404）
-    { path: '*', redirect: '/home/dashboard' }]
+    routes: routes
 }));
 
 /***/ }),

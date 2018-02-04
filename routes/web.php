@@ -11,12 +11,12 @@
 |
 */
 
+Route::get('test', 'TestController@index');
+
 Route::group(array(
     'domain' => env('DOMAIN_ADMIN'),
     'namespace' => 'Admin',
 ), function() {
-
-    Route::get('test', 'HomeController@test');
 
     // 入口
     Route::get('', 'HomeController@index');
