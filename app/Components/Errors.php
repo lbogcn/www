@@ -42,4 +42,16 @@ class Errors
         return [-10003, $msg];
     }
 
+    /**
+     * 密码错误
+     * @param string|null $msg
+     * @return array
+     */
+    public static function passwordError($msg = null)
+    {
+        $msg = is_null($msg) ? trans('errors.' . snake_case(__FUNCTION__)) : $msg;
+
+        return [-10004, $msg];
+    }
+
 }

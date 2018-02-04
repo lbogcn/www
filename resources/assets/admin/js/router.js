@@ -21,6 +21,11 @@ let genRoute = (menus, parent) => {
 };
 
 genRoute(menu, '');
+routes.push(
+    {path: '/login', component: require('./pages/login'),},
+    {path: '/modify-password', component: require('./pages/modify-password'),},
+    {path: '*', redirect: '/home/dashboard',}
+);
 
 export default new Router({
     routes: routes

@@ -28,6 +28,8 @@
                         <i class="el-icon-lb-user"></i>
                         <span>{{user.name}}</span>
                     </template>
+
+                    <el-menu-item index="modify-password"><i class="el-icon-lb-xiugaimima"></i><span>修改密码</span></el-menu-item>
                     <el-menu-item index="logout"><i class="el-icon-lb-logout"></i><span>退出登录</span></el-menu-item>
                 </el-submenu>
             </el-menu>
@@ -102,6 +104,8 @@
                 switch (index) {
                     case 'logout':
                         this.logout();break;
+                    default:
+                        this.$router.push({path: '/' + index});
                 }
             },
             logout() {

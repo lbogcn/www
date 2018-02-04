@@ -12,7 +12,12 @@ class TestController extends Controller
             abort(404);
         }
 
-        return $this->a();
+        return $this->b();
+    }
+
+    private function b()
+    {
+        return bcrypt('123456');
     }
 
     private function a()

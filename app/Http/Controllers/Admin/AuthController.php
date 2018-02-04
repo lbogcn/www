@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Components\ApiResponse;
+use App\Components\Errors;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Auth;
@@ -70,6 +71,38 @@ class AuthController extends Controller
         $this->guard()->logout();
 
         $request->session()->invalidate();
+
+        return ApiResponse::success(null);
+    }
+
+    /**
+     * 修改密码
+     * @param Request $request
+     * @return ApiResponse
+     * @throws \Throwable
+     */
+    public function modifyPassword(Request $request)
+    {
+        $this->validate($request, array(
+            'old_password' => ['required'],
+            'password' => ['required', 'min:6', 'max:16', 'confirmed']
+        ));
+
+        /** @var Admin $user */
+        $user = $this->guard()->user();
+
+        $validate = $this->guard()->validate(array(
+            'username' => $user->username,
+            'password' => $request->input('old_password'),
+        ));
+
+        if (!$validate) {
+            return ApiResponse::fail(Errors::passwordError());
+        }
+
+        $user->password = bcrypt($request->input('password'));
+        $user->saveOrFail();
+        $this->guard()->logout();
 
         return ApiResponse::success(null);
     }

@@ -3193,6 +3193,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -3229,6 +3231,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             switch (index) {
                 case 'logout':
                     this.logout();break;
+                default:
+                    this.$router.push({ path: '/' + index });
             }
         },
         logout: function logout() {
@@ -4286,6 +4290,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     self.$store.commit('setUser', resp.data.data.user);
                     self.$router.back(-1);
                     self.$message({ message: '登录成功', type: 'success' });
+                }
+            });
+        }
+    },
+    mounted: function mounted() {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/admin/js/pages/modify-password.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            form: {
+                old_password: null,
+                password: null,
+                password_confirmation: null
+            }
+        };
+    },
+
+    methods: {
+        handleSubmit: function handleSubmit() {
+            var self = this;
+            this.$http.post('/modify-password', this.form).then(function (resp) {
+                if (resp.data.code === 0) {
+                    self.$message({ message: '修改成功，请重新登录', type: 'success' });
+                    self.$router.push({ path: '/login' });
                 }
             });
         }
@@ -6508,6 +6574,21 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4debd781\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/less-loader/dist/cjs.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/admin/js/pages/modify-password.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n#modify-password .box-card {\n  width: 400px;\n  margin: 30px auto;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5b036e1d\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/less-loader/dist/cjs.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/admin/js/pages/control/log/operation.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6577,7 +6658,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n@font-face {font-family: \"iconfont\";\n  src: url(" + escape(__webpack_require__("./resources/assets/font/iconfont.eot?t=1517750799927")) + "); /* IE9*/\n  src: url(" + escape(__webpack_require__("./resources/assets/font/iconfont.eot?t=1517750799927")) + "#iefix) format('embedded-opentype'), \n  url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),\n  url(" + escape(__webpack_require__("./resources/assets/font/iconfont.ttf?t=1517750799927")) + ") format('truetype'), \n  url(" + escape(__webpack_require__("./resources/assets/font/iconfont.svg?t=1517750799927")) + "#iconfont) format('svg'); /* iOS 4.1- */\n}\n\n.iconfont {\n  font-family:\"iconfont\" !important;\n  font-size:16px;\n  font-style:normal;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\n.el-icon-lb-24:before { content: \"\\E618\"; }\n\n.el-icon-lb-user:before { content: \"\\E69E\"; }\n\n.el-icon-lb-quanxianguanli:before { content: \"\\E676\"; }\n\n.el-icon-lb-caozuo:before { content: \"\\E7B5\"; }\n\n.el-icon-lb-dashboard:before { content: \"\\E6DD\"; }\n\n.el-icon-lb-caidan:before { content: \"\\E665\"; }\n\n.el-icon-lb-liuyan:before { content: \"\\E638\"; }\n\n.el-icon-lb-shouqicaidan:before { content: \"\\E622\"; }\n\n.el-icon-lb-zhankaicaidan:before { content: \"\\E624\"; }\n\n.el-icon-lb-logout:before { content: \"\\E6F7\"; }\n\n.el-icon-lb-chuangjianv:before { content: \"\\E61A\"; }\n\n.el-icon-lb-fabuwenzhang:before { content: \"\\E670\"; }\n\n.el-icon-lb-log:before { content: \"\\E73F\"; }\n\n.el-icon-lb-yonghu:before { content: \"\\E60E\"; }\n\n.el-icon-lb-jiaoseguanli:before { content: \"\\E623\"; }\n\n.el-icon-lb-error:before { content: \"\\E604\"; }\n\n.el-icon-lb-permissions-list:before { content: \"\\E619\"; }\n\n.el-icon-lb-wenjuantiaocha:before { content: \"\\E60B\"; }\n\n", ""]);
+exports.push([module.i, "\n@font-face {font-family: \"iconfont\";\n  src: url(" + escape(__webpack_require__("./resources/assets/font/iconfont.eot?t=1517754792747")) + "); /* IE9*/\n  src: url(" + escape(__webpack_require__("./resources/assets/font/iconfont.eot?t=1517754792747")) + "#iefix) format('embedded-opentype'), \n  url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),\n  url(" + escape(__webpack_require__("./resources/assets/font/iconfont.ttf?t=1517754792747")) + ") format('truetype'), \n  url(" + escape(__webpack_require__("./resources/assets/font/iconfont.svg?t=1517754792747")) + "#iconfont) format('svg'); /* iOS 4.1- */\n}\n\n.iconfont {\n  font-family:\"iconfont\" !important;\n  font-size:16px;\n  font-style:normal;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\n.el-icon-lb-24:before { content: \"\\E618\"; }\n\n.el-icon-lb-user:before { content: \"\\E69E\"; }\n\n.el-icon-lb-quanxianguanli:before { content: \"\\E676\"; }\n\n.el-icon-lb-caozuo:before { content: \"\\E7B5\"; }\n\n.el-icon-lb-dashboard:before { content: \"\\E6DD\"; }\n\n.el-icon-lb-caidan:before { content: \"\\E665\"; }\n\n.el-icon-lb-liuyan:before { content: \"\\E638\"; }\n\n.el-icon-lb-shouqicaidan:before { content: \"\\E622\"; }\n\n.el-icon-lb-zhankaicaidan:before { content: \"\\E624\"; }\n\n.el-icon-lb-logout:before { content: \"\\E6F7\"; }\n\n.el-icon-lb-chuangjianv:before { content: \"\\E61A\"; }\n\n.el-icon-lb-fabuwenzhang:before { content: \"\\E670\"; }\n\n.el-icon-lb-xiugaimima:before { content: \"\\E600\"; }\n\n.el-icon-lb-log:before { content: \"\\E73F\"; }\n\n.el-icon-lb-yonghu:before { content: \"\\E60E\"; }\n\n.el-icon-lb-jiaoseguanli:before { content: \"\\E623\"; }\n\n.el-icon-lb-error:before { content: \"\\E604\"; }\n\n.el-icon-lb-permissions-list:before { content: \"\\E619\"; }\n\n.el-icon-lb-wenjuantiaocha:before { content: \"\\E60B\"; }\n\n", ""]);
 
 // exports
 
@@ -50847,6 +50928,127 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4debd781\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/pages/modify-password.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { attrs: { id: "modify-password" } },
+    [
+      _c("el-card", { staticClass: "box-card" }, [
+        _c(
+          "div",
+          {
+            staticClass: "clearfix",
+            attrs: { slot: "header" },
+            slot: "header"
+          },
+          [_c("span", [_vm._v("修改密码")])]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "text item" },
+          [
+            _c(
+              "el-form",
+              { attrs: { size: "small", "label-width": "80px" } },
+              [
+                _c(
+                  "el-form-item",
+                  { attrs: { label: "原密码" } },
+                  [
+                    _c("el-input", {
+                      attrs: { type: "password" },
+                      model: {
+                        value: _vm.form.old_password,
+                        callback: function($$v) {
+                          _vm.$set(_vm.form, "old_password", $$v)
+                        },
+                        expression: "form.old_password"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-form-item",
+                  { attrs: { label: "新密码" } },
+                  [
+                    _c("el-input", {
+                      attrs: { type: "password" },
+                      model: {
+                        value: _vm.form.password,
+                        callback: function($$v) {
+                          _vm.$set(_vm.form, "password", $$v)
+                        },
+                        expression: "form.password"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-form-item",
+                  { attrs: { label: "确认密码" } },
+                  [
+                    _c("el-input", {
+                      attrs: { type: "password" },
+                      model: {
+                        value: _vm.form.password_confirmation,
+                        callback: function($$v) {
+                          _vm.$set(_vm.form, "password_confirmation", $$v)
+                        },
+                        expression: "form.password_confirmation"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-form-item",
+                  [
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { size: "mini", type: "primary" },
+                        on: { click: _vm.handleSubmit }
+                      },
+                      [_vm._v("提交")]
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4debd781", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-5b036e1d\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/pages/control/log/operation.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51224,6 +51426,15 @@ var render = function() {
                         _vm._v(" "),
                         _c("span", [_vm._v(_vm._s(_vm.user.name))])
                       ]),
+                      _vm._v(" "),
+                      _c(
+                        "el-menu-item",
+                        { attrs: { index: "modify-password" } },
+                        [
+                          _c("i", { staticClass: "el-icon-lb-xiugaimima" }),
+                          _c("span", [_vm._v("修改密码")])
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("el-menu-item", { attrs: { index: "logout" } }, [
                         _c("i", { staticClass: "el-icon-lb-logout" }),
@@ -54927,6 +55138,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-49216c8b\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../../node_modules/less-loader/dist/cjs.js!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./questionnaires.vue", function() {
      var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-49216c8b\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../../node_modules/less-loader/dist/cjs.js!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./questionnaires.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4debd781\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/less-loader/dist/cjs.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/admin/js/pages/modify-password.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4debd781\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/less-loader/dist/cjs.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/admin/js/pages/modify-password.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("5389000a", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4debd781\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/less-loader/dist/cjs.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./modify-password.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4debd781\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/less-loader/dist/cjs.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./modify-password.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -67113,6 +67351,8 @@ var map = {
 	"./pages/home/dashboard.vue": "./resources/assets/admin/js/pages/home/dashboard.vue",
 	"./pages/login": "./resources/assets/admin/js/pages/login.vue",
 	"./pages/login.vue": "./resources/assets/admin/js/pages/login.vue",
+	"./pages/modify-password": "./resources/assets/admin/js/pages/modify-password.vue",
+	"./pages/modify-password.vue": "./resources/assets/admin/js/pages/modify-password.vue",
 	"./pages/operation/content/article": "./resources/assets/admin/js/pages/operation/content/article.vue",
 	"./pages/operation/content/article.vue": "./resources/assets/admin/js/pages/operation/content/article.vue",
 	"./pages/operation/content/message": "./resources/assets/admin/js/pages/operation/content/message.vue",
@@ -67910,6 +68150,58 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/admin/js/pages/modify-password.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4debd781\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/less-loader/dist/cjs.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/admin/js/pages/modify-password.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/admin/js/pages/modify-password.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4debd781\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/pages/modify-password.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/admin/js/pages/modify-password.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4debd781", Component.options)
+  } else {
+    hotAPI.reload("data-v-4debd781", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/admin/js/pages/operation/content/article.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -68098,6 +68390,7 @@ var genRoute = function genRoute(menus, parent) {
 };
 
 genRoute(__WEBPACK_IMPORTED_MODULE_2__menu_json___default.a, '');
+routes.push({ path: '/login', component: __webpack_require__("./resources/assets/admin/js/pages/login.vue") }, { path: '/modify-password', component: __webpack_require__("./resources/assets/admin/js/pages/modify-password.vue") }, { path: '*', redirect: '/home/dashboard' });
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes
@@ -68231,24 +68524,24 @@ if(false) {
 
 /***/ }),
 
-/***/ "./resources/assets/font/iconfont.eot?t=1517750799927":
+/***/ "./resources/assets/font/iconfont.eot?t=1517754792747":
 /***/ (function(module, exports) {
 
-module.exports = "/fonts/iconfont.eot?7e1d0485b8a488c11215b6bc71cc1d7e";
+module.exports = "/fonts/iconfont.eot?b4753db9b75a7922cb2439f5f0e65394";
 
 /***/ }),
 
-/***/ "./resources/assets/font/iconfont.svg?t=1517750799927":
+/***/ "./resources/assets/font/iconfont.svg?t=1517754792747":
 /***/ (function(module, exports) {
 
-module.exports = "/fonts/iconfont.svg?b3e8f646dc262f6c6071c5b339ff0363";
+module.exports = "/fonts/iconfont.svg?4f858630b91efb444edc4cf721fe2074";
 
 /***/ }),
 
-/***/ "./resources/assets/font/iconfont.ttf?t=1517750799927":
+/***/ "./resources/assets/font/iconfont.ttf?t=1517754792747":
 /***/ (function(module, exports) {
 
-module.exports = "/fonts/iconfont.ttf?2ea4b60d2bfda07e77cb01d0173cca78";
+module.exports = "/fonts/iconfont.ttf?33fd46b6f9eedc9158b8a4640a490790";
 
 /***/ }),
 
