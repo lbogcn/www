@@ -31,31 +31,39 @@
         </el-header>
 
         <el-container class="container">
-            <el-aside width="200px">
-                <el-menu
-                        :router="true"
-                        :default-active="$route.path"
-                        background-color="#545c64"
-                        text-color="#fff"
-                        active-text-color="#ffd04b">
+            <el-menu
+                    class="vertical-menu"
+                    :router="true"
+                    :default-active="$route.path"
+                    :collapse="isCollapse"
+                    background-color="#545c64"
+                    text-color="#fff"
+                    active-text-color="#ffd04b">
 
-                    <template v-for="menu in verticalMenus">
-                        <el-submenu v-if="menu.childs" :index="menu.name">
-                            <template slot="title">
-                                <i v-if="menu.icon" :class="menu.icon"></i>
-                                <span>{{menu.title}}</span>
-                            </template>
-
-                            <el-menu-item v-for="child in menu.childs" :key="child.name" :index="'/' + modulePath + '/' + menu.name + '/' + child.name">{{child.title}}</el-menu-item>
-                        </el-submenu>
-
-                        <el-menu-item v-if="!menu.childs" :index="'/' + modulePath + '/' + menu.name">
+                <template v-for="menu in verticalMenus">
+                    <el-submenu v-if="menu.childs" :index="menu.name">
+                        <template slot="title">
                             <i v-if="menu.icon" :class="menu.icon"></i>
                             <span>{{menu.title}}</span>
+                        </template>
+
+                        <el-menu-item v-for="child in menu.childs" :key="child.name" :index="'/' + modulePath + '/' + menu.name + '/' + child.name">
+                            <i v-if="child.icon" :class="child.icon"></i>
+                            <span>{{child.title}}</span>
                         </el-menu-item>
-                    </template>
-                </el-menu>
-            </el-aside>
+                    </el-submenu>
+
+                    <el-menu-item v-if="!menu.childs" :index="'/' + modulePath + '/' + menu.name">
+                        <i v-if="menu.icon" :class="menu.icon"></i>
+                        <span>{{menu.title}}</span>
+                    </el-menu-item>
+                </template>
+
+                <div @click="isCollapse = !isCollapse" class="menu-collapse">
+                    <i v-show="!isCollapse" class="el-icon-lb-shouqicaidan"></i>
+                    <i v-show="isCollapse" class="el-icon-lb-zhankaicaidan"></i>
+                </div>
+            </el-menu>
 
             <el-container class="wrapper">
                 <el-main>
@@ -72,6 +80,7 @@
     export default {
         data() {
             return {
+                isCollapse: false,
             };
         },
         computed: {
@@ -164,18 +173,31 @@
         bottom: 0;
     }
 
-    .el-aside {
-        overflow-y: auto;
-        overflow-x: hidden;
-
-        .el-menu {
-            width: 100%;
-            height: 100%;
-        }
-    }
-
     .wrapper {
         margin-left: 3px;
+    }
+
+    .vertical-menu {
+        &:not(.el-menu--collapse) {
+            width: 200px;
+
+            .menu-collapse{
+                text-align: right;
+                right: 20px;
+            }
+        }
+
+        .menu-collapse{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            cursor: pointer;
+            color: #fff;
+            font-size: 24px;
+            padding: 5px 0;
+            text-align: center;
+        }
     }
 
 </style>

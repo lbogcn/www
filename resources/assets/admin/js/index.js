@@ -7,6 +7,7 @@ import store from './store';
 import SearchForm from './components/search-form';
 
 import 'element-ui/lib/theme-chalk/index.css'
+import '../../font/iconfont.css';
 import '../less/global.less';
 
 Vue.use(ElementUI);
