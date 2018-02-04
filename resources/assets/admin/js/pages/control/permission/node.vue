@@ -4,7 +4,7 @@
 
         <el-row>
             <el-col class="text-right">
-                <el-button type="primary" size="mini" @click="searchDialogVisible = true">搜索</el-button>
+                <el-button type="primary" size="mini" @click="searchFormData.visible = true">搜索</el-button>
                 <el-button type="success" size="mini" @click="handleCreate">新建</el-button>
                 <el-button type="danger" size="mini" @click="handleSync">一键同步</el-button>
             </el-col>
@@ -55,19 +55,7 @@
             </span>
         </el-dialog>
 
-        <el-dialog :visible.sync="searchDialogVisible" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
-            <el-form size="small" label-width="80px">
-                <el-form-item label="所在组">
-                    <el-select v-model="searchForm.group" clearable>
-                        <el-option v-for="item in groups" :key="item.group" :value="item.group" :label="item.group"></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-
-            <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="search()">搜索</el-button>
-            </span>
-        </el-dialog>
+        <search-form :data.sync="searchFormData" @submit="search"></search-form>
     </div>
 </template>
 
@@ -82,12 +70,31 @@
                     per_page: 0,
                     total: 0,
                 },
+
                 userDialogVisible: false,
                 storeData: {},
-                searchDialogVisible: false,
-                searchForm: {
-                    group: null
+
+                searchFormData: {
+                    visible: false,
+                    formItem: [
+                        {
+                            label: '所在组',
+                            field: 'group',
+                            type: 'select',
+                            options: [
+                            ],
+                            optionProp: {
+                                label: 'group',
+                                value: 'group',
+                            },
+                            clearable: true,
+                        }
+                    ],
+                    formData: {
+                        group: null,
+                    },
                 },
+
                 groups: []
             };
         },
@@ -97,20 +104,21 @@
                 this.$http.get('/permission/node/init').then(resp => {
                     if (resp.data.code === 0) {
                         self.groups = resp.data.data.groups;
+                        self.searchFormData.formItem[0].options = self.groups;
                     }
                 });
             },
             search() {
                 let self = this;
                 let action = '/permission/node?' + qs.stringify({
-                    search: this.searchForm,
+                    search: this.searchFormData.formData,
                     page: this.paginate.current_page,
                 });
 
                 this.$http.get(action).then(resp => {
                     if (resp.data.code === 0) {
-                        self.searchDialogVisible = false;
                         self.paginate = resp.data.data.paginate;
+                        self.searchFormData.visible = false;
                     }
                 });
             },

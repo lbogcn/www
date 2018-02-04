@@ -4,7 +4,7 @@
 
         <el-row>
             <el-col class="text-right">
-                <el-button type="primary" size="mini" @click="dialogVisibleSearch = true">搜索</el-button>
+                <el-button type="primary" size="mini" @click="searchFormData.visible = true">搜索</el-button>
                 <el-button type="success" size="mini" @click="handleCreate">新建</el-button>
             </el-col>
         </el-row>
@@ -74,18 +74,7 @@
             </span>
         </el-dialog>
 
-        <el-dialog :visible.sync="dialogVisibleSearch" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
-            <el-form size="small" label-width="80px">
-                <el-form-item label="标题">
-                    <el-input v-model="searchForm.title"></el-input>
-                </el-form-item>
-            </el-form>
-
-            <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="search">搜索</el-button>
-            </span>
-        </el-dialog>
-
+        <search-form :data.sync="searchFormData" @submit="search"></search-form>
     </div>
 </template>
 
@@ -105,25 +94,34 @@
                     title: null,
                     questions: [],
                 },
-                dialogVisibleSearch: false,
-                searchForm: {
-                    title: null
-                },
 
+                searchFormData: {
+                    visible: false,
+                    formItem: [
+                        {
+                            label: '标题',
+                            field: 'title',
+                            type: 'input',
+                        },
+                    ],
+                    formData: {
+                        title: null,
+                    },
+                },
             };
         },
         methods: {
             search() {
                 let self = this;
                 let action = '/questionnaires?' + qs.stringify({
-                    search: this.searchForm,
+                    search: this.searchFormData.formData,
                     page: this.paginate.current_page,
                 });
 
                 this.$http.get(action).then(resp => {
                     if (resp.data.code === 0) {
-                        self.dialogVisibleSearch = false;
                         self.paginate = resp.data.data.paginate;
+                        self.searchFormData.visible = false;
                     }
                 });
             },

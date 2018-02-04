@@ -3241,6 +3241,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/admin/js/components/search-form.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['data'],
+    methods: {
+        resetForm: function resetForm() {
+            this.$refs['searchForm'].resetFields();
+        },
+        getOptionProp: function getOptionProp(option, prop) {
+            prop = prop || { label: 'label', value: 'value' };
+            return {
+                label: option[prop.label],
+                value: option[prop.value]
+            };
+        }
+    },
+    watch: {
+        'data': function data(val) {
+            this.data = val;
+            this.$emit('update:data', this.data);
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/admin/js/pages/control/log/operation.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3248,25 +3297,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_qs__ = __webpack_require__("./node_modules/qs/lib/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_qs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_qs__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3342,9 +3372,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 total: 0
             },
 
-            dialogVisibleSearch: false,
-            searchForm: {
-                username: null
+            searchFormData: {
+                visible: false,
+                formItem: [{
+                    label: '用户名',
+                    field: 'username',
+                    type: 'input'
+                }, {
+                    label: '请求方式',
+                    field: 'method',
+                    type: 'select',
+                    options: [{ value: 'GET', label: 'GET' }, { value: 'POST', label: 'POST' }, { value: 'PUT', label: 'PUT' }, { value: 'DELETE', label: 'DELETE' }],
+                    clearable: true
+                }],
+                formData: {
+                    username: null,
+                    method: null
+                }
             }
         };
     },
@@ -3353,15 +3397,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         search: function search() {
             var self = this;
             var action = '/log/operation?' + __WEBPACK_IMPORTED_MODULE_0_qs___default.a.stringify({
-                search: this.searchForm,
+                search: this.searchFormData.formData,
                 page: this.paginate.current_page
             });
 
             this.$http.get(action).then(function (resp) {
                 if (resp.data.code === 0) {
-                    self.searchDialogVisible = false;
                     self.paginate = resp.data.data.paginate;
-                    self.dialogVisibleSearch = false;
+                    self.searchFormData.visible = false;
                 }
             });
         },
@@ -3628,18 +3671,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3651,12 +3682,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 per_page: 0,
                 total: 0
             },
+
             userDialogVisible: false,
             storeData: {},
-            searchDialogVisible: false,
-            searchForm: {
-                group: null
+
+            searchFormData: {
+                visible: false,
+                formItem: [{
+                    label: '所在组',
+                    field: 'group',
+                    type: 'select',
+                    options: [],
+                    optionProp: {
+                        label: 'group',
+                        value: 'group'
+                    },
+                    clearable: true
+                }],
+                formData: {
+                    group: null
+                }
             },
+
             groups: []
         };
     },
@@ -3667,20 +3714,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$http.get('/permission/node/init').then(function (resp) {
                 if (resp.data.code === 0) {
                     self.groups = resp.data.data.groups;
+                    self.searchFormData.formItem[0].options = self.groups;
                 }
             });
         },
         search: function search() {
             var self = this;
             var action = '/permission/node?' + __WEBPACK_IMPORTED_MODULE_0_qs___default.a.stringify({
-                search: this.searchForm,
+                search: this.searchFormData.formData,
                 page: this.paginate.current_page
             });
 
             this.$http.get(action).then(function (resp) {
                 if (resp.data.code === 0) {
-                    self.searchDialogVisible = false;
                     self.paginate = resp.data.data.paginate;
+                    self.searchFormData.visible = false;
                 }
             });
         },
@@ -4020,16 +4068,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4043,9 +4081,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             dialogVisibleUser: false,
             storeData: {},
-            dialogVisibleSearch: false,
-            searchForm: {
-                username: null
+
+            searchFormData: {
+                visible: false,
+                formItem: [{
+                    label: '用户名',
+                    field: 'username',
+                    type: 'input'
+                }],
+                formData: {
+                    username: null
+                }
             },
 
             dialogVisibleRole: false,
@@ -4062,14 +4108,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         search: function search() {
             var self = this;
             var action = '/permission/user?' + __WEBPACK_IMPORTED_MODULE_0_qs___default.a.stringify({
-                search: this.searchForm,
+                search: this.searchFormData.formData,
                 page: this.paginate.current_page
             });
 
             this.$http.get(action).then(function (resp) {
                 if (resp.data.code === 0) {
-                    self.dialogVisibleSearch = false;
                     self.paginate = resp.data.data.paginate;
+                    self.searchFormData.visible = false;
                 }
             });
         },
@@ -4281,16 +4327,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4303,9 +4339,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 total: 0
             },
             storeData: {},
-            dialogVisibleSearch: false,
-            searchForm: {
-                author: null
+
+            searchFormData: {
+                visible: false,
+                formItem: [{
+                    label: '作者',
+                    field: 'author',
+                    type: 'input'
+                }],
+                formData: {
+                    author: null
+                }
             }
 
         };
@@ -4315,14 +4359,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         search: function search() {
             var self = this;
             var action = '/article?' + __WEBPACK_IMPORTED_MODULE_0_qs___default.a.stringify({
-                search: this.searchForm,
+                search: this.searchFormData.formData,
                 page: this.paginate.current_page
             });
 
             this.$http.get(action).then(function (resp) {
                 if (resp.data.code === 0) {
-                    self.dialogVisibleSearch = false;
                     self.paginate = resp.data.data.paginate;
+                    self.searchFormData.visible = false;
                 }
             });
         },
@@ -4441,17 +4485,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4468,11 +4501,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 title: null,
                 questions: []
             },
-            dialogVisibleSearch: false,
-            searchForm: {
-                title: null
-            }
 
+            searchFormData: {
+                visible: false,
+                formItem: [{
+                    label: '标题',
+                    field: 'title',
+                    type: 'input'
+                }],
+                formData: {
+                    title: null
+                }
+            }
         };
     },
 
@@ -4480,14 +4520,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         search: function search() {
             var self = this;
             var action = '/questionnaires?' + __WEBPACK_IMPORTED_MODULE_0_qs___default.a.stringify({
-                search: this.searchForm,
+                search: this.searchFormData.formData,
                 page: this.paginate.current_page
             });
 
             this.$http.get(action).then(function (resp) {
                 if (resp.data.code === 0) {
-                    self.dialogVisibleSearch = false;
                     self.paginate = resp.data.data.paginate;
+                    self.searchFormData.visible = false;
                 }
             });
         },
@@ -49015,7 +49055,7 @@ var render = function() {
                   attrs: { type: "primary", size: "mini" },
                   on: {
                     click: function($event) {
-                      _vm.dialogVisibleSearch = true
+                      _vm.searchFormData.visible = true
                     }
                   }
                 },
@@ -49178,72 +49218,15 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          staticClass: "default-dialog",
-          attrs: {
-            visible: _vm.dialogVisibleSearch,
-            "modal-append-to-body": false,
-            "close-on-click-modal": false
+      _c("search-form", {
+        attrs: { data: _vm.searchFormData },
+        on: {
+          "update:data": function($event) {
+            _vm.searchFormData = $event
           },
-          on: {
-            "update:visible": function($event) {
-              _vm.dialogVisibleSearch = $event
-            }
-          }
-        },
-        [
-          _c(
-            "el-form",
-            { attrs: { size: "small", "label-width": "80px" } },
-            [
-              _c(
-                "el-form-item",
-                { attrs: { label: "作者" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.searchForm.author,
-                      callback: function($$v) {
-                        _vm.$set(_vm.searchForm, "author", $$v)
-                      },
-                      expression: "searchForm.author"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary", size: "mini" },
-                  on: {
-                    click: function($event) {
-                      _vm.search()
-                    }
-                  }
-                },
-                [_vm._v("搜索")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
+          submit: _vm.search
+        }
+      })
     ],
     1
   )
@@ -49837,7 +49820,7 @@ var render = function() {
                   attrs: { type: "primary", size: "mini" },
                   on: {
                     click: function($event) {
-                      _vm.dialogVisibleSearch = true
+                      _vm.searchFormData.visible = true
                     }
                   }
                 },
@@ -50077,72 +50060,15 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          staticClass: "default-dialog",
-          attrs: {
-            visible: _vm.dialogVisibleSearch,
-            "modal-append-to-body": false,
-            "close-on-click-modal": false
+      _c("search-form", {
+        attrs: { data: _vm.searchFormData },
+        on: {
+          "update:data": function($event) {
+            _vm.searchFormData = $event
           },
-          on: {
-            "update:visible": function($event) {
-              _vm.dialogVisibleSearch = $event
-            }
-          }
-        },
-        [
-          _c(
-            "el-form",
-            { attrs: { size: "small", "label-width": "80px" } },
-            [
-              _c(
-                "el-form-item",
-                { attrs: { label: "用户名" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.searchForm.username,
-                      callback: function($$v) {
-                        _vm.$set(_vm.searchForm, "username", $$v)
-                      },
-                      expression: "searchForm.username"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary", size: "mini" },
-                  on: {
-                    click: function($event) {
-                      _vm.search()
-                    }
-                  }
-                },
-                [_vm._v("搜索")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
+          submit: _vm.search
+        }
+      }),
       _vm._v(" "),
       _c(
         "el-dialog",
@@ -50293,7 +50219,7 @@ var render = function() {
                   attrs: { type: "primary", size: "mini" },
                   on: {
                     click: function($event) {
-                      _vm.dialogVisibleSearch = true
+                      _vm.searchFormData.visible = true
                     }
                   }
                 },
@@ -50653,68 +50579,15 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          staticClass: "default-dialog",
-          attrs: {
-            visible: _vm.dialogVisibleSearch,
-            "modal-append-to-body": false,
-            "close-on-click-modal": false
+      _c("search-form", {
+        attrs: { data: _vm.searchFormData },
+        on: {
+          "update:data": function($event) {
+            _vm.searchFormData = $event
           },
-          on: {
-            "update:visible": function($event) {
-              _vm.dialogVisibleSearch = $event
-            }
-          }
-        },
-        [
-          _c(
-            "el-form",
-            { attrs: { size: "small", "label-width": "80px" } },
-            [
-              _c(
-                "el-form-item",
-                { attrs: { label: "标题" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.searchForm.title,
-                      callback: function($$v) {
-                        _vm.$set(_vm.searchForm, "title", $$v)
-                      },
-                      expression: "searchForm.title"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary", size: "mini" },
-                  on: { click: _vm.search }
-                },
-                [_vm._v("搜索")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
+          submit: _vm.search
+        }
+      })
     ],
     1
   )
@@ -50757,7 +50630,7 @@ var render = function() {
                   attrs: { type: "primary", size: "mini" },
                   on: {
                     click: function($event) {
-                      _vm.dialogVisibleSearch = true
+                      _vm.searchFormData.visible = true
                     }
                   }
                 },
@@ -50961,103 +50834,15 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          staticClass: "default-dialog",
-          attrs: {
-            visible: _vm.dialogVisibleSearch,
-            "modal-append-to-body": false,
-            "close-on-click-modal": false
+      _c("search-form", {
+        attrs: { data: _vm.searchFormData },
+        on: {
+          "update:data": function($event) {
+            _vm.searchFormData = $event
           },
-          on: {
-            "update:visible": function($event) {
-              _vm.dialogVisibleSearch = $event
-            }
-          }
-        },
-        [
-          _c(
-            "el-form",
-            { attrs: { size: "small", "label-width": "80px" } },
-            [
-              _c(
-                "el-form-item",
-                { attrs: { label: "用户名" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.searchForm.username,
-                      callback: function($$v) {
-                        _vm.$set(_vm.searchForm, "username", $$v)
-                      },
-                      expression: "searchForm.username"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "请求方式" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { clearable: "" },
-                      model: {
-                        value: _vm.searchForm.method,
-                        callback: function($$v) {
-                          _vm.$set(_vm.searchForm, "method", $$v)
-                        },
-                        expression: "searchForm.method"
-                      }
-                    },
-                    [
-                      _c("el-option", { attrs: { value: "GET" } }),
-                      _vm._v(" "),
-                      _c("el-option", { attrs: { value: "POST" } }),
-                      _vm._v(" "),
-                      _c("el-option", { attrs: { value: "PUT" } }),
-                      _vm._v(" "),
-                      _c("el-option", { attrs: { value: "DELETE" } })
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary", size: "mini" },
-                  on: {
-                    click: function($event) {
-                      _vm.search()
-                    }
-                  }
-                },
-                [_vm._v("搜索")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
+          submit: _vm.search
+        }
+      })
     ],
     1
   )
@@ -51258,6 +51043,138 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-c917597c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/components/search-form.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "el-dialog",
+    {
+      staticClass: "default-dialog",
+      attrs: {
+        visible: _vm.data.visible,
+        "modal-append-to-body": false,
+        "close-on-click-modal": false,
+        title: "搜索"
+      },
+      on: {
+        "update:visible": function($event) {
+          _vm.$set(_vm.data, "visible", $event)
+        }
+      }
+    },
+    [
+      _c(
+        "el-form",
+        {
+          ref: "searchForm",
+          attrs: { model: _vm.data, size: "small", "label-width": "80px" },
+          nativeOn: {
+            submit: function($event) {
+              $event.preventDefault()
+            }
+          }
+        },
+        _vm._l(_vm.data.formItem, function(item, index) {
+          return _c(
+            "el-form-item",
+            {
+              key: index,
+              attrs: { label: item.label, prop: "formData." + item.field }
+            },
+            [
+              item.type === "input"
+                ? _c("el-input", {
+                    model: {
+                      value: _vm.data.formData[item.field],
+                      callback: function($$v) {
+                        _vm.$set(_vm.data.formData, item.field, $$v)
+                      },
+                      expression: "data.formData[item.field]"
+                    }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              item.type === "select"
+                ? _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: item.clearable },
+                      model: {
+                        value: _vm.data.formData[item.field],
+                        callback: function($$v) {
+                          _vm.$set(_vm.data.formData, item.field, $$v)
+                        },
+                        expression: "data.formData[item.field]"
+                      }
+                    },
+                    _vm._l(item.options, function(option) {
+                      return _c("el-option", {
+                        key: _vm.getOptionProp(option).value,
+                        attrs: {
+                          value: _vm.getOptionProp(option, item.optionProp)
+                            .value,
+                          label: _vm.getOptionProp(option, item.optionProp)
+                            .label
+                        }
+                      })
+                    })
+                  )
+                : _vm._e()
+            ],
+            1
+          )
+        })
+      ),
+      _vm._v(" "),
+      _c(
+        "span",
+        {
+          staticClass: "dialog-footer",
+          attrs: { slot: "footer" },
+          slot: "footer"
+        },
+        [
+          _c(
+            "el-button",
+            {
+              attrs: { type: "primary", size: "mini" },
+              on: {
+                click: function($event) {
+                  _vm.$emit("submit")
+                }
+              }
+            },
+            [_vm._v("搜索")]
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            { attrs: { size: "mini" }, on: { click: _vm.resetForm } },
+            [_vm._v("重置")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-c917597c", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d58a227a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/pages/control/permission/node.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51284,7 +51201,7 @@ var render = function() {
                   attrs: { type: "primary", size: "mini" },
                   on: {
                     click: function($event) {
-                      _vm.searchDialogVisible = true
+                      _vm.searchFormData.visible = true
                     }
                   }
                 },
@@ -51529,82 +51446,15 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          staticClass: "default-dialog",
-          attrs: {
-            visible: _vm.searchDialogVisible,
-            "modal-append-to-body": false,
-            "close-on-click-modal": false
+      _c("search-form", {
+        attrs: { data: _vm.searchFormData },
+        on: {
+          "update:data": function($event) {
+            _vm.searchFormData = $event
           },
-          on: {
-            "update:visible": function($event) {
-              _vm.searchDialogVisible = $event
-            }
-          }
-        },
-        [
-          _c(
-            "el-form",
-            { attrs: { size: "small", "label-width": "80px" } },
-            [
-              _c(
-                "el-form-item",
-                { attrs: { label: "所在组" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { clearable: "" },
-                      model: {
-                        value: _vm.searchForm.group,
-                        callback: function($$v) {
-                          _vm.$set(_vm.searchForm, "group", $$v)
-                        },
-                        expression: "searchForm.group"
-                      }
-                    },
-                    _vm._l(_vm.groups, function(item) {
-                      return _c("el-option", {
-                        key: item.group,
-                        attrs: { value: item.group, label: item.group }
-                      })
-                    })
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary", size: "mini" },
-                  on: {
-                    click: function($event) {
-                      _vm.search()
-                    }
-                  }
-                },
-                [_vm._v("搜索")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
+          submit: _vm.search
+        }
+      })
     ],
     1
   )
@@ -66595,6 +66445,54 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/admin/js/components/search-form.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/admin/js/components/search-form.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-c917597c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/components/search-form.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/admin/js/components/search-form.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c917597c", Component.options)
+  } else {
+    hotAPI.reload("data-v-c917597c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/admin/js/http.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -66682,10 +66580,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_app__ = __webpack_require__("./resources/assets/admin/js/components/app.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_app__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__("./resources/assets/admin/js/store.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_ui_lib_theme_chalk_index_css__ = __webpack_require__("./node_modules/element-ui/lib/theme-chalk/index.css");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_ui_lib_theme_chalk_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_element_ui_lib_theme_chalk_index_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__less_global_less__ = __webpack_require__("./resources/assets/admin/less/global.less");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__less_global_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__less_global_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_search_form__ = __webpack_require__("./resources/assets/admin/js/components/search-form.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_search_form___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_search_form__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_element_ui_lib_theme_chalk_index_css__ = __webpack_require__("./node_modules/element-ui/lib/theme-chalk/index.css");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_element_ui_lib_theme_chalk_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_element_ui_lib_theme_chalk_index_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__less_global_less__ = __webpack_require__("./resources/assets/admin/less/global.less");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__less_global_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__less_global_less__);
+
 
 
 
@@ -66699,6 +66600,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_element_ui___default.a);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$http = __WEBPACK_IMPORTED_MODULE_2__http__["a" /* default */];
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('search-form', __WEBPACK_IMPORTED_MODULE_5__components_search_form___default.a);
 
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#app',

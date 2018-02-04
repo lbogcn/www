@@ -4,7 +4,7 @@
 
         <el-row>
             <el-col class="text-right">
-                <el-button type="primary" size="mini" @click="dialogVisibleSearch = true">搜索</el-button>
+                <el-button type="primary" size="mini" @click="searchFormData.visible = true">搜索</el-button>
                 <el-button type="success" size="mini" @click="handleCreate">新建</el-button>
             </el-col>
         </el-row>
@@ -53,17 +53,7 @@
             </span>
         </el-dialog>
 
-        <el-dialog :visible.sync="dialogVisibleSearch" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
-            <el-form size="small" label-width="80px">
-                <el-form-item label="用户名">
-                    <el-input v-model="searchForm.username"></el-input>
-                </el-form-item>
-            </el-form>
-
-            <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="search()">搜索</el-button>
-            </span>
-        </el-dialog>
+        <search-form :data.sync="searchFormData" @submit="search"></search-form>
 
         <el-dialog :visible.sync="dialogVisibleRole" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
             <el-form size="small" label-width="80px">
@@ -98,9 +88,19 @@
                 },
                 dialogVisibleUser: false,
                 storeData: {},
-                dialogVisibleSearch: false,
-                searchForm: {
-                    username: null
+
+                searchFormData: {
+                    visible: false,
+                    formItem: [
+                        {
+                            label: '用户名',
+                            field: 'username',
+                            type: 'input',
+                        },
+                    ],
+                    formData: {
+                        username: null,
+                    },
                 },
 
                 dialogVisibleRole: false,
@@ -116,14 +116,14 @@
             search() {
                 let self = this;
                 let action = '/permission/user?' + qs.stringify({
-                    search: this.searchForm,
+                    search: this.searchFormData.formData,
                     page: this.paginate.current_page,
                 });
 
                 this.$http.get(action).then(resp => {
                     if (resp.data.code === 0) {
-                        self.dialogVisibleSearch = false;
                         self.paginate = resp.data.data.paginate;
+                        self.searchFormData.visible = false;
                     }
                 });
             },

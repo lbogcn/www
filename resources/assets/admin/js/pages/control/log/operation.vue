@@ -4,7 +4,7 @@
 
         <el-row>
             <el-col class="text-right">
-                <el-button type="primary" size="mini" @click="dialogVisibleSearch = true">搜索</el-button>
+                <el-button type="primary" size="mini" @click="searchFormData.visible = true">搜索</el-button>
                 <el-button type="danger" size="mini" @click="handleClear">清理</el-button>
             </el-col>
         </el-row>
@@ -57,26 +57,7 @@
             </el-col>
         </el-row>
 
-        <el-dialog :visible.sync="dialogVisibleSearch" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
-            <el-form size="small" label-width="80px">
-                <el-form-item label="用户名">
-                    <el-input v-model="searchForm.username"></el-input>
-                </el-form-item>
-
-                <el-form-item label="请求方式">
-                    <el-select v-model="searchForm.method" clearable>
-                        <el-option value="GET" ></el-option>
-                        <el-option value="POST" ></el-option>
-                        <el-option value="PUT" ></el-option>
-                        <el-option value="DELETE" ></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-
-            <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="search()">搜索</el-button>
-            </span>
-        </el-dialog>
+        <search-form :data.sync="searchFormData" @submit="search"></search-form>
     </div>
 </template>
 
@@ -92,25 +73,46 @@
                     total: 0,
                 },
 
-                dialogVisibleSearch: false,
-                searchForm: {
-                    username: null,
-                }
+                searchFormData: {
+                    visible: false,
+                    formItem: [
+                        {
+                            label: '用户名',
+                            field: 'username',
+                            type: 'input',
+                        },
+                        {
+                            label: '请求方式',
+                            field: 'method',
+                            type: 'select',
+                            options: [
+                                {value: 'GET', label: 'GET'},
+                                {value: 'POST', label: 'POST'},
+                                {value: 'PUT', label: 'PUT'},
+                                {value: 'DELETE', label: 'DELETE'},
+                            ],
+                            clearable: true,
+                        }
+                    ],
+                    formData: {
+                        username: null,
+                        method: null,
+                    },
+                },
             };
         },
         methods: {
             search() {
                 let self = this;
                 let action = '/log/operation?' + qs.stringify({
-                    search: this.searchForm,
+                    search: this.searchFormData.formData,
                     page: this.paginate.current_page,
                 });
 
                 this.$http.get(action).then(resp => {
                     if (resp.data.code === 0) {
-                        self.searchDialogVisible = false;
                         self.paginate = resp.data.data.paginate;
-                        self.dialogVisibleSearch = false;
+                        self.searchFormData.visible = false;
                     }
                 });
             },
