@@ -37,8 +37,9 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception $exception
      * @return void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -50,13 +51,42 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Exception $exception
-     * @return ApiResponse
+     * @return ApiResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $exception)
     {
 //        return parent::render($request, $exception);
 //        var_dump(get_class($exception));exit;
+        switch ($request->getHttpHost()) {
+            case config('global.domain.admin'):
+                return $this->renderAdmin($request, $exception);
+            case config('global.domain.web'):
+                return $this->renderWeb($request, $exception);
+            default:
+                return parent::render($request, $exception);
+        }
 
+    }
+
+    /**
+     * 渲染前端异常
+     * @param $request
+     * @param Exception $exception
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    private function renderWeb($request, Exception $exception)
+    {
+        return parent::render($request, $exception);
+    }
+
+    /**
+     * 渲染后台异常
+     * @param $request
+     * @param Exception $exception
+     * @return ApiResponse
+     */
+    private function renderAdmin($request, Exception $exception)
+    {
         $code = $exception->getCode();
         if ($code == 0) {
             $code = -1;

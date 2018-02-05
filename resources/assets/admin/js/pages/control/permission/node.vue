@@ -6,7 +6,7 @@
             <el-col class="text-right">
                 <el-button-search @click="searchFormData.visible = true">搜索</el-button-search>
                 <el-button-create @click="handleCreate">新建</el-button-create>
-                <el-button type="danger" size="mini" @click="handleSync">一键同步</el-button>
+                <el-button type="danger" size="mini" @click="handleSync" icon="el-icon-lb-sync">一键同步</el-button>
             </el-col>
         </el-row>
 
