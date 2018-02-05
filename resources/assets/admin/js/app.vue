@@ -14,16 +14,8 @@
                     text-color="#fff"
                     active-text-color="#ffd04b">
                 <el-menu-item v-for="menu in menus" :index="menu.name" :key="menu.name">{{menu.title}}</el-menu-item>
-            </el-menu>
 
-            <el-menu
-                    class="navbar-control"
-                    mode="horizontal"
-                    background-color="#545c64"
-                    text-color="#fff"
-                    @select="onSelectControl"
-                    active-text-color="#ffd04b">
-                <el-submenu index="control-user" v-if="user.name">
+                <el-submenu index="control-user" v-if="user.name" class="navbar-control">
                     <template slot="title">
                         <i class="el-icon-lb-user"></i>
                         <span>{{user.name}}</span>
@@ -98,14 +90,13 @@
         router,
         methods: {
             onSelectModule(index) {
-                this.$store.commit('changeModule', index);
-            },
-            onSelectControl(index) {
                 switch (index) {
                     case 'logout':
                         this.logout();break;
+                    case 'modify-password':
+                        this.$router.push({path: '/' + index});break;
                     default:
-                        this.$router.push({path: '/' + index});
+                        this.$store.commit('changeModule', index);
                 }
             },
             logout() {
@@ -142,6 +133,7 @@
     .el-header {
         background-color: #545c64;
         padding: 0;
+        position: relative;
 
         .brand{
             float: left;
@@ -151,13 +143,19 @@
             color: #FFF;
         }
 
-        .navbar-module{float: left;}
-        .navbar-control{
-            float: right;
-            margin-right: 20px;
+        .navbar-module{
+            float: left;
+            position: absolute;
+            left: 201px;
+            right: 0;
+            padding-right: 15px;
+            
+            .navbar-control{
+                float: right;
 
-            .el-menu-item{
-                min-width: auto;
+                .el-menu-item{
+                    min-width: auto;
+                }
             }
         }
     }

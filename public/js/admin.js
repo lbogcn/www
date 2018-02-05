@@ -3187,14 +3187,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3225,14 +3217,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     router: __WEBPACK_IMPORTED_MODULE_0__router__["a" /* default */],
     methods: {
         onSelectModule: function onSelectModule(index) {
-            this.$store.commit('changeModule', index);
-        },
-        onSelectControl: function onSelectControl(index) {
             switch (index) {
                 case 'logout':
                     this.logout();break;
+                case 'modify-password':
+                    this.$router.push({ path: '/' + index });break;
                 default:
-                    this.$router.push({ path: '/' + index });
+                    this.$store.commit('changeModule', index);
             }
         },
         logout: function logout() {
@@ -6612,7 +6603,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.el-header {\n  background-color: #545c64;\n  padding: 0;\n}\n.el-header .brand {\n  float: left;\n  width: 201px;\n  text-align: center;\n  line-height: 60px;\n  color: #FFF;\n}\n.el-header .navbar-module {\n  float: left;\n}\n.el-header .navbar-control {\n  float: right;\n  margin-right: 20px;\n}\n.el-header .navbar-control .el-menu-item {\n  min-width: auto;\n}\n.el-main {\n  padding: 0;\n}\n.el-footer {\n  background-color: #B3C0D1;\n  color: #333;\n  text-align: center;\n  line-height: 60px;\n}\n.container {\n  position: fixed;\n  top: 61px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.wrapper {\n  margin-left: 3px;\n}\n.vertical-menu:not(.el-menu--collapse) {\n  width: 200px;\n}\n.vertical-menu:not(.el-menu--collapse) .menu-collapse {\n  text-align: right;\n  right: 20px;\n}\n.vertical-menu .menu-collapse {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  cursor: pointer;\n  color: #fff;\n  font-size: 24px;\n  padding: 5px 0;\n  text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n.el-header {\n  background-color: #545c64;\n  padding: 0;\n  position: relative;\n}\n.el-header .brand {\n  float: left;\n  width: 201px;\n  text-align: center;\n  line-height: 60px;\n  color: #FFF;\n}\n.el-header .navbar-module {\n  float: left;\n  position: absolute;\n  left: 201px;\n  right: 0;\n  padding-right: 15px;\n}\n.el-header .navbar-module .navbar-control {\n  float: right;\n}\n.el-header .navbar-module .navbar-control .el-menu-item {\n  min-width: auto;\n}\n.el-main {\n  padding: 0;\n}\n.el-footer {\n  background-color: #B3C0D1;\n  color: #333;\n  text-align: center;\n  line-height: 60px;\n}\n.container {\n  position: fixed;\n  top: 61px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.wrapper {\n  margin-left: 3px;\n}\n.vertical-menu:not(.el-menu--collapse) {\n  width: 200px;\n}\n.vertical-menu:not(.el-menu--collapse) .menu-collapse {\n  text-align: right;\n  right: 20px;\n}\n.vertical-menu .menu-collapse {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  left: 0;\n  cursor: pointer;\n  color: #fff;\n  font-size: 24px;\n  padding: 5px 0;\n  text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -51394,32 +51385,22 @@ var render = function() {
               },
               on: { select: _vm.onSelectModule }
             },
-            _vm._l(_vm.menus, function(menu) {
-              return _c(
-                "el-menu-item",
-                { key: menu.name, attrs: { index: menu.name } },
-                [_vm._v(_vm._s(menu.title))]
-              )
-            })
-          ),
-          _vm._v(" "),
-          _c(
-            "el-menu",
-            {
-              staticClass: "navbar-control",
-              attrs: {
-                mode: "horizontal",
-                "background-color": "#545c64",
-                "text-color": "#fff",
-                "active-text-color": "#ffd04b"
-              },
-              on: { select: _vm.onSelectControl }
-            },
             [
+              _vm._l(_vm.menus, function(menu) {
+                return _c(
+                  "el-menu-item",
+                  { key: menu.name, attrs: { index: menu.name } },
+                  [_vm._v(_vm._s(menu.title))]
+                )
+              }),
+              _vm._v(" "),
               _vm.user.name
                 ? _c(
                     "el-submenu",
-                    { attrs: { index: "control-user" } },
+                    {
+                      staticClass: "navbar-control",
+                      attrs: { index: "control-user" }
+                    },
                     [
                       _c("template", { slot: "title" }, [
                         _c("i", { staticClass: "el-icon-lb-user" }),
@@ -51445,7 +51426,7 @@ var render = function() {
                   )
                 : _vm._e()
             ],
-            1
+            2
           )
         ],
         1

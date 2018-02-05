@@ -24,7 +24,7 @@ Route::group(array(
     // 登入登出
     Route::post('login', 'AuthController@login');
     Route::get('logout', 'AuthController@logout');
-    Route::post('modify-password', 'AuthController@modifyPassword')->middleware(['auth:admin']);
+    Route::post('modify-password', 'AuthController@modifyPassword')->middleware(['auth:admin', 'admin_operation_log:admin']);
 
     // 获取菜单
     Route::get('init', 'HomeController@init')->middleware(['auth:admin']);
