@@ -1,5 +1,5 @@
 <template>
-    <div id="permission-role" class="page">
+    <div class="page">
         <h2 class="page-header">角色管理</h2>
 
         <el-row>

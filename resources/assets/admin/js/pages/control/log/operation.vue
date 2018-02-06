@@ -1,5 +1,5 @@
 <template>
-    <div id="permission-user" class="page">
+    <div class="page">
         <h2 class="page-header">操作日志</h2>
 
         <el-row>

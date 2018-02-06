@@ -1,5 +1,5 @@
 <template>
-    <div id="permission-node" class="page">
+    <div class="page">
         <h2 class="page-header">节点管理</h2>
 
         <el-row>
