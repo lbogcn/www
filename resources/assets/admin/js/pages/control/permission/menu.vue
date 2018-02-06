@@ -139,7 +139,7 @@
     };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     .node-desc {
         padding: 0 5px;
         color: #999;

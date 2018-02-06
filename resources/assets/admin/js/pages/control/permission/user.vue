@@ -200,7 +200,7 @@
     };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     .checkbox-permission-item.el-checkbox.el-checkbox{
         margin-left: 0;
         margin-right: 15px;

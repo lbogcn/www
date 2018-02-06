@@ -1,30 +1,28 @@
 <template>
-    <div id="modify-password">
-        <el-card class="box-card">
-            <div slot="header" class="clearfix">
-                <span>修改密码</span>
-            </div>
-            <div class="text item">
-                <el-form size="small" label-width="80px">
-                    <el-form-item label="原密码">
-                        <el-input v-model="form.old_password" type="password"></el-input>
-                    </el-form-item>
+    <el-card class="box-card">
+        <div slot="header" class="clearfix">
+            <span>修改密码</span>
+        </div>
+        <div class="text item">
+            <el-form size="small" label-width="80px">
+                <el-form-item label="原密码">
+                    <el-input v-model="form.old_password" type="password"></el-input>
+                </el-form-item>
 
-                    <el-form-item label="新密码">
-                        <el-input v-model="form.password" type="password"></el-input>
-                    </el-form-item>
+                <el-form-item label="新密码">
+                    <el-input v-model="form.password" type="password"></el-input>
+                </el-form-item>
 
-                    <el-form-item label="确认密码">
-                        <el-input v-model="form.password_confirmation" type="password"></el-input>
-                    </el-form-item>
+                <el-form-item label="确认密码">
+                    <el-input v-model="form.password_confirmation" type="password"></el-input>
+                </el-form-item>
 
-                    <el-form-item>
-                        <el-button size="mini" type="primary" @click="handleSubmit">提交</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-        </el-card>
-    </div>
+                <el-form-item>
+                    <el-button size="mini" type="primary" @click="handleSubmit">提交</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-card>
 </template>
 
 <script>
@@ -54,11 +52,9 @@
     }
 </script>
 
-<style lang="less">
-    #modify-password {
-        .box-card {
-            width: 400px;
-            margin: 30px auto;
-        }
+<style lang="less" scoped>
+    .box-card {
+        width: 400px;
+        margin: 30px auto;
     }
 </style>
