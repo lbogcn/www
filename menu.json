@@ -24,6 +24,11 @@
             "title": "文章管理",
             "icon": "el-icon-lb-24"
           },
+          "category": {
+            "name": "category",
+            "title": "类目管理",
+            "icon": "el-icon-lb-caidan"
+          },
           "questionnaires": {
             "name": "questionnaires",
             "title": "问卷管理",

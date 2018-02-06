@@ -20,5 +20,7 @@ Route::group(array(
     'namespace' => 'Web',
 ), function() {
 
+    Route::get('', 'HomeController@index');
+
     Route::get('article/{article}.html', 'ArticleController@index');
 });

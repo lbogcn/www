@@ -32,6 +32,7 @@ Route::group(array(
             'permission/menu' => 'Permission\MenuController',
             'log/operation' => 'Log\OperationController',
             'article/static' => 'Article\StaticController',
+            'article/category' => 'Article\CategoryController',
             'article' => 'Article\ArticleController',
             'questionnaires' => 'QuestionnairesController',
             'message' => 'MessageController',

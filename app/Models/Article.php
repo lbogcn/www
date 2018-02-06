@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property int $id
+ * @property string $title
+ * @property string $author
+ * @property string $image
+ * @property string $excerpt
+ * @property string $content
+ * @property int $weight
+ * @property int $pv
  * @property int $display
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -38,9 +45,9 @@ class Article extends Eloquent
     {
         if ($this->display == self::DISPLAY_SHOW) {
             $data = array(
-                'article' => $this,
+                'model' => $this,
             );
-            $page = view('web.article', $data)->render();
+            $page = view('web.article.article', $data)->render();
             file_put_contents($this->staticFilename(), $page);
 
             return $page;

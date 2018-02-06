@@ -1,6 +1,6 @@
 <template>
-    <div id="permission-role" class="page">
-        <h2 class="page-header">角色管理</h2>
+    <div id="permission-user" class="page">
+        <h2 class="page-header">类目管理</h2>
 
         <el-row>
             <el-col class="text-right">
@@ -11,12 +11,18 @@
         <el-row>
             <el-col>
                 <el-table size="small" :data="paginate.data" stripe>
-                    <el-table-column prop="role" label="角色"></el-table-column>
-                    <el-table-column prop="name" label="描述"></el-table-column>
+                    <el-table-column prop="alias" label="别名"></el-table-column>
+                    <el-table-column prop="title" label="标题"></el-table-column>
+                    <el-table-column prop="weight" label="权重" width="80px"></el-table-column>
+                    <el-table-column prop="display" label="状态">
+                        <template slot-scope="scope">
+                            <el-tag size="small" type="success" v-if="scope.row.display === 1">显示</el-tag>
+                            <el-tag size="small" type="danger" v-if="scope.row.display !== 1">隐藏</el-tag>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="created_at" label="创建时间"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="handleShowPermission(scope.row)" type="text" size="mini">权限</el-button>
                             <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="mini">编辑</el-button>
                             <el-button @click="handleDelete(scope.$index, scope.row)" type="text" size="mini">删除</el-button>
                         </template>
@@ -33,31 +39,28 @@
 
         <el-dialog :visible.sync="dialogVisibleStore" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
             <el-form size="small" label-width="80px">
-                <el-form-item label="角色">
-                    <el-input v-model="storeData.role" :disabled="!!storeData.id"></el-input>
+                <el-form-item label="别名">
+                    <el-input v-model="storeData.alias" placeholder="英文且唯一，显示在url上" :disabled="!!storeData.id"></el-input>
                 </el-form-item>
 
-                <el-form-item label="描述">
-                    <el-input v-model="storeData.name"></el-input>
+                <el-form-item label="标题">
+                    <el-input v-model="storeData.title" placeholder="显示在页面菜单上"></el-input>
+                </el-form-item>
+
+                <el-form-item label="权重">
+                    <el-input v-model="storeData.weight" placeholder="请输入小于100的正整数，越大越靠前"></el-input>
+                </el-form-item>
+
+                <el-form-item label="显示状态">
+                    <el-select v-model="storeData.display">
+                        <el-option :value="1" label="显示"></el-option>
+                        <el-option :value="2" label="隐藏"></el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
 
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" size="mini" @click="handleStore">保存</el-button>
-            </span>
-        </el-dialog>
-
-        <el-dialog :visible.sync="dialogVisiblePermission" :modal-append-to-body="false" :close-on-click-modal="false" width="600px">
-            <el-form size="small" label-width="160px">
-                <el-form-item v-for="(permissions, group) in permissionsGroups" :label="group" :key="group">
-                    <el-checkbox-group v-model="storeDataPermission.node_id">
-                        <el-checkbox v-for="permission in permissions" :label="permission.id" :key="permission.id" class="checkbox-permission-item">{{permission.node}}</el-checkbox>
-                    </el-checkbox-group>
-                </el-form-item>
-            </el-form>
-
-            <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handleStorePermission">保存</el-button>
             </span>
         </el-dialog>
     </div>
@@ -74,20 +77,17 @@
                     per_page: 0,
                     total: 0,
                 },
-                dialogVisibleStore: false,
-                storeData: {},
 
-                dialogVisiblePermission: false,
-                storeDataPermission: {
-                    node_id: [],
+                dialogVisibleStore: false,
+                storeData: {
+                    alias: null, title: null, weight: 0, display: 2
                 },
-                permissionsGroups: {},
             };
         },
         methods: {
             search() {
                 let self = this;
-                let action = '/permission/role?' + qs.stringify({
+                let action = '/article/category?' + qs.stringify({
                     page: this.paginate.current_page,
                 });
 
@@ -104,7 +104,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.delete('/permission/role/' + row.id).then(resp => {
+                    this.$http.delete('/article/category/' + row.id).then(resp => {
                         if (resp.data.code === 0) {
                             self.paginate.data.splice(index, 1);
                             self.$message({type: 'success', message: '删除成功!'});
@@ -114,17 +114,13 @@
             },
             handleCreate() {
                 this.storeData = {
-                    role: null, name: null
+                    alias: null, title: null, weight: 0, display: 2
                 };
-                this.dialogVisibleStore = true;
-            },
-            handleEdit(index, row) {
-                this.storeData = JSON.parse(JSON.stringify(row));
                 this.dialogVisibleStore = true;
             },
             handleStore() {
                 let self = this;
-                let cbk = function(resp) {
+                let cbk = resp => {
                     if (resp.data.code === 0) {
                         self.$message({type: 'success', message: '保存成功!'});
                         self.dialogVisibleStore = false;
@@ -133,34 +129,15 @@
                 };
 
                 if (this.storeData.id) {
-                    this.$http.put('/permission/role/' + this.storeData.id, this.storeData).then(cbk);
+                    this.$http.put('/article/category/' + this.storeData.id, this.storeData).then(cbk);
                 } else {
-                    this.$http.post('/permission/role', this.storeData).then(cbk);
+                    this.$http.post('/article/category', this.storeData).then(cbk);
                 }
             },
-            handleShowPermission(row) {
-                let self = this;
-                this.$http.get('/permission/role/' + row.id + '/permission').then(resp => {
-                    if (resp.data.code === 0) {
-                        let data = resp.data.data;
-
-                        self.storeDataPermission.role_id = row.id;
-                        self.storeDataPermission.node_id = data.role_permission_id;
-                        self.permissionsGroups = data.groups;
-                        self.dialogVisiblePermission = true;
-                    }
-                });
+            handleEdit(index, row) {
+                this.storeData = row;
+                this.dialogVisibleStore = true;
             },
-            handleStorePermission() {
-                let self = this;
-                this.$http.post('/permission/role/' + this.storeDataPermission.role_id + '/permission', this.storeDataPermission).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.$message({type: 'success', message: '保存成功!'});
-                        self.search();
-                        self.dialogVisiblePermission = false;
-                    }
-                });
-            }
         },
         mounted() {
             this.$http.defaults.loadTarget = '.wrapper';
@@ -170,8 +147,4 @@
 </script>
 
 <style lang="less">
-    .checkbox-permission-item.el-checkbox.el-checkbox{
-        margin-left: 0;
-        margin-right: 15px;
-    }
 </style>
