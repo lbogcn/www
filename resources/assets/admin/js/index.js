@@ -11,8 +11,7 @@ import ElButtonSearch from './components/el-button-search';
 import ElButtonCreate from './components/el-button-create';
 import ElButtonDelete from './components/el-button-delete';
 
-import 'element-ui/lib/theme-chalk/index.css'
-import '../../font/iconfont.css';
+import 'element-ui/lib/theme-chalk/index.css';
 import '../less/global.less';
 
 Vue.use(ElementUI);

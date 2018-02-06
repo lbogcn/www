@@ -13,6 +13,8 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/admin/js/index.js', 'public/js/admin.js').version();
 
+mix.less('resources/assets/web/less/index.less', 'public/css/app.css').version();
+
 if (mix.inProduction()) {
     mix.version();
 }

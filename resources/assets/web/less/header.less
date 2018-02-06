@@ -1,0 +1,144 @@
+
+.header {
+  width: 35%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #ddd;
+  background-repeat: repeat, no-repeat;
+  background-size: auto, cover;
+  transition: background-image 2s ease-in-out;
+  will-change: transition;
+
+  section{
+    margin-top: 1em;
+  }
+
+  .headings {
+    margin-top: 60px;
+    text-align: center;
+
+    a {
+      h1 {
+        font-size: 2rem;
+        margin-top: 0.75em;
+        color: #fff;
+        font-weight: normal;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        margin-top: 0.375em;
+        color: #fff;
+        font-weight: normal;
+      }
+
+      .avatar {
+        max-width: 75px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border-radius: 100%;
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0 2px 20px 3px rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+
+  .switchboard {
+    text-align: center;
+
+    ul {
+      list-style: none;
+
+      li {
+        display: inline-block;
+        margin: 0 5px;
+      }
+    }
+  }
+
+  .intro {
+    text-align: center;
+    font-size: 1.4rem;
+    color: #e7e7e7;
+    line-height: 1.5;
+  }
+
+  .categories {
+    text-align: center;
+
+    ul {
+      list-style: none;
+
+      li {
+        font-size: 1.6rem;
+        margin-top: 0.4em;
+
+        a{
+          @keyframes def {
+            100% { color: #e7e7e7;}
+          }
+          animation: def 0.8s forwards;
+
+          &:hover{
+            @keyframes hover {
+              100% { color: #fff;}
+            }
+            animation: hover 0.5s forwards;
+          }
+        }
+      }
+    }
+  }
+
+  .copyright {
+    position: absolute;
+    bottom: 1em;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .header {
+    width: 100%;
+    position: relative;
+    padding: 1em 0;
+
+    section{
+      margin-top: 0.3em;
+    }
+
+    .headings{
+      margin-top: 0;
+
+      a {
+        vertical-align: middle;
+        display: inline-block;
+        margin: 0 0.5em;
+
+        .avatar {
+          margin: 0;
+        }
+
+        h1, h2 {
+          margin: 0;
+        }
+      }
+    }
+
+    .categories{
+      ul {
+        li {
+          display: inline-block;
+          margin: 0 0.1em;
+        }
+      }
+    }
+    
+    .copyright {
+      display: none;
+    }
+  }
+}

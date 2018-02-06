@@ -80,7 +80,7 @@
 
                 dialogVisibleStore: false,
                 storeData: {
-                    alias: null, title: null, weight: 0, display: 2
+                    alias: null, title: null, weight: 10, display: 2
                 },
             };
         },
@@ -114,7 +114,7 @@
             },
             handleCreate() {
                 this.storeData = {
-                    alias: null, title: null, weight: 0, display: 2
+                    alias: null, title: null, weight: 10, display: 2
                 };
                 this.dialogVisibleStore = true;
             },

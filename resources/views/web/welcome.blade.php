@@ -5,41 +5,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{$main_title}}</title>
-    <style>
-        .header {width: 35%;position: fixed;left: 0;top: 0;bottom:0;    background-color: #ddd;
-            background-image: url("https://blog.dandyweng.com/wp-content/themes/albatross/images/overlay-lba-x2.png"),url("https://blog.dandyweng.com/wp-content/themes/albatross/backgrounds/03.jpg");
-            background-repeat: repeat, no-repeat;
-            background-size: auto, cover;
-            transition: background-image 2s ease-in-out;
-            will-change: transition;}
-        .headings {margin-top: 60px; text-align: center;}
-        .avatar {
-            max-width: 75px;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            border-radius: 100%;
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0 2px 20px 3px rgba(0, 0, 0, 0.25);
-        }
-    </style>
+    <link rel="stylesheet" href="{{mix('css/app.css')}}">
 </head>
 <body>
-    <div class="header">
-        <div class="headings">
+    <div class="header" style="background-image: url({{url('/images/overlay-lba-x2.png')}}), url({{$cover}})">
+        <section class="headings">
             <a href="">
                 <img src="http://cdn.lbog.cn/FtCx3GUQhmC1g2hyxvgRreIr2owN.jpg" class="avatar">
-                <h2>{{$main_title}}</h2>
-                <h3>{{$sub_title}}</h3>
             </a>
-        </div>
+            <a href="">
+                <h1>{{$main_title}}</h1>
+                <h2>{{$sub_title}}</h2>
+            </a>
+        </section>
 
-        <div class="switchboard">
-            <a href="https://github/islenbo"><img src="github"></a>
-        </div>
+        <section class="switchboard">
+            <ul>
+                <li>
+                    <a href="https://github.com/islenbo" target="_blank">
+                        <i class="lb-github"></i>
+                    </a>
+                </li>
+            </ul>
+        </section>
 
-        <div class="intro">
+        <section class="intro">
             <p>{{$intro}}</p>
-        </div>
+        </section>
+
+        <section class="categories">
+            <ul>
+                <?php /** @var \App\Models\ArticleCategory $category */ ?>
+                @foreach ($categories as $category)
+                    <li>
+                        <a href="">{{$category->title}}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </section>
+
+        <section class="copyright">
+            <p>&copy; {{date('Y')}} lenbo 粤ICP备17008394号-1</p>
+        </section>
     </div>
+
     <div class="main">
 
     </div>

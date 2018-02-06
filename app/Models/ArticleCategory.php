@@ -16,6 +16,8 @@ use Eloquent;
 class ArticleCategory extends Eloquent
 {
 
+    const DISPLAY_SHOW = 1;
+
     public $fillable = [
         'alias', 'title', 'weight', 'display'
     ];
