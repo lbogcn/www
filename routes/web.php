@@ -23,4 +23,6 @@ Route::group(array(
     Route::get('', 'HomeController@index');
 
     Route::get('article/{article}.html', 'ArticleController@index');
+
+    Route::get('/{alias}', 'HomeController@category');
 });

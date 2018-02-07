@@ -4607,6 +4607,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4621,7 +4646,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             dialogVisibleStore: false,
             storeData: {
-                alias: null, title: null, weight: 10, display: 2
+                alias: null, title: null, weight: 10, display: 2, type: 1, url: ''
             }
         };
     },
@@ -4658,7 +4683,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         handleCreate: function handleCreate() {
             this.storeData = {
-                alias: null, title: null, weight: 10, display: 2
+                alias: null, title: null, weight: 10, display: 2, type: 1, url: ''
             };
             this.dialogVisibleStore = true;
         },
@@ -6846,7 +6871,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.text-ellipsis {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.text-word-break-all {\n  max-width: 300px;\n  word-break: break-all;\n}\n", ""]);
 
 // exports
 
@@ -52414,7 +52439,67 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
+                    attrs: { label: "链接" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-tooltip",
+                              {
+                                attrs: { effect: "dark", placement: "bottom" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "text-word-break-all",
+                                    attrs: { slot: "content" },
+                                    slot: "content"
+                                  },
+                                  [_vm._v(_vm._s(scope.row.url))]
+                                ),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-ellipsis" }, [
+                                  _vm._v(_vm._s(scope.row.url))
+                                ])
+                              ]
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
                     attrs: { prop: "weight", label: "权重", width: "80px" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "type", label: "类型" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            scope.row.type === 1
+                              ? _c(
+                                  "el-tag",
+                                  { attrs: { size: "small", type: "success" } },
+                                  [_vm._v("内部模块")]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            scope.row.type === 2
+                              ? _c("el-tag", { attrs: { size: "small" } }, [
+                                  _vm._v("外部链接")
+                                ])
+                              : _vm._e()
+                          ]
+                        }
+                      }
+                    ])
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
@@ -52600,6 +52685,56 @@ var render = function() {
                 ],
                 1
               ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "类型" } },
+                [
+                  _c(
+                    "el-select",
+                    {
+                      model: {
+                        value: _vm.storeData.type,
+                        callback: function($$v) {
+                          _vm.$set(_vm.storeData, "type", $$v)
+                        },
+                        expression: "storeData.type"
+                      }
+                    },
+                    [
+                      _c("el-option", {
+                        attrs: { value: 1, label: "内部模块" }
+                      }),
+                      _vm._v(" "),
+                      _c("el-option", {
+                        attrs: { value: 2, label: "外部链接" }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm.storeData.type === 2
+                ? _c(
+                    "el-form-item",
+                    { attrs: { label: "跳转链接" } },
+                    [
+                      _c("el-input", {
+                        attrs: { placeholder: "http://或https://开头" },
+                        model: {
+                          value: _vm.storeData.url,
+                          callback: function($$v) {
+                            _vm.$set(_vm.storeData, "url", $$v)
+                          },
+                          expression: "storeData.url"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "el-form-item",

@@ -13,7 +13,21 @@
                 <el-table size="small" :data="paginate.data" stripe>
                     <el-table-column prop="alias" label="别名"></el-table-column>
                     <el-table-column prop="title" label="标题"></el-table-column>
+                    <el-table-column label="链接">
+                        <template slot-scope="scope">
+                            <el-tooltip effect="dark" placement="bottom">
+                                <div slot="content" class="text-word-break-all">{{scope.row.url}}</div>
+                                <p class="text-ellipsis">{{scope.row.url}}</p>
+                            </el-tooltip>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="weight" label="权重" width="80px"></el-table-column>
+                    <el-table-column prop="type" label="类型">
+                        <template slot-scope="scope">
+                            <el-tag size="small" type="success" v-if="scope.row.type === 1">内部模块</el-tag>
+                            <el-tag size="small" v-if="scope.row.type === 2">外部链接</el-tag>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="display" label="状态">
                         <template slot-scope="scope">
                             <el-tag size="small" type="success" v-if="scope.row.display === 1">显示</el-tag>
@@ -51,6 +65,17 @@
                     <el-input v-model="storeData.weight" placeholder="请输入小于100的正整数，越大越靠前"></el-input>
                 </el-form-item>
 
+                <el-form-item label="类型">
+                    <el-select v-model="storeData.type">
+                        <el-option :value="1" label="内部模块"></el-option>
+                        <el-option :value="2" label="外部链接"></el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item label="跳转链接" v-if="storeData.type === 2">
+                    <el-input v-model="storeData.url" placeholder="http://或https://开头"></el-input>
+                </el-form-item>
+
                 <el-form-item label="显示状态">
                     <el-select v-model="storeData.display">
                         <el-option :value="1" label="显示"></el-option>
@@ -80,7 +105,7 @@
 
                 dialogVisibleStore: false,
                 storeData: {
-                    alias: null, title: null, weight: 10, display: 2
+                    alias: null, title: null, weight: 10, display: 2, type: 1, url: '',
                 },
             };
         },
@@ -114,7 +139,7 @@
             },
             handleCreate() {
                 this.storeData = {
-                    alias: null, title: null, weight: 10, display: 2
+                    alias: null, title: null, weight: 10, display: 2, type: 1, url: '',
                 };
                 this.dialogVisibleStore = true;
             },
@@ -147,4 +172,13 @@
 </script>
 
 <style lang="less">
+    .text-ellipsis{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .text-word-break-all{
+        max-width: 300px;
+        word-break: break-all;
+    }
 </style>

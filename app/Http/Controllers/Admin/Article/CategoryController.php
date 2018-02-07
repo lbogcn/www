@@ -54,9 +54,16 @@ class CategoryController extends Controller
             'title' => ['required', 'max:10'],
             'weight' => ['required', 'integer', 'min:0', 'max:100'],
             'display' => ['required', 'in:1,2'],
+            'type' => ['required', 'in:1,2'],
         ));
+        if ($request->input('type') == 2) {
+            $this->validate($request, array(
+                'url' => ['url', 'max:500'],
+            ));
+        }
 
-        $data = $request->only(['alias', 'title', 'weight', 'display']);
+        $data = $request->only(['alias', 'title', 'weight', 'display', 'type', 'url']);
+        $data['url'] = $category->genUrl($data);
         $category->create($data);
 
         return ApiResponse::success(null);
@@ -74,9 +81,17 @@ class CategoryController extends Controller
             'title' => ['required', 'max:10'],
             'weight' => ['required', 'integer', 'min:0', 'max:100'],
             'display' => ['required', 'in:1,2'],
+            'type' => ['required', 'in:1,2'],
         ));
+        if ($request->input('type') == 2) {
+            $this->validate($request, array(
+                'url' => ['url', 'max:500'],
+            ));
+        }
 
-        $data = $request->only(['title', 'weight', 'display']);
+        $urlData = $data = $request->only(['title', 'weight', 'display', 'type', 'url']);
+        $urlData['alias'] = $category->alias;
+        $data['url'] = $category->genUrl($urlData);
         $category->update($data);
 
         return ApiResponse::success(null);

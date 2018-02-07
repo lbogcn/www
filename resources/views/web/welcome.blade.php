@@ -36,7 +36,7 @@
                 <?php /** @var \App\Models\ArticleCategory $category */ ?>
                 @foreach ($categories as $category)
                     <li>
-                        <a href="">{{$category->title}}</a>
+                        <a href="{{$category->url}}">{{$category->title}}</a>
                     </li>
                 @endforeach
             </ul>

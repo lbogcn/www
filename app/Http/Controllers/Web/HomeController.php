@@ -32,4 +32,9 @@ class HomeController extends Controller
         return view('web.welcome', $data);
     }
 
+    public function category($alias)
+    {
+
+    }
+
 }
