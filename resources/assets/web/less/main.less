@@ -1,0 +1,69 @@
+.main {
+  margin-left: 30%;
+  padding: 3em;
+
+  .articles {
+    position: relative;
+
+    @import "article";
+  }
+
+  .pagination {
+    height: 60px;
+
+    ul {
+      list-style: none;
+
+      li {
+        display: inline-block;
+        width: 120px;
+        text-align: center;
+
+        &.disabled{
+          display: none;
+        }
+
+        a, span{
+          color: #000;
+          display: block;
+          height: 50px;
+          line-height: 50px;
+
+          border: 1px solid #ddd;
+          border-bottom: 1px solid #ddd!important;
+          border-radius: 5px;
+          background-color: #fff;
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 10px 75px 0 rgba(0, 0, 75, 0.125);
+          transition: background-color .3s ease-out, box-shadow .5s ease-out;
+          transition-delay: .1s;
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+          margin: 0 1em;
+
+          &:hover, &:active{
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1), 0 10px 100px 0 rgba(0, 0, 75, 0.5);
+          }
+
+          &:active {
+            position: relative;
+            top: 2px;
+            left: 2px;
+          }
+        }
+
+        span{
+          cursor: default;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    margin-left: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    margin-left: 0;
+    padding: 2em;
+  }
+}

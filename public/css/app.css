@@ -1,5 +1,31 @@
+
+@font-face {font-family: "webfont";
+  src: url(/fonts/webfont.eot?1970053da9dd47de6a0e4e23a5101731); /* IE9*/
+  src: url(/fonts/webfont.eot?1970053da9dd47de6a0e4e23a5101731#iefix) format('embedded-opentype'), 
+  url('data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAVwAAsAAAAAB8wAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABHU1VCAAABCAAAADMAAABCsP6z7U9TLzIAAAE8AAAARAAAAFZW7lDNY21hcAAAAYAAAABeAAABhrzABr5nbHlmAAAB4AAAAaQAAAG4uxnRf2hlYWQAAAOEAAAALwAAADYQYE73aGhlYQAAA7QAAAAcAAAAJAffA4VobXR4AAAD0AAAAAwAAAAMC+oAAGxvY2EAAAPcAAAACAAAAAgAdgDcbWF4cAAAA+QAAAAfAAAAIAESAF1uYW1lAAAEBAAAAUUAAAJtPlT+fXBvc3QAAAVMAAAAIwAAADTd3u50eJxjYGRgYOBikGPQYWB0cfMJYeBgYGGAAJAMY05meiJQDMoDyrGAaQ4gZoOIAgCKIwNPAHicY2Bk/sk4gYGVgYOpk+kMAwNDP4RmfM1gxMjBwMDEwMrMgBUEpLmmMDgwVLx7xNzwv4EhhrmBoQEozAiSAwA1FQ1XeJzFkMENgDAMAy9t6QMxCA8G4sUcnbcDdIViQnkwQS05VhxLiQIsQBQPMYFdGA9OueZ+ZHU/eSZLjUBptXf1nyqiWXYNKplpsHmr/9i87qPTVyiDOrHVl4Qbq+0PNwAAeJwNj89q1FAche8vmXtvZiaTzNz8ufnTZJIZm9uxNmjM3FikUwShqJUWBbEFFz7ASKGLduGiooKgC92JSxG6qI8w4HO0m0H0OaI5HA6Hb/chjNC/3+pC9ZCF1tAtdB/tIwRkHUaGEkEqylxZByfFDrcNVYxFSsejXN0CPiK2W8gy44QSEwyI4XZaSJErAqblTLkLhRsB+GHwlK2uMPUzdDwRv68fKt/BGY5XzNlG/eDGtl0klnaiM+Yz9kkjGGuK0jINmHO3jdsdUv/AZuAshhNlCLovgt2DXhKylx/KV9EqbwOcnYEVJsb59iAYNH0duBbzab+neUFvfM2Gk79dz9Kj7A9qAo3rxxaox2iG0MBl3JViSjKRQyV53EzVvLLKZCVdLgs+g4bSGBybNBuB3VBWZUgQRNXFVwvD0aZqbWjllrfjdeLTOVRmH5dP6J0vm/reTdw3wmh+anPc+/ZLxfXy6qpeYji+qOuqZXWf00Mr8LvhiwTTScTfHTy7N93VIKem2ZmA9qhMHl8/fMttGb/RdJDQ+nkJKSH18rJR+Q+kPUrxeJxjYGRgYADiW69fNcXz23xl4GZhAIFrC1jrEPT/bhZG5mIgl4OBCSQKAFIICuMAeJxjYGRgYG7438AQwwJkMTAASTCNBJgBRzUCbgQAAAAD6QAABAEAAAAAAAAAdgDceJxjYGRgYGBmCGRgZQABJiDmAkIGhv9gPgMAEPcBcAB4nGWPTU7DMBCFX/oHpBKqqGCH5AViASj9EatuWFRq911036ZOmyqJI8et1ANwHo7ACTgC3IA78EgnmzaWx9+8eWNPANzgBx6O3y33kT1cMjtyDRe4F65TfxBukF+Em2jjVbhF/U3YxzOmwm10YXmD17hi9oR3YQ8dfAjXcI1P4Tr1L+EG+Vu4iTv8CrfQ8erCPuZeV7iNRy/2x1YvnF6p5UHFockikzm/gple75KFrdLqnGtbxCZTg6BfSVOdaVvdU+zXQ+ciFVmTqgmrOkmMyq3Z6tAFG+fyUa8XiR6EJuVYY/62xgKOcQWFJQ6MMUIYZIjK6Og7VWb0r7FDwl57Vj3N53RbFNT/c4UBAvTPXFO6stJ5Ok+BPV8bUnV0K27LnpQ0kV7NSRKyQl7WtlRC6gE2ZVeOEXpc0Yk/KGdI/wAJWm7IAAAAeJxjYGKAAC4G7ICZkYmRmZGFgbGCLT2zJKM0iYEBABX2Ax4A') format('woff'),
+  url(/fonts/webfont.ttf?9a925892d496cc0854cc5a986ad83e54) format('truetype'), 
+  url(/fonts/webfont.svg?21728ff602c2061de2a1cf8859ca9f16#webfont) format('svg'); /* iOS 4.1- */
+}
+
+.webfont {
+  font-family:"webfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.lb-github:before { content: "\EEE2"; }
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
 html {
   font-size: 62.5%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", Arial, sans-serif;
 }
 html,
 body,
@@ -87,11 +113,8 @@ video {
   border: 0;
   vertical-align: baseline;
 }
-*,
-*:before,
-*:after {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+body {
+  background: #FAFBFF;
 }
 a {
   text-decoration: none;
@@ -105,7 +128,7 @@ p {
   height: auto;
 }
 .header {
-  width: 35%;
+  width: 30%;
   position: fixed;
   left: 0;
   top: 0;
@@ -116,6 +139,7 @@ p {
   -webkit-transition: background-image 2s ease-in-out;
   transition: background-image 2s ease-in-out;
   will-change: transition;
+  text-shadow: #333 0.1em 0.1em 0.5em;
 }
 .header section {
   margin-top: 1em;
@@ -205,7 +229,7 @@ p {
   color: #fff;
   text-align: center;
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 992px) {
   .header {
     width: 100%;
     position: relative;
@@ -235,5 +259,144 @@ p {
   }
   .header .copyright {
     display: none;
+  }
+}
+.main {
+  margin-left: 30%;
+  padding: 3em;
+}
+.main .articles {
+  position: relative;
+}
+.main .articles article {
+  padding: 3.5em 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.main .articles article header {
+  -webkit-box-flex: 5;
+      -ms-flex: 5;
+          flex: 5;
+}
+.main .articles article header h2 {
+  font-size: 2.5rem;
+  font-weight: normal;
+  line-height: 1.35;
+  margin-bottom: 0.5em;
+  color: #333;
+}
+.main .articles article header p {
+  font-size: 1.6rem;
+  line-height: 1.625;
+  letter-spacing: 0.35px;
+  margin-bottom: 1em;
+  color: #555;
+  cursor: pointer;
+}
+.main .articles article header span {
+  color: #888;
+  cursor: default;
+}
+.main .articles article header span span {
+  padding: 0 0.2em;
+}
+.main .articles article footer {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  position: relative;
+  padding-left: 40px;
+}
+.main .articles article footer .cover {
+  border-radius: 3px;
+  background-size: 100%;
+  background-size: cover;
+  background-position: 50%;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 25, 0.1), 0 5px 75px 1px rgba(0, 0, 50, 0.2);
+          box-shadow: 0 2px 5px rgba(0, 0, 25, 0.1), 0 5px 75px 1px rgba(0, 0, 50, 0.2);
+  -webkit-transition: -webkit-box-shadow 1s ease-out;
+  transition: -webkit-box-shadow 1s ease-out;
+  transition: box-shadow 1s ease-out;
+  transition: box-shadow 1s ease-out, -webkit-box-shadow 1s ease-out;
+  -webkit-transition-delay: 2s;
+          transition-delay: 2s;
+}
+@media screen and (min-width: 768px) {
+  .main .articles article footer .cover {
+    height: 100%!important;
+  }
+}
+@media screen and (max-width: 767px) {
+  .main .articles article {
+    display: block;
+    padding: 2.5em 0;
+  }
+  .main .articles article footer {
+    position: relative;
+    padding: 40px 0;
+  }
+}
+.main .pagination {
+  height: 60px;
+}
+.main .pagination ul {
+  list-style: none;
+}
+.main .pagination ul li {
+  display: inline-block;
+  width: 120px;
+  text-align: center;
+}
+.main .pagination ul li.disabled {
+  display: none;
+}
+.main .pagination ul li a,
+.main .pagination ul li span {
+  color: #000;
+  display: block;
+  height: 50px;
+  line-height: 50px;
+  border: 1px solid #ddd;
+  border-bottom: 1px solid #ddd!important;
+  border-radius: 5px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 10px 75px 0 rgba(0, 0, 75, 0.125);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 10px 75px 0 rgba(0, 0, 75, 0.125);
+  -webkit-transition: background-color 0.3s ease-out, -webkit-box-shadow 0.5s ease-out;
+  transition: background-color 0.3s ease-out, -webkit-box-shadow 0.5s ease-out;
+  transition: background-color 0.3s ease-out, box-shadow 0.5s ease-out;
+  transition: background-color 0.3s ease-out, box-shadow 0.5s ease-out, -webkit-box-shadow 0.5s ease-out;
+  -webkit-transition-delay: .1s;
+          transition-delay: .1s;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  margin: 0 1em;
+}
+.main .pagination ul li a:hover,
+.main .pagination ul li span:hover,
+.main .pagination ul li a:active,
+.main .pagination ul li span:active {
+  background-color: #f9f9f9;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1), 0 10px 100px 0 rgba(0, 0, 75, 0.5);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1), 0 10px 100px 0 rgba(0, 0, 75, 0.5);
+}
+.main .pagination ul li a:active,
+.main .pagination ul li span:active {
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+.main .pagination ul li span {
+  cursor: default;
+}
+@media screen and (max-width: 992px) {
+  .main {
+    margin-left: 0;
+  }
+}
+@media screen and (max-width: 768px) {
+  .main {
+    margin-left: 0;
+    padding: 2em;
   }
 }

@@ -10,16 +10,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property string $title
  * @property string $author
- * @property string $image
+ * @property string $cover
+ * @property int $cover_width
+ * @property int $cover_height
  * @property string $excerpt
  * @property string $content
  * @property int $weight
  * @property int $pv
  * @property int $display
+ * @property bool $has_static
+ * @property string $url
+ * @property string $release_time
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @property bool $has_static
  */
 class Article extends Eloquent
 {
@@ -29,11 +33,11 @@ class Article extends Eloquent
     const DISPLAY_SHOW = 1;
 
     public $fillable = [
-        'title', 'author', 'image', 'excerpt', 'weight', 'pv', 'display', 'content'
+        'title', 'author', 'cover', 'cover_width', 'cover_height', 'excerpt', 'weight', 'pv', 'display', 'content'
     ];
 
     public $appends = [
-        'has_static'
+        'has_static', 'url', 'release_time'
     ];
 
     /**
@@ -58,6 +62,49 @@ class Article extends Eloquent
 
             return '';
         }
+    }
+
+    /**
+     * 获取访问地址
+     * @return string
+     */
+    public function getUrlAttribute()
+    {
+        return action("\\" . App\Http\Controllers\Web\ArticleController::class . '@index', $this->id);
+    }
+
+    /**
+     * 发布时间
+     * @return string
+     */
+    public function getReleaseTimeAttribute()
+    {
+        $createdAt = strtotime($this->created_at);
+        $s = time() - $createdAt;
+
+        if ($s < 60) {
+            $val = $s;
+            $unit = '秒';
+        } elseif ($s < 60 * 60) {
+            $val = intval($s / 60);
+            $unit = '分钟';
+        } elseif ($s < 24 * 3600) {
+            $val = intval($s / 3600);
+            $unit = '小时';
+        } elseif ($s < 7 * 24 * 3600) {
+            $val = intval($s / 24 / 3600);
+            $unit = '天';
+        } elseif ($s < 30 * 24 * 3600) {
+            $val = intval($s / 7 / 24 / 3600);
+            $unit = '周';
+        } elseif ($s < 365 * 24 * 3600) {
+            $val = intval($s / 30 / 24 / 3600);
+            $unit = '个月';
+        } else {
+            return date('Y-m-d', $createdAt) . '发布';
+        }
+
+        return "{$val}{$unit}前发布";
     }
 
     /**
