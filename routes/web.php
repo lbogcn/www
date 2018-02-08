@@ -24,5 +24,6 @@ Route::group(array(
 
     Route::get('article/{article}.html', 'ArticleController@index');
 
-    Route::get('/{alias}', 'HomeController@category');
+    Route::get('{alias}.html', 'CategoryController@index');
+    Route::get('{alias}/p_{page}.html', 'CategoryController@paginate');
 });
