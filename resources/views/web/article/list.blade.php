@@ -27,7 +27,7 @@ $categories = \App\Models\ArticleCategory::where('display', \App\Models\ArticleC
                         <h2>{{$article->title}}</h2>
                         <p>{{$article->excerpt}}</p>
                     </a>
-                    <span>
+                    <span class="meta">
                         <span>{{$article->release_time}}</span>
                     </span>
                 </header>
@@ -47,7 +47,10 @@ $categories = \App\Models\ArticleCategory::where('display', \App\Models\ArticleC
         <?php /** @var \Illuminate\Pagination\Paginator $articles */ ?>
         {{$articles->render()}}
     </section>
+
+    @include('web.footer')
 </section>
 
+<script src="{{mix('js/app.js')}}"></script>
 </body>
 </html>

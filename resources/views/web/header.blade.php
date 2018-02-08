@@ -41,9 +41,4 @@ $cover = \App\Models\Cover::where('display', \App\Models\Cover::DISPLAY_SHOW)
             @endforeach
         </ul>
     </section>
-
-    <footer class="copyright">
-        <p>&copy; {{date('Y')}} lenbo 粤ICP备17008394号-1</p>
-        <p>Theme by Dandy's Blog</p>
-    </footer>
 </header>

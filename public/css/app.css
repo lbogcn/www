@@ -223,13 +223,6 @@ p {
     color: #fff;
   }
 }
-.header .copyright {
-  position: absolute;
-  bottom: 1em;
-  width: 100%;
-  color: #fff;
-  text-align: center;
-}
 @media screen and (max-width: 992px) {
   .header {
     width: 100%;
@@ -257,9 +250,6 @@ p {
   .header .categories ul li {
     display: inline-block;
     margin: 0 0.1em;
-  }
-  .header .copyright {
-    display: none;
   }
 }
 .main {
@@ -294,13 +284,6 @@ p {
   margin-bottom: 1em;
   color: #555;
   cursor: pointer;
-}
-.main .articles article header span {
-  color: #888;
-  cursor: default;
-}
-.main .articles article header span span {
-  padding: 0 0.2em;
 }
 .main .articles article footer {
   -webkit-box-flex: 2;
@@ -337,6 +320,35 @@ p {
     position: relative;
     padding: 40px 0;
   }
+}
+.main .post {
+  font-size: 100%;
+}
+.main .post header {
+  margin-bottom: 3em;
+}
+.main .post header h1 {
+  font-size: 3.5rem;
+  font-weight: normal;
+  margin-bottom: 0.2em;
+  cursor: default;
+}
+.main .post .content p {
+  font-size: 1.6rem;
+  line-height: 1.725;
+  margin-bottom: 1.5rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+.main .post .content img {
+  max-width: 100%;
+  height: auto;
+}
+.main .meta {
+  color: #888;
+  cursor: default;
+}
+.main .meta span {
+  padding: 0 0.2em;
 }
 .main .pagination {
   height: 60px;
@@ -390,6 +402,10 @@ p {
 }
 .main .pagination ul li span {
   cursor: default;
+}
+.main .copyright {
+  color: #ccc;
+  text-align: center;
 }
 @media screen and (max-width: 992px) {
   .main {

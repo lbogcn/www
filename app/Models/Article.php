@@ -52,7 +52,10 @@ class Article extends Eloquent
                 'model' => $this,
             );
             $page = view('web.article.article', $data)->render();
-            file_put_contents($this->staticFilename(), $page);
+
+            if (!config('app.debug')) {
+                file_put_contents($this->staticFilename(), $page);
+            }
 
             return $page;
         } else {

@@ -14,6 +14,10 @@
     <section class="articles">
         <p>404咯，你是不是进错地方了？</p>
     </section>
+
+    @include('web.footer')
 </section>
+
+<script src="{{mix('js/app.js')}}"></script>
 </body>
 </html>
