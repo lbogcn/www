@@ -22,7 +22,7 @@ Route::group(array(
 
     Route::get('', 'HomeController@index');
 
-    Route::get('qiniu', 'QiniuController@index');
+    Route::any('qiniu', 'QiniuController@index');
 
     Route::get('static/article/{article}.html', 'ArticleController@index');
     Route::get('static/{alias}.html', 'CategoryController@index');
