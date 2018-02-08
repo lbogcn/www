@@ -170,13 +170,4 @@
 </script>
 
 <style lang="less" scoped>
-    .text-ellipsis{
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    .text-word-break-all{
-        max-width: 300px;
-        word-break: break-all;
-    }
 </style>

@@ -17,7 +17,14 @@
                             <img :src="scope.row.url" class="img-responsive">
                         </template>
                     </el-table-column>
-                    <el-table-column prop="source" label="来源"></el-table-column>
+                    <el-table-column prop="source" label="来源">
+                        <template slot-scope="scope">
+                            <el-tooltip effect="dark" placement="bottom">
+                                <div slot="content" class="text-word-break-all">{{scope.row.source}}</div>
+                                <p class="text-ellipsis">{{scope.row.source}}</p>
+                            </el-tooltip>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="weight" label="权重"></el-table-column>
                     <el-table-column prop="display" label="状态">
                         <template slot-scope="scope">
@@ -49,7 +56,15 @@
                 </el-form-item>
 
                 <el-form-item label="图片">
-                    <el-input v-model="storeData.url"></el-input>
+                    <el-col :span="4">
+                        <el-button-upload @success="handleSuccessUpload">
+                            <el-button type="success">上传</el-button>
+                        </el-button-upload>
+                    </el-col>
+
+                    <el-col :span="18" :offset="1">
+                        <img :src="storeData.url" class="img-responsive preview">
+                    </el-col>
                 </el-form-item>
 
                 <el-form-item label="来源">
@@ -77,6 +92,7 @@
 
 <script>
     import qs from 'qs';
+
     export default {
         data() {
             return {
@@ -144,9 +160,12 @@
                 }
             },
             handleEdit(index, row) {
-                this.storeData = row;
+                this.storeData = JSON.parse(JSON.stringify(row));
                 this.dialogVisibleStore = true;
             },
+            handleSuccessUpload(data) {
+                this.storeData.url = data.url;
+            }
         },
         mounted() {
             this.$http.defaults.loadTarget = '.wrapper';
@@ -156,4 +175,13 @@
 </script>
 
 <style lang="less" scoped>
+    .preview{
+        width: 100%;
+        display: block;
+
+        &[src=""],
+        &:not([src]) {
+            opacity: 0;
+        }
+    }
 </style>

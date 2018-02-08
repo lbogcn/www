@@ -49,7 +49,7 @@ class CoverController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, array(
-            'title' => ['required', 'max:10'],
+            'title' => ['required', 'max:20'],
             'url' => ['required', 'url', 'max:500'],
             'source' => ['required', 'url', 'max:500'],
             'weight' => ['required', 'min:1', 'max:100', 'integer'],
@@ -71,7 +71,7 @@ class CoverController extends Controller
     public function update(Request $request, Cover $cover)
     {
         $this->validate($request, array(
-            'title' => ['required', 'max:10'],
+            'title' => ['required', 'max:20'],
             'url' => ['required', 'url', 'max:500'],
             'source' => ['required', 'url', 'max:500'],
             'weight' => ['required', 'min:1', 'max:100', 'integer'],

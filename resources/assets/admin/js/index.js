@@ -10,6 +10,7 @@ import SearchForm from './components/search-form';
 import ElButtonSearch from './components/el-button-search';
 import ElButtonCreate from './components/el-button-create';
 import ElButtonDelete from './components/el-button-delete';
+import ElButtonUpload from './components/el-button-upload';
 
 import 'element-ui/lib/theme-chalk/index.css';
 import '../less/global.less';
@@ -22,6 +23,7 @@ Vue.component('search-form', SearchForm);
 Vue.component('el-button-search', ElButtonSearch);
 Vue.component('el-button-create', ElButtonCreate);
 Vue.component('el-button-delete', ElButtonDelete);
+Vue.component('el-button-upload', ElButtonUpload);
 
 new Vue({
     el: '#app',

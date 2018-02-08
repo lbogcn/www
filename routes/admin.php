@@ -20,6 +20,8 @@ Route::group(array(
         'middleware' => ['admin'],
     ), function() {
 
+        Route::get('upload-token', 'HomeController@uploadToken');
+
         Route::get('permission/node/init', 'Permission\NodeController@init');
         Route::get('permission/node/sync', 'Permission\NodeController@sync');
 

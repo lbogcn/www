@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Components\ApiResponse;
+use App\Components\Qiniu;
 use App\Components\Rbac;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
@@ -10,6 +11,12 @@ use Auth;
 
 class HomeController extends Controller
 {
+    const PERMISSION = array(
+        'title' => '公共',
+        'nodes' => [
+            ['action' => 'uploadToken', 'name' => '上传资源'],
+        ],
+    );
 
     /**
      * 首页
@@ -39,6 +46,18 @@ class HomeController extends Controller
         );
 
         return ApiResponse::success($data);
+    }
+
+    /**
+     * 获取上传token
+     * @param Qiniu $qiniu
+     * @return ApiResponse
+     */
+    public function uploadToken(Qiniu $qiniu)
+    {
+        $token = $qiniu->token(config('global.qiniu.callback'));
+
+        return ApiResponse::success(compact('token'));
     }
 
 }

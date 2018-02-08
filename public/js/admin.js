@@ -3259,6 +3259,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/admin/js/components/el-button-upload.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            token: null
+        };
+    },
+
+    methods: {
+        upload: function upload(action, formData) {
+            var self = this;
+            formData.append('token', this.token);
+            this.$http.post(action, formData).then(function (resp) {
+                if (resp.data.code === 0) {
+                    self.$emit('success', resp.data.data);
+                }
+            });
+        },
+        getToken: function getToken() {
+            var self = this;
+            return this.$http.get('/upload-token').then(function (resp) {
+                if (resp.data.code === 0) {
+                    self.token = resp.data.data.token;
+                } else {
+                    throw resp.data.msg;
+                }
+            });
+        },
+        httpRequest: function httpRequest(option) {
+            var self = this;
+            var formData = new FormData();
+            formData.append(option.filename, option.file);
+
+            if (!this.token) {
+                this.getToken().then(function () {
+                    self.upload(option.action, formData);
+                });
+            } else {
+                self.upload(option.action, formData);
+            }
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/admin/js/components/search-form.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4800,6 +4857,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4872,8 +4945,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         handleEdit: function handleEdit(index, row) {
-            this.storeData = row;
+            this.storeData = JSON.parse(JSON.stringify(row));
             this.dialogVisibleStore = true;
+        },
+        handleSuccessUpload: function handleSuccessUpload(data) {
+            this.storeData.url = data.url;
         }
     },
     mounted: function mounted() {
@@ -6874,7 +6950,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 exports.i(__webpack_require__("./node_modules/css-loader/index.js!./resources/assets/admin/font/iconfont.css"), "");
 
 // module
-exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n}\n[class^=\"el-icon-lb\"],\n[class*=\" el-icon-lb\"] {\n  font-family: \"el-icon-lb\" !important;\n  /* 以下内容参照第三方图标库本身的规则 */\n  font-size: inherit;\n  font-style: normal;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.text-left {\n  text-align: left;\n}\n.text-right {\n  text-align: right;\n}\n.text-center {\n  text-align: center;\n}\n.pull-left {\n  float: left;\n}\n.pull-right {\n  float: right;\n}\n.wrapper .page-header {\n  padding-bottom: 10px;\n  margin: 0 0 20px;\n  border-bottom: 1px solid #eee;\n}\n.wrapper .el-row {\n  margin-bottom: 15px;\n}\n.page {\n  padding: 20px;\n}\n.default-dialog .el-dialog {\n  width: 450px;\n}\n.max-dialog .el-dialog {\n  width: 900px;\n}\n.img-responsive {\n  max-width: 100%;\n  height: auto;\n}\n", ""]);
+exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n}\n[class^=\"el-icon-lb\"],\n[class*=\" el-icon-lb\"] {\n  font-family: \"el-icon-lb\" !important;\n  /* 以下内容参照第三方图标库本身的规则 */\n  font-size: inherit;\n  font-style: normal;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.text-left {\n  text-align: left;\n}\n.text-right {\n  text-align: right;\n}\n.text-center {\n  text-align: center;\n}\n.pull-left {\n  float: left;\n}\n.pull-right {\n  float: right;\n}\n.wrapper .page-header {\n  padding-bottom: 10px;\n  margin: 0 0 20px;\n  border-bottom: 1px solid #eee;\n}\n.wrapper .el-row {\n  margin-bottom: 15px;\n}\n.page {\n  padding: 20px;\n}\n.default-dialog .el-dialog {\n  width: 450px;\n}\n.max-dialog .el-dialog {\n  width: 900px;\n}\n.img-responsive {\n  max-width: 100%;\n  height: auto;\n}\n.text-ellipsis {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.text-word-break-all {\n  max-width: 300px;\n  word-break: break-all;\n}\n", ""]);
 
 // exports
 
@@ -6994,7 +7070,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.text-ellipsis[data-v-5b036e1d] {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.text-word-break-all[data-v-5b036e1d] {\n  max-width: 300px;\n  word-break: break-all;\n}\n", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -7039,7 +7115,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.preview[data-v-ccd51ea8] {\n  width: 100%;\n  display: block;\n}\n.preview[src=\"\"][data-v-ccd51ea8],\n.preview[data-v-ccd51ea8]:not([src]) {\n  opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -7054,7 +7130,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.text-ellipsis[data-v-ccf80cce] {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.text-word-break-all[data-v-ccf80cce] {\n  max-width: 300px;\n  word-break: break-all;\n}\n", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -50089,6 +50165,39 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-096619a6\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/components/el-button-upload.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "el-upload",
+    {
+      staticStyle: { display: "inline-block" },
+      attrs: {
+        action: "http://up-z2.qiniu.com/",
+        "show-file-list": false,
+        "http-request": _vm.httpRequest
+      }
+    },
+    [_vm._t("default")],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-096619a6", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-246300dc\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/pages/login.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -52635,7 +52744,37 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "source", label: "来源" }
+                    attrs: { prop: "source", label: "来源" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-tooltip",
+                              {
+                                attrs: { effect: "dark", placement: "bottom" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "text-word-break-all",
+                                    attrs: { slot: "content" },
+                                    slot: "content"
+                                  },
+                                  [_vm._v(_vm._s(scope.row.source))]
+                                ),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-ellipsis" }, [
+                                  _vm._v(_vm._s(scope.row.source))
+                                ])
+                              ]
+                            )
+                          ]
+                        }
+                      }
+                    ])
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
@@ -52790,15 +52929,30 @@ var render = function() {
                 "el-form-item",
                 { attrs: { label: "图片" } },
                 [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.storeData.url,
-                      callback: function($$v) {
-                        _vm.$set(_vm.storeData, "url", $$v)
-                      },
-                      expression: "storeData.url"
-                    }
-                  })
+                  _c(
+                    "el-col",
+                    { attrs: { span: 4 } },
+                    [
+                      _c(
+                        "el-button-upload",
+                        { on: { success: _vm.handleSuccessUpload } },
+                        [
+                          _c("el-button", { attrs: { type: "success" } }, [
+                            _vm._v("上传")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("el-col", { attrs: { span: 18, offset: 1 } }, [
+                    _c("img", {
+                      staticClass: "img-responsive preview",
+                      attrs: { src: _vm.storeData.url }
+                    })
+                  ])
                 ],
                 1
               ),
@@ -68912,6 +69066,54 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/admin/js/components/el-button-upload.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/admin/js/components/el-button-upload.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-096619a6\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/admin/js/components/el-button-upload.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/admin/js/components/el-button-upload.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-096619a6", Component.options)
+  } else {
+    hotAPI.reload("data-v-096619a6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/admin/js/components/search-form.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -69055,10 +69257,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_el_button_create___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_el_button_create__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_el_button_delete__ = __webpack_require__("./resources/assets/admin/js/components/el-button-delete.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_el_button_delete___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_el_button_delete__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_element_ui_lib_theme_chalk_index_css__ = __webpack_require__("./node_modules/element-ui/lib/theme-chalk/index.css");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_element_ui_lib_theme_chalk_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_element_ui_lib_theme_chalk_index_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__less_global_less__ = __webpack_require__("./resources/assets/admin/less/global.less");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__less_global_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__less_global_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_el_button_upload__ = __webpack_require__("./resources/assets/admin/js/components/el-button-upload.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_el_button_upload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_el_button_upload__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_element_ui_lib_theme_chalk_index_css__ = __webpack_require__("./node_modules/element-ui/lib/theme-chalk/index.css");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_element_ui_lib_theme_chalk_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_element_ui_lib_theme_chalk_index_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__less_global_less__ = __webpack_require__("./resources/assets/admin/less/global.less");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__less_global_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__less_global_less__);
 
 
 
@@ -69075,6 +69279,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_element_ui___default.a);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.$http = __WEBPACK_IMPORTED_MODULE_2__http__["a" /* default */];
@@ -69083,6 +69288,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('search-form', __WEBPACK_I
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('el-button-search', __WEBPACK_IMPORTED_MODULE_6__components_el_button_search___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('el-button-create', __WEBPACK_IMPORTED_MODULE_7__components_el_button_create___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('el-button-delete', __WEBPACK_IMPORTED_MODULE_8__components_el_button_delete___default.a);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('el-button-upload', __WEBPACK_IMPORTED_MODULE_9__components_el_button_upload___default.a);
 
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#app',

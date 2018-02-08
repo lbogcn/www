@@ -12,17 +12,17 @@ class TestController extends Controller
             abort(404);
         }
 
-        return $this->b();
-    }
-
-    private function b()
-    {
-        return bcrypt('123456');
+        return $this->a();
     }
 
     private function a()
     {
-        return config('menu');
+        return '<form action="http://up-z2.qiniu.com/" method="post" enctype="multipart/form-data">
+    <input type="text" name="token" value="{{(new \App\Components\Qiniu())->token(\'http://callback.lbog.cn/qiniu/ueditor\')}}">
+    <input type="file" name="file">
+    <input type="submit" value="submit">
+</form>';
     }
+
 
 }
