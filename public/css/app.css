@@ -135,7 +135,7 @@ p {
   bottom: 0;
   background-color: #ddd;
   background-repeat: repeat, no-repeat;
-  background-size: auto, cover;
+  background-size: auto, auto 130%;
   -webkit-transition: background-image 2s ease-in-out;
   transition: background-image 2s ease-in-out;
   will-change: transition;

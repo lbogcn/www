@@ -8,6 +8,7 @@ use Eloquent;
  * @property int $id
  * @property string $title
  * @property string $url
+ * @property string $source
  * @property int $weight
  * @property int $display
  * @property \Carbon\Carbon $created_at
@@ -19,7 +20,7 @@ class Cover extends Eloquent
     const DISPLAY_SHOW = 1;
 
     public $fillable = [
-        'title', 'url', 'weight', 'display'
+        'title', 'url', 'weight', 'display', 'source'
     ];
 
 

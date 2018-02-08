@@ -8,7 +8,7 @@ $cover = \App\Models\Cover::where('display', \App\Models\Cover::DISPLAY_SHOW)
     ->orderBy('id', 'desc')
     ->first();
 ?>
-<header class="header" style="background-image: url({{url('/images/overlay-lba-x2.png')}}), url({{$cover->url or ''}})">
+<header class="header" id="header" style="background-image: url({{url('/images/overlay-lba-x2.png')}}), url({{$cover->url or ''}})">
     <section class="headings">
         <a href="/">
             <img src="http://cdn.lbog.cn/FtCx3GUQhmC1g2hyxvgRreIr2owN.jpg" class="avatar">

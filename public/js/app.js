@@ -65,10 +65,39 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/assets/web/js/cover-scroll.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = (function () {
+    var scrollFunc = function scrollFunc() {
+        var offset = document.documentElement.scrollTop / document.body.clientHeight * document.body.clientHeight * 0.3;
+        document.querySelector('#header').style.backgroundPositionY = -offset + "px";
+    };
+
+    // 给页面绑定滑轮滚动事件 firefox
+    if (document.addEventListener) {
+        document.addEventListener('DOMMouseScroll', scrollFunc, false);
+    }
+
+    // 滚动滑轮触发scrollFunc方法 ie 谷歌
+    window.onmousewheel = document.onmousewheel = scrollFunc;
+
+    scrollFunc();
+});
+
+/***/ }),
+
 /***/ "./resources/assets/web/js/index.js":
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cover_scroll__ = __webpack_require__("./resources/assets/web/js/cover-scroll.js");
 
 
+
+new __WEBPACK_IMPORTED_MODULE_0__cover_scroll__["a" /* default */]();
 
 /***/ }),
 

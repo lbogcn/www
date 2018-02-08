@@ -1,0 +1,16 @@
+export default () => {
+    let scrollFunc = () => {
+        let offset = (document.documentElement.scrollTop / document.body.clientHeight) * document.body.clientHeight * 0.3;
+        document.querySelector('#header').style.backgroundPositionY = -offset + "px";
+    };
+
+    // 给页面绑定滑轮滚动事件 firefox
+    if (document.addEventListener) {
+        document.addEventListener('DOMMouseScroll', scrollFunc, false);
+    }
+
+    // 滚动滑轮触发scrollFunc方法 ie 谷歌
+    window.onmousewheel = document.onmousewheel = scrollFunc;
+
+    scrollFunc();
+};
