@@ -15,8 +15,19 @@
                 <el-table size="small" :data="paginate.data" stripe>
                     <el-table-column prop="title" label="标题"></el-table-column>
                     <el-table-column prop="author" label="作者"></el-table-column>
-                    <el-table-column prop="image" label="封面图片"></el-table-column>
-                    <el-table-column prop="excerpt" label="摘要"></el-table-column>
+                    <el-table-column prop="cover" label="封面图片">
+                        <template slot-scope="scope">
+                            <img :src="scope.row.cover" class="img-responsive">
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="excerpt" label="摘要">
+                        <template slot-scope="scope">
+                            <el-tooltip effect="dark" placement="bottom">
+                                <div slot="content" class="text-word-break-all">{{scope.row.excerpt}}</div>
+                                <p class="text-ellipsis">{{scope.row.excerpt}}</p>
+                            </el-tooltip>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="weight" label="权重" width="80px"></el-table-column>
                     <el-table-column prop="pv" label="PV" width="80px"></el-table-column>
                     <el-table-column prop="display" label="状态">
