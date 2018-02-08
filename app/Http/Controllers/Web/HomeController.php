@@ -17,7 +17,6 @@ class HomeController extends Controller
             ->simplePaginate(5);
         $data = array(
             'articles' => $articles,
-            'cover' => '/images/03.jpg',
         );
 
         return view('web.article.list', $data);

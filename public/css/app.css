@@ -223,6 +223,16 @@ p {
     color: #fff;
   }
 }
+.header .corner {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  color: rgba(16, 16, 16, 0.7);
+  cursor: default;
+}
+.header .corner a {
+  color: rgba(16, 16, 16, 0.7);
+}
 @media screen and (max-width: 992px) {
   .header {
     width: 100%;
@@ -352,21 +362,19 @@ p {
 }
 .main .pagination {
   height: 60px;
-  margin-top: 1em;
-}
-.main .pagination ul {
+  margin: 1em 0 5em;
   list-style: none;
 }
-.main .pagination ul li {
+.main .pagination li {
   display: inline-block;
   width: 120px;
   text-align: center;
 }
-.main .pagination ul li.disabled {
+.main .pagination li.disabled {
   display: none;
 }
-.main .pagination ul li a,
-.main .pagination ul li span {
+.main .pagination li a,
+.main .pagination li span {
   color: #000;
   display: block;
   height: 50px;
@@ -386,21 +394,21 @@ p {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   margin: 0 1em;
 }
-.main .pagination ul li a:hover,
-.main .pagination ul li span:hover,
-.main .pagination ul li a:active,
-.main .pagination ul li span:active {
+.main .pagination li a:hover,
+.main .pagination li span:hover,
+.main .pagination li a:active,
+.main .pagination li span:active {
   background-color: #f9f9f9;
   -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1), 0 10px 100px 0 rgba(0, 0, 75, 0.5);
           box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1), 0 10px 100px 0 rgba(0, 0, 75, 0.5);
 }
-.main .pagination ul li a:active,
-.main .pagination ul li span:active {
+.main .pagination li a:active,
+.main .pagination li span:active {
   position: relative;
   top: 2px;
   left: 2px;
 }
-.main .pagination ul li span {
+.main .pagination li span {
   cursor: default;
 }
 .main .copyright {

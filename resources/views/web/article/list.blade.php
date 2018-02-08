@@ -11,7 +11,7 @@ $categories = \App\Models\ArticleCategory::where('display', \App\Models\ArticleC
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{$sub_title}} - {{config('app.name')}}</title>
+    <title>@if(isset($sub_title)){{$sub_title}} - @endif{{config('app.name')}}</title>
     <link rel="stylesheet" href="{{mix('css/app.css')}}">
 </head>
 <body>
@@ -43,10 +43,8 @@ $categories = \App\Models\ArticleCategory::where('display', \App\Models\ArticleC
         @endforelse
     </section>
 
-    <section class="pagination">
-        <?php /** @var \Illuminate\Pagination\Paginator $articles */ ?>
-        {{$articles->render()}}
-    </section>
+    <?php /** @var \Illuminate\Pagination\Paginator $articles */ ?>
+    {{$articles->render()}}
 
     @include('web.footer')
 </section>
