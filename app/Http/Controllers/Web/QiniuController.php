@@ -28,10 +28,10 @@ class QiniuController extends Controller
             $data = array(
                 'url' => $qiniu->moveToPublic($hash),
                 'body' => array(
-                    'size' => $body['size'],
-                    'height' => $body['height'],
-                    'width' => $body['width'],
-                    'ext' => $body['ext'],
+                    'size' => $hash['size'],
+                    'height' => $hash['height'],
+                    'width' => $hash['width'],
+                    'ext' => $hash['ext'],
                 )
             );
 
