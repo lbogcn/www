@@ -9,7 +9,9 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -65,7 +67,6 @@ class Handler extends ExceptionHandler
             default:
                 return parent::render($request, $exception);
         }
-
     }
 
     /**
@@ -76,6 +77,10 @@ class Handler extends ExceptionHandler
      */
     private function renderWeb($request, Exception $exception)
     {
+        if ($exception instanceof NotFoundHttpException) {
+            return Response::view('web.404')->setStatusCode($exception->getStatusCode());
+        }
+
         return parent::render($request, $exception);
     }
 

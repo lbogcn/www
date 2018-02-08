@@ -340,6 +340,7 @@ p {
 }
 .main .pagination {
   height: 60px;
+  margin-top: 1em;
 }
 .main .pagination ul {
   list-style: none;

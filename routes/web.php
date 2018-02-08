@@ -22,8 +22,7 @@ Route::group(array(
 
     Route::get('', 'HomeController@index');
 
-    Route::get('article/{article}.html', 'ArticleController@index');
-
-    Route::get('{alias}.html', 'CategoryController@index');
-    Route::get('{alias}/p_{page}.html', 'CategoryController@paginate');
+    Route::get('static/article/{article}.html', 'ArticleController@index');
+    Route::get('static/{alias}.html', 'CategoryController@index');
+    Route::get('static/{alias}/p_{page}.html', 'CategoryController@paginate');
 });

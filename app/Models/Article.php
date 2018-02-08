@@ -120,9 +120,14 @@ class Article extends Eloquent
      * 获取静态化目录
      * @return string
      */
-    private function staticFilename()
+    private function staticFilename(): string
     {
-        return App::publicPath() . "/article/{$this->id}.html";
+        $filename = App::publicPath() . "/static/article/{$this->id}.html";
+        if (!is_dir(dirname($filename))) {
+            mkdir(dirname($filename), 755, true);
+        }
+
+        return $filename;
     }
 
 }

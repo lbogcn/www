@@ -20,7 +20,7 @@ $categories = \App\Models\ArticleCategory::where('display', \App\Models\ArticleC
 <section class="main">
     <section class="articles">
         <?php /** @var \App\Models\Article $article */ ?>
-        @foreach($articles as $article)
+        @forelse($articles as $article)
             <article>
                 <header>
                     <a href="{{$article->url}}">
@@ -38,7 +38,9 @@ $categories = \App\Models\ArticleCategory::where('display', \App\Models\ArticleC
                     </a>
                 </footer>
             </article>
-        @endforeach
+        @empty
+            <p>作者有点懒，什么都没留下~</p>
+        @endforelse
     </section>
 
     <section class="pagination">

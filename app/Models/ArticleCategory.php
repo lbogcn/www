@@ -93,18 +93,19 @@ class ArticleCategory extends Eloquent
      * @param null $page
      * @return string
      */
-    private function staticFilename($page = null)
+    private function staticFilename($page = null): string
     {
         if ($page) {
-            $path = App::publicPath() . "/{$this->alias}";
-            if (!is_dir($path)) {
-                mkdir($path);
-            }
-
-            return "{$path}/p_{$page}.html";
+            $filename = App::publicPath() . "/static/{$this->alias}/p_{$page}.html";
+        } else {
+            $filename = App::publicPath() . "/static/{$this->alias}.html";
         }
 
-        return App::publicPath() . "/{$this->alias}.html";
+        if (!is_dir(dirname($filename))) {
+            mkdir(dirname($filename), 755, true);
+        }
+
+        return $filename;
     }
 
     /**
