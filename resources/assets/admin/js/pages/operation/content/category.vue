@@ -171,7 +171,7 @@
     };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     .text-ellipsis{
         overflow: hidden;
         text-overflow: ellipsis;

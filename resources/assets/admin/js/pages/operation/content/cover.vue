@@ -1,28 +1,25 @@
 <template>
     <div class="page">
-        <h2 class="page-header">留言管理</h2>
+        <h2 class="page-header">封面管理</h2>
 
         <el-row>
             <el-col class="text-right">
-                <el-button-search @click="searchFormData.visible = true">搜索</el-button-search>
+                <el-button-create @click="handleCreate">新建</el-button-create>
             </el-col>
         </el-row>
 
         <el-row>
             <el-col>
                 <el-table size="small" :data="paginate.data" stripe>
-                    <el-table-column prop="email" label="邮箱"></el-table-column>
-                    <el-table-column prop="nickname" label="昵称"></el-table-column>
-                    <el-table-column prop="ip" label="IP"></el-table-column>
-                    <el-table-column label="内容">
+                    <el-table-column prop="title" label="标题"></el-table-column>
+                    <el-table-column label="预览">
                         <template slot-scope="scope">
-                            <el-tooltip effect="dark" placement="bottom">
-                                <div slot="content" class="text-word-break-all">{{scope.row.content}}</div>
-                                <p class="text-ellipsis">{{scope.row.content}}</p>
-                            </el-tooltip>
+                            <img :src="scope.row.url" class="img-responsive">
                         </template>
                     </el-table-column>
-                    <el-table-column prop="display" label="显示">
+                    <el-table-column prop="source" label="来源"></el-table-column>
+                    <el-table-column prop="weight" label="权重"></el-table-column>
+                    <el-table-column prop="display" label="状态">
                         <template slot-scope="scope">
                             <el-tag size="small" type="success" v-if="scope.row.display === 1">显示</el-tag>
                             <el-tag size="small" type="danger" v-if="scope.row.display !== 1">隐藏</el-tag>
@@ -47,23 +44,27 @@
 
         <el-dialog :visible.sync="dialogVisibleStore" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
             <el-form size="small" label-width="80px">
-                <el-form-item label="邮箱">
-                    <p>{{storeData.email}}</p>
+                <el-form-item label="标题">
+                    <el-input v-model="storeData.title"></el-input>
                 </el-form-item>
 
-                <el-form-item label="昵称">
-                    <el-input v-model="storeData.nickname"></el-input>
+                <el-form-item label="图片">
+                    <el-input v-model="storeData.url"></el-input>
                 </el-form-item>
 
-                <el-form-item label="显示">
+                <el-form-item label="来源">
+                    <el-input v-model="storeData.source" placeholder="输入来源网址"></el-input>
+                </el-form-item>
+
+                <el-form-item label="权重">
+                    <el-input v-model="storeData.weight"></el-input>
+                </el-form-item>
+
+                <el-form-item label="显示状态">
                     <el-select v-model="storeData.display">
-                        <el-option label="显示" :value="1"></el-option>
-                        <el-option label="隐藏" :value="2"></el-option>
+                        <el-option :value="1" label="显示"></el-option>
+                        <el-option :value="2" label="隐藏"></el-option>
                     </el-select>
-                </el-form-item>
-
-                <el-form-item label="内容">
-                    <el-input v-model="storeData.content" type="textarea"></el-input>
                 </el-form-item>
             </el-form>
 
@@ -71,9 +72,6 @@
                 <el-button type="primary" size="mini" @click="handleStore">保存</el-button>
             </span>
         </el-dialog>
-
-        <search-form :data.sync="searchFormData" @submit="search"></search-form>
-
     </div>
 </template>
 
@@ -91,37 +89,20 @@
 
                 dialogVisibleStore: false,
                 storeData: {
-                    id: null, email: null, nickname: null, display: null, content: null
+                    title: null, url: null, source: null, weight: 10, display: 1
                 },
-
-                searchFormData: {
-                    visible: false,
-                    formItem: [
-                        {
-                            label: '邮箱',
-                            field: 'email',
-                            type: 'input',
-                        },
-                    ],
-                    formData: {
-                        email: null,
-                    },
-                },
-
             };
         },
         methods: {
             search() {
                 let self = this;
-                let action = '/message?' + qs.stringify({
-                    search: this.searchFormData.formData,
+                let action = '/cover?' + qs.stringify({
                     page: this.paginate.current_page,
                 });
 
                 this.$http.get(action).then(resp => {
                     if (resp.data.code === 0) {
                         self.paginate = resp.data.data.paginate;
-                        self.searchFormData.visible = false;
                     }
                 });
             },
@@ -132,7 +113,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.delete('/message/' + row.id).then(resp => {
+                    this.$http.delete('/cover/' + row.id).then(resp => {
                         if (resp.data.code === 0) {
                             self.paginate.data.splice(index, 1);
                             self.$message({type: 'success', message: '删除成功!'});
@@ -140,8 +121,10 @@
                     });
                 });
             },
-            handleEdit(index, row) {
-                this.storeData = JSON.parse(JSON.stringify(row));
+            handleCreate() {
+                this.storeData = {
+                    title: null, url: null, source: null, weight: 10, display: 1
+                };
                 this.dialogVisibleStore = true;
             },
             handleStore() {
@@ -155,11 +138,15 @@
                 };
 
                 if (this.storeData.id) {
-                    this.$http.put('/message/' + this.storeData.id, this.storeData).then(cbk);
+                    this.$http.put('/cover/' + this.storeData.id, this.storeData).then(cbk);
                 } else {
-                    this.$http.put('/message', this.storeData).then(cbk);
+                    this.$http.post('/cover', this.storeData).then(cbk);
                 }
-            }
+            },
+            handleEdit(index, row) {
+                this.storeData = row;
+                this.dialogVisibleStore = true;
+            },
         },
         mounted() {
             this.$http.defaults.loadTarget = '.wrapper';

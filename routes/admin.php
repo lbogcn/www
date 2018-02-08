@@ -36,6 +36,7 @@ Route::group(array(
             'article' => 'Article\ArticleController',
             'questionnaires' => 'QuestionnairesController',
             'message' => 'MessageController',
+            'cover' => 'CoverController',
         ]);
     });
 });

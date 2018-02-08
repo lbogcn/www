@@ -29,6 +29,11 @@
             "title": "类目管理",
             "icon": "el-icon-lb-caidan"
           },
+          "cover": {
+            "name": "cover",
+            "title": "封面管理",
+            "icon": "el-icon-lb-wenanfengmian"
+          },
           "questionnaires": {
             "name": "questionnaires",
             "title": "问卷管理",

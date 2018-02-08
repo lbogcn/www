@@ -52,7 +52,7 @@ class ArticleController extends Controller
             'author' => ['required', 'min:1', 'max:10'],
             'image' => ['required', 'url'],
             'weight' => ['required', 'min:1', 'max:100', 'integer'],
-            'display' => ['required', 'integer'],
+            'display' => ['required', 'in:1,2'],
             'content' => ['required'],
         ));
         $data = $request->only(['title', 'author', 'image', 'weight', 'display', 'content']);

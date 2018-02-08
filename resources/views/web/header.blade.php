@@ -42,5 +42,7 @@ $cover = \App\Models\Cover::where('display', \App\Models\Cover::DISPLAY_SHOW)
         </ul>
     </section>
 
-    <span class="corner">图片出处：<a href="{{$cover->source}}">{{$cover->title}}</a></span>
+    @if($cover)
+        <span class="corner">图片出处：<a href="{{$cover->source}}">{{$cover->title}}</a></span>
+    @endif
 </header>
