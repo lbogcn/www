@@ -11,4 +11,4 @@ chmod -R 777 ./bootstrap/cache
 
 chown -R www:www $(cd `dirname $0`; pwd)
 
-/etc/init.d/php-fpm reload
+sudo /etc/init.d/php-fpm reload

@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <div class="page" id="article-editor">
         <header>
             <i class="el-icon-arrow-left back" @click="back"></i>
         </header>
@@ -45,11 +45,11 @@
             <el-form-item label="内容">
                 <el-row class="editor">
                     <el-col class="markdown">
-                        <el-input v-model="storeData.markdown" type="textarea" :rows="20" placeholder="请输入正文内容"></el-input>
+                        <el-input v-model="storeData.markdown" type="textarea" :rows="20" placeholder="请输入正文内容" :style="{height: editorHeight}"></el-input>
                     </el-col>
 
                     <el-col class="content">
-                        <div v-html="storeData.content" class="article-body"></div>
+                        <div v-html="storeData.content" class="article-body" ref="content"></div>
                     </el-col>
                 </el-row>
             </el-form-item>
@@ -73,6 +73,7 @@
                 },
                 editor: null,
                 categories: [],
+                editorHeight: 'auto',
             };
         },
         methods: {
@@ -123,10 +124,17 @@
         watch: {
             'storeData.markdown': _.debounce(function (val) {
                 this.storeData.content = marked(val, {sanitize: true});
+
+                if (this.$refs.content) {
+                    let self = this;
+                    this.$nextTick(() => {
+                        self.editorHeight = self.$refs.content.offsetHeight + 'px';
+                    });
+                }
             }, 300),
             '$route.params.id'(id) {
                 this.initStartData(id);
-            }
+            },
         },
         mounted() {
             this.initStartData(this.$route.params.id);
@@ -135,37 +143,42 @@
     }
 </script>
 
-<style lang="less" scoped>
-    header{
-        margin-bottom: 15px;
+<style lang="less">
+    #article-editor {
+        header{
+            margin-bottom: 15px;
 
-        .back{
-            cursor: pointer;
-        }
-    }
-
-    .editor{
-        display: flex;
-
-        .el-col {
-            padding: 5px;
+            .back{
+                cursor: pointer;
+            }
         }
 
-        .markdown {
-            flex: 4;
+        .editor{
+            display: flex;
+
+            .markdown {
+                padding: 5px;
+                flex: 4;
+                border-right: 2px #ccc dashed;
+
+                textarea{
+                    height: 100%;
+                }
+            }
+
+            .content {
+                padding: 5px;
+                flex: 6;
+            }
         }
 
-        .content {
-            flex: 6;
+        .cover-preview{
+            height: 100px;
+            width: auto;
         }
-    }
 
-    .cover-preview{
-        height: 100px;
-        width: auto;
-    }
-
-    .default-form-item{
-        width: 500px;
+        .default-form-item{
+            width: 500px;
+        }
     }
 </style>

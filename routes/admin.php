@@ -27,6 +27,8 @@ Route::group(array(
 
         Route::get('article-categories', 'Article\ArticleController@categories');
 
+        Route::get('article/preview/{article}', 'Article\ArticleController@preview');
+
         Route::resources([
             'permission/user' => 'Permission\UserController',
             'permission/user.role' => 'Permission\UserRoleController',

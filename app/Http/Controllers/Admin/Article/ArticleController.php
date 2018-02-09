@@ -20,6 +20,7 @@ class ArticleController extends Controller
             ['action' => 'update', 'name' => '更新'],
             ['action' => 'destroy', 'name' => '删除'],
             ['action' => 'categories', 'name' => '获取可用类目'],
+            ['action' => 'preview', 'name' => '预览'],
         ],
     );
 
@@ -135,4 +136,17 @@ class ArticleController extends Controller
         return ApiResponse::success($data);
     }
 
+    /**
+     * 预览
+     * @param Article $article
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function preview(Article $article)
+    {
+        $data = array(
+            'model' => $article
+        );
+
+        return view('web.article.article', $data);
+    }
 }

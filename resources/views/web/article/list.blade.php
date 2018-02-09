@@ -34,7 +34,7 @@ $categories = \App\Models\ArticleCategory::where('display', \App\Models\ArticleC
 
                 <footer>
                     <a href="{{$article->url}}">
-                        <div class="cover" style="height: {{$article->cover_height}}px; background-image: url({{$article->cover}});"></div>
+                        <div class="cover" style="background-image: url({{$article->cover}})"></div>
                     </a>
                 </footer>
             </article>
