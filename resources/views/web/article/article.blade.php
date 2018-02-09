@@ -20,7 +20,7 @@
             </span>
         </header>
 
-        <div class="content">
+        <div class="article-body">
             {!! $article->content !!}
         </div>
     </article>
