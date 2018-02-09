@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Article;
 use App\Components\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\ArticleCategory;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -14,8 +15,11 @@ class ArticleController extends Controller
         'title' => '文章管理',
         'nodes' => [
             ['action' => 'index', 'name' => '列表'],
+            ['action' => 'show', 'name' => '详情'],
             ['action' => 'store', 'name' => '保存'],
+            ['action' => 'update', 'name' => '更新'],
             ['action' => 'destroy', 'name' => '删除'],
+            ['action' => 'categories', 'name' => '获取可用类目'],
         ],
     );
 
@@ -49,15 +53,53 @@ class ArticleController extends Controller
     {
         $this->validate($request, array(
             'title' => ['required', 'min:1', 'max:60'],
-            'author' => ['required', 'min:1', 'max:10'],
-            'image' => ['required', 'url'],
+            'cover' => ['required', 'url'],
+            'excerpt' => ['required', 'max:500'],
             'weight' => ['required', 'min:1', 'max:100', 'integer'],
             'display' => ['required', 'in:1,2'],
+            'first_category_id' => ['required', 'integer'],
+            'markdown' => ['required'],
             'content' => ['required'],
         ));
-        $data = $request->only(['title', 'author', 'image', 'weight', 'display', 'content']);
-        $data['excerpt'] = '';
-        Article::create($data);
+        $data = $request->only(['title', 'cover', 'cover_width', 'cover_height', 'excerpt', 'weight', 'display', 'markdown', 'content']);
+        $data['author'] = 'lenbo';
+
+        $article = Article::create($data);
+        $article->categories()->attach([$request->input('first_category_id')]);
+
+        return ApiResponse::success(null);
+    }
+
+    /**
+     * 详情
+     * @param Article $article
+     * @return ApiResponse
+     */
+    public function show(Article $article)
+    {
+        $data = array(
+            'article' => $article
+        );
+
+        return ApiResponse::success($data);
+    }
+
+    public function update(Request $request, Article $article)
+    {
+        $this->validate($request, array(
+            'title' => ['required', 'min:1', 'max:60'],
+            'cover' => ['required', 'url'],
+            'excerpt' => ['required', 'max:500'],
+            'weight' => ['required', 'min:1', 'max:100', 'integer'],
+            'display' => ['required', 'in:1,2'],
+            'first_category_id' => ['required', 'integer'],
+            'markdown' => ['required'],
+            'content' => ['required'],
+        ));
+        $data = $request->only(['title', 'cover', 'cover_width', 'cover_height', 'excerpt', 'weight', 'display', 'markdown', 'content']);
+        $article->update($data);
+        $article->categories()->detach();
+        $article->categories()->attach([$request->input('first_category_id')]);
 
         return ApiResponse::success(null);
     }
@@ -73,6 +115,24 @@ class ArticleController extends Controller
         $article->delete();
 
         return ApiResponse::success(null);
+    }
+
+    /**
+     * 获取可用类目
+     * @return ApiResponse
+     */
+    public function categories()
+    {
+        $rows = ArticleCategory::where('display', ArticleCategory::DISPLAY_SHOW)
+            ->where('type', ArticleCategory::TYPE_MODULE)
+            ->orderBy('weight', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
+        $data = array(
+            'categories' => $rows,
+        );
+
+        return ApiResponse::success($data);
     }
 
 }

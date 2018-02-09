@@ -58,7 +58,7 @@
                 <el-form-item label="图片">
                     <el-col :span="4">
                         <el-button-upload @success="handleSuccessUpload">
-                            <el-button type="success">上传</el-button>
+                            <el-button type="success" size="mini" icon="el-icon-upload">上传</el-button>
                         </el-button-upload>
                     </el-col>
 

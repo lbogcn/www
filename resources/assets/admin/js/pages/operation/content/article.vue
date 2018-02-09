@@ -42,7 +42,7 @@
                     <el-table-column prop="created_at" label="创建时间"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="mini">编辑</el-button>
+                            <el-button @click="handleEdit(scope.row.id)" type="text" size="mini">编辑</el-button>
                             <el-button @click="handleUnitStatic(scope.row.id)" type="text" size="mini">静态化</el-button>
                             <el-button @click="handleDelete(scope.$index, scope.row)" type="text" size="mini">删除</el-button>
                         </template>
@@ -136,6 +136,7 @@
                 });
             },
             handleCreate() {
+                this.$router.push({path: '/article-editor'});
             },
             handleStatic() {
                 this.staticProgress = 0;
@@ -176,7 +177,8 @@
                     }
                 });
             },
-            handleEdit(index, row) {
+            handleEdit(id) {
+                this.$router.push({path: '/article-editor/' + id});
             },
         },
         mounted() {

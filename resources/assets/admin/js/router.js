@@ -24,6 +24,7 @@ genRoute(menu, '');
 routes.push(
     {path: '/login', component: require('./pages/login'),},
     {path: '/modify-password', component: require('./pages/modify-password'),},
+    {path: '/article-editor/:id?', component: require('./pages/operation/content/article-editor')},
     {path: '*', redirect: '/home/dashboard',}
 );
 

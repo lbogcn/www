@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $cover_width
  * @property int $cover_height
  * @property string $excerpt
+ * @property string $markdown
  * @property string $content
  * @property int $weight
  * @property int $pv
@@ -24,6 +25,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
+ * @property int $first_category_id
+ * @property ArticleCategory|\Illuminate\Database\Eloquent\Collection $categories
  */
 class Article extends Eloquent
 {
@@ -33,12 +36,21 @@ class Article extends Eloquent
     const DISPLAY_SHOW = 1;
 
     public $fillable = [
-        'title', 'author', 'cover', 'cover_width', 'cover_height', 'excerpt', 'weight', 'pv', 'display', 'content'
+        'title', 'author', 'cover', 'cover_width', 'cover_height', 'excerpt', 'weight', 'pv', 'display', 'content', 'markdown'
     ];
 
     public $appends = [
-        'has_static', 'url', 'release_time'
+        'has_static', 'url', 'release_time', 'first_category_id'
     ];
+
+    /**
+     * 获取所属类目
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(ArticleCategory::class, 'article_category', 'article_id', 'category_id');
+    }
 
     /**
      * 静态化并渲染输出
@@ -117,6 +129,21 @@ class Article extends Eloquent
     public function getHasStaticAttribute()
     {
         return file_exists($this->staticFilename());
+    }
+
+    /**
+     * 获取类目ID列表
+     * @return int
+     */
+    public function getFirstCategoryIdAttribute()
+    {
+        $categories = $this->categories->toArray();
+        $ids = array_column($categories, 'id');
+        if (count($ids) == 0) {
+            return null;
+        }
+
+        return current($ids);
     }
 
     /**

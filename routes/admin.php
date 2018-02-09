@@ -25,6 +25,8 @@ Route::group(array(
         Route::get('permission/node/init', 'Permission\NodeController@init');
         Route::get('permission/node/sync', 'Permission\NodeController@sync');
 
+        Route::get('article-categories', 'Article\ArticleController@categories');
+
         Route::resources([
             'permission/user' => 'Permission\UserController',
             'permission/user.role' => 'Permission\UserRoleController',
