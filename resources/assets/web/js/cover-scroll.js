@@ -1,7 +1,7 @@
 export default () => {
     let scrollFunc = () => {
-        let offset = (document.documentElement.scrollTop / document.body.clientHeight) * document.body.clientHeight * 0.3;
-        document.querySelector('#header').style.backgroundPositionY = -offset + "px";
+        let offset = document.documentElement.scrollTop / document.body.clientHeight * 100;
+        document.querySelector('#header').style.backgroundPositionY = offset + "%";
     };
 
     // 给页面绑定滑轮滚动事件 firefox
