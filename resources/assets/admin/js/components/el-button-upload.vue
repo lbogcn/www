@@ -8,8 +8,10 @@
     export default {
         data() {
             return {
-                token: null,
             };
+        },
+        computed: {
+            token() {return this.$store.state.uploadToken;},
         },
         methods: {
             upload(action, formData) {
@@ -25,7 +27,7 @@
                 let self = this;
                 return this.$http.get('/upload-token').then(resp => {
                     if (resp.data.code === 0) {
-                        self.token = resp.data.data.token;
+                        self.$store.commit('setUploadToken', resp.data.data.token);
                     } else {
                         throw resp.data.msg;
                     }

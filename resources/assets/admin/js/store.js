@@ -10,6 +10,7 @@ export default new Vuex.Store({
         modulePath: '',
         user: {},
         appName: '',
+        uploadToken: null,
     },
     mutations: {
         setMenus(state, menus) {
@@ -47,6 +48,9 @@ export default new Vuex.Store({
             let menu = state.menus[index] || {};
             state.verticalMenus = menu.childs || {};
             state.modulePath = index;
-        }
+        },
+        setUploadToken(state, uploadToken) {
+            state.uploadToken = uploadToken;
+        },
     }
 });
