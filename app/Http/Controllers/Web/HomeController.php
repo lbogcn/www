@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Cover;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -21,6 +22,28 @@ class HomeController extends Controller
         );
 
         return view('web.article.list', $data);
+    }
+
+    /**
+     * 统计pv
+     * @param Request $request
+     * @return string
+     * @throws \Throwable
+     */
+    public function pv(Request $request)
+    {
+        $id = $request->input('id');
+        /** @var Article $article */
+        $article = Article::select(['id', 'pv'])->findOrFail($id);
+        if ($request->input('read') == '1') {
+            $pv = $article->readPv();
+        } else {
+            $pv = $article->incrPv();
+        }
+
+        $js = "document.querySelector('{$request->input('dom')}').innerHTML = '{$pv}人浏览过'";
+
+        return $js;
     }
 
     /**

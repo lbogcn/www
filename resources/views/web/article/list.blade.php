@@ -13,6 +13,7 @@ $categories = \App\Models\ArticleCategory::where('display', \App\Models\ArticleC
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@if(isset($sub_title)){{$sub_title}} - @endif{{config('app.name')}}</title>
     <link rel="stylesheet" href="{{mix('css/app.css')}}">
+    <script src="{{mix('js/base.js')}}"></script>
 </head>
 <body>
 @include('web.header')
@@ -28,7 +29,12 @@ $categories = \App\Models\ArticleCategory::where('display', \App\Models\ArticleC
                         <p>{{$article->excerpt}}</p>
                     </a>
                     <span class="meta">
-                        <span>{{$article->release_time}}</span>
+                        <span data-time-{{$article->id}}>
+                            <script>getReleaseTime('[data-time-{{$article->id}}]', '{{strtotime($article->created_at)}}');</script>
+                        </span>
+                        <span data-pv-{{$article->id}}>
+                            <script src="{{url('/pv?' . http_build_query(['id' => $article->id, 'read' => 1, 'dom' => "[data-pv-{$article->id}]"]))}}"></script>
+                        </span>
                     </span>
                 </header>
 

@@ -12,6 +12,9 @@ class TestController extends Controller
             abort(404);
         }
 
+        /** @var \Redis $redis */
+        $redis = \App::make('redis.connection');
+        dd($redis);
         return $this->a();
     }
 

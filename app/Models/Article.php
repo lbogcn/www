@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App;
+use Cache;
 use Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -158,6 +159,43 @@ class Article extends Eloquent
         }
 
         return $filename;
+    }
+
+    /**
+     * 递增pv
+     * @return int
+     * @throws \Throwable
+     */
+    public function incrPv()
+    {
+        /** @var \Redis $redis */
+        $redis = App::make('redis.connection');
+        $key = Cache::getPrefix() . 'pv';
+        $pv = $redis->hIncrBy($key, $this->id, 1);
+        if ($pv % 10 == 0 || $pv == 1) {
+            if ($this->pv < $pv) {
+                $this->pv = $pv;
+                $this->saveOrFail();
+            } else {
+                $pv = $this->pv + 1;
+                $redis->hset($key, $this->id, $pv);
+            }
+        }
+
+        return $pv;
+    }
+
+    /**
+     * 获取pv
+     * @return string
+     */
+    public function readPv()
+    {
+        /** @var \Redis $redis */
+        $redis = App::make('redis.connection');
+        $key = Cache::getPrefix() . 'pv';
+
+        return $redis->hGet($key, $this->id);
     }
 
 }
