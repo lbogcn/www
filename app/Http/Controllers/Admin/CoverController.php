@@ -16,6 +16,7 @@ class CoverController extends Controller
             ['action' => 'store', 'name' => '保存'],
             ['action' => 'update', 'name' => '更新'],
             ['action' => 'destroy', 'name' => '删除'],
+            ['action' => 'cache', 'name' => '静态化'],
         ],
     );
 
@@ -97,4 +98,15 @@ class CoverController extends Controller
         return ApiResponse::success(null);
     }
 
+    /**
+     * 静态化
+     * @param Cover $cover
+     * @return ApiResponse
+     */
+    public function cache(Cover $cover)
+    {
+        $cover->cache();
+
+        return ApiResponse::success(null);
+    }
 }

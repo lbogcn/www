@@ -23,5 +23,22 @@ class Cover extends Eloquent
         'title', 'url', 'weight', 'display', 'source'
     ];
 
+    /**
+     * 写入缓存
+     */
+    public function cache()
+    {
+        $covers = self::select(['url', 'source', 'title'])
+            ->where('display', Cover::DISPLAY_SHOW)
+            ->orderBy('weight', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
+        $json = json_encode($covers, JSON_UNESCAPED_UNICODE);
+        $filename = \App::publicPath() . '/static/covers.json';
+        file_put_contents($filename, $json);
+
+        return $covers;
+    }
+
 
 }

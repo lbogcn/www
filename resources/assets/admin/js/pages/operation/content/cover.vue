@@ -1,10 +1,11 @@
 <template>
-    <div class="page">
+    <div class="page" id="cover">
         <h2 class="page-header">封面管理</h2>
 
         <el-row>
             <el-col class="text-right">
                 <el-button-create @click="handleCreate">新建</el-button-create>
+                <el-button type="danger" size="mini" @click="handleStatic" icon="el-icon-lb-sync">静态化</el-button>
             </el-col>
         </el-row>
 
@@ -56,13 +57,13 @@
                 </el-form-item>
 
                 <el-form-item label="图片">
-                    <el-col :span="4">
+                    <el-col :span="6">
                         <el-button-upload @success="handleSuccessUpload">
                             <el-button type="success" size="mini" icon="el-icon-upload">上传</el-button>
                         </el-button-upload>
                     </el-col>
 
-                    <el-col :span="18" :offset="1">
+                    <el-col :span="15" :offset="1">
                         <img :src="storeData.url" class="img-responsive preview">
                     </el-col>
                 </el-form-item>
@@ -165,6 +166,14 @@
             },
             handleSuccessUpload(data) {
                 this.storeData.url = data.url;
+            },
+            handleStatic() {
+                let self = this;
+                this.$http.post('/cover/static').then(resp => {
+                    if (resp.data.code === 0) {
+                        self.$message({type: 'success', message: '操作成功!'});
+                    }
+                });
             }
         },
         mounted() {
@@ -174,14 +183,16 @@
     };
 </script>
 
-<style lang="less" scoped>
-    .preview{
-        width: 100%;
-        display: block;
+<style lang="less">
+    #cover{
+        .preview{
+            width: 100%;
+            display: block;
 
-        &[src=""],
-        &:not([src]) {
-            opacity: 0;
+            &[src=""],
+            &:not([src]) {
+                opacity: 0;
+            }
         }
     }
 </style>

@@ -29,6 +29,8 @@ Route::group(array(
 
         Route::get('article/preview/{article}', 'Article\ArticleController@preview');
 
+        Route::post('cover/static', 'CoverController@cache');
+
         Route::resources([
             'permission/user' => 'Permission\UserController',
             'permission/user.role' => 'Permission\UserRoleController',

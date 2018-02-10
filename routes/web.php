@@ -24,6 +24,7 @@ Route::group(array(
 
     Route::any('qiniu', 'QiniuController@index');
 
+    Route::get('static/covers.json', 'HomeController@covers');
     Route::get('static/article/{article}.html', 'ArticleController@index');
     Route::get('static/{alias}.html', 'CategoryController@index');
     Route::get('static/{alias}/p_{page}.html', 'CategoryController@paginate');
