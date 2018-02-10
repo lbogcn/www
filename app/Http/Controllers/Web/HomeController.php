@@ -41,6 +41,7 @@ class HomeController extends Controller
             $pv = $article->incrPv();
         }
 
+        $pv = intval($pv);
         $js = "document.querySelector('{$request->input('dom')}').innerHTML = '{$pv}人浏览过'";
 
         return $js;
