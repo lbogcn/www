@@ -162,6 +162,7 @@
 
     .el-main {
         padding: 0;
+        position: relative;
     }
 
     .el-footer {
