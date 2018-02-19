@@ -31,6 +31,8 @@ Route::group(array(
 
         Route::post('cover/static', 'CoverController@cache');
 
+        Route::get('log/error/init', 'Log\ErrorController@init');
+
         Route::resources([
             'permission/user' => 'Permission\UserController',
             'permission/user.role' => 'Permission\UserRoleController',
@@ -39,6 +41,7 @@ Route::group(array(
             'permission/node' => 'Permission\NodeController',
             'permission/menu' => 'Permission\MenuController',
             'log/operation' => 'Log\OperationController',
+            'log/error' => 'Log\ErrorController',
             'article/static' => 'Article\StaticController',
             'article/category' => 'Article\CategoryController',
             'article' => 'Article\ArticleController',
