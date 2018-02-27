@@ -36,6 +36,7 @@
                 let self = this;
                 this.$http.post('/login', this.form).then(resp => {
                     if (resp.data.code === 0) {
+                        window.sessionStorage.removeItem('init_data');
                         self.$store.commit('loadMenus', self);
                         self.$store.commit('setUser', resp.data.data.user);
                         self.$router.back(-1);
