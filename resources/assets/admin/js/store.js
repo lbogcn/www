@@ -31,18 +31,32 @@ export default new Vuex.Store({
             state.verticalMenus = {};
         },
         loadMenus(state, app) {
-            app.$http.get('/init').then(resp => {
-                if (resp.data.code === 0) {
-                    state.menus = resp.data.data.menus;
-                    state.user = resp.data.data.user;
-                    state.appName = resp.data.data.app_name;
+            let initData = null;
+            try {
+                initData = JSON.parse(window.sessionStorage.getItem('init_data'));
+            } catch (e) {}
 
-                    let route = app.$route.path;
-                    let char = '/';
-                    let path = route.replace(new RegExp('^\\'+char+'+|\\'+char+'+$', 'g'), '').split(char);
-                    app.$store.commit('changeModule', path[0]);
-                }
-            }, err => {});
+            let cbk = (data) => {
+                state.menus = data.menus;
+                state.user = data.user;
+                state.appName = data.app_name;
+
+                let route = app.$route.path;
+                let char = '/';
+                let path = route.replace(new RegExp('^\\'+char+'+|\\'+char+'+$', 'g'), '').split(char);
+                app.$store.commit('changeModule', path[0]);
+            };
+
+            if (!initData) {
+                app.$http.get('/init').then(resp => {
+                    if (resp.data.code === 0) {
+                        cbk(resp.data.data);
+                        window.sessionStorage.setItem('init_data', JSON.stringify(resp.data.data));
+                    }
+                }, err => {});
+            } else {
+                cbk(initData);
+            }
         },
         changeModule(state, index) {
             let menu = state.menus[index] || {};

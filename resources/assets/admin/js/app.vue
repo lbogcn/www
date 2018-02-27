@@ -77,7 +77,7 @@
     export default {
         data() {
             return {
-                isCollapse: false,
+                isCollapse: window.sessionStorage.getItem('menu_collapse') === 'true',
             };
         },
         computed: {
@@ -120,6 +120,11 @@
 
                     return resp;
                 }, error => {return Promise.reject(error);});
+            }
+        },
+        watch: {
+            isCollapse(val) {
+                window.sessionStorage.setItem('menu_collapse', val ? 'true' : 'false');
             }
         },
         created() {
