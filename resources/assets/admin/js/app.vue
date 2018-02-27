@@ -46,13 +46,13 @@
 
                         <el-menu-item v-for="child in menu.childs" :key="child.name" :index="'/' + modulePath + '/' + menu.name + '/' + child.name">
                             <i v-if="child.icon" :class="child.icon"></i>
-                            <span>{{child.title}}</span>
+                            <span slot="title">{{child.title}}</span>
                         </el-menu-item>
                     </el-submenu>
 
                     <el-menu-item v-if="!menu.childs" :index="'/' + modulePath + '/' + menu.name">
                         <i v-if="menu.icon" :class="menu.icon"></i>
-                        <span>{{menu.title}}</span>
+                        <span slot="title">{{menu.title}}</span>
                     </el-menu-item>
                 </template>
 
