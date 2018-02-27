@@ -167,28 +167,21 @@
         }
     }
 
-    .el-main {
-        padding: 0;
-        position: relative;
-    }
-
-    .el-footer {
-        background-color: #B3C0D1;
-        color: #333;
-        text-align: center;
-        line-height: 60px;
-    }
-
     .container{
-        position: fixed;
+        position: absolute;
         top: 61px;
         left: 0;
         right: 0;
         bottom: 0;
-    }
 
-    .wrapper {
-        margin-left: 3px;
+        .wrapper {
+            margin-left: 3px;
+
+            .el-main {
+                padding: 0;
+                position: relative;
+            }
+        }
     }
 
     .vertical-menu {
