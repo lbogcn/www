@@ -60,20 +60,39 @@ class ErrorController extends Controller
      */
     private function paginate($file, $page)
     {
-        $data = '';
+        $data = [];
         $total = 0;
+        $handle = new SplFileObject($file);
+
+        // 统计总行数
+        while (!$handle->eof()) {
+            $block = $handle->fread(4096);
+            $total += substr_count($block, "\n");
+        }
+
         $current_page = intval((is_numeric($page) && $page >= 1) ? $page : 1);
-        $per_page = 120;
-        $offset = ($current_page - 1) * $per_page;
+        $per_page = 50;
+        $range = [
+            $total - $current_page * $per_page,
+            $total - ($current_page - 1) * $per_page,
+        ];
 
-        foreach (new SplFileObject($file) as $index => $line) {
-            $total++;
-
-            if ($index >= $offset && $index < $offset + $per_page) {
+        foreach ($handle as $index => $line) {
+            if ($index > $range[0] && $index <= $range[1]) {
                 $currentLine = $index + 1;
-                $data .= "{$currentLine}\t{$line}";
+
+                $data[] = array(
+                    'line' => intval($currentLine),
+                    'content' => substr($line, -1) === "\n" ? substr($line, 0, strlen($line) - 1) : $line,
+                );
+            }
+
+            if ($index > $range[1]) {
+                break;
             }
         }
+
+        $data = array_reverse($data);
 
         return compact('data', 'total', 'current_page', 'per_page');
     }

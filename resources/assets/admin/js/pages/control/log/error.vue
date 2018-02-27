@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <div id="log-error" class="page">
         <h2 class="page-header">错误日志</h2>
 
         <el-row>
@@ -11,8 +11,13 @@
         </el-row>
 
         <el-row>
-            <el-col>
-                <pre style="background: #eee;overflow-x: auto; padding: 5px;">{{paginate.data}}</pre>
+            <el-col style="display: flex;">
+                <ul class="line">
+                    <li v-for="item in paginate.data" :key="item.line" v-html="item.line"></li>
+                </ul>
+                <ul class="code">
+                    <li v-for="item in paginate.data" :key="item.line" v-html="item.content || '_'"></li>
+                </ul>
             </el-col>
         </el-row>
 
@@ -80,3 +85,28 @@
         }
     };
 </script>
+
+<style lang="less">
+    #log-error {
+        .line {
+            list-style: none;
+            flex: 1;
+            color: #999;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .code {
+            overflow-x: auto;
+            list-style: none;
+            background: #eee;
+            font-size: 14px;
+            color: #333;
+            padding: 0 5px;
+
+            li {
+                white-space: nowrap;
+            }
+        }
+    }
+</style>
