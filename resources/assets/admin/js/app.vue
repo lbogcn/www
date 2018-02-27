@@ -139,6 +139,7 @@
         background-color: #545c64;
         padding: 0;
         position: relative;
+        z-index: 10001;
 
         .brand{
             float: left;
@@ -146,6 +147,7 @@
             text-align: center;
             line-height:60px;
             color: #FFF;
+            border-bottom: solid 1px #e6e6e6;
         }
 
         .navbar-module{
@@ -190,6 +192,8 @@
     }
 
     .vertical-menu {
+        z-index: 10001;
+
         &:not(.el-menu--collapse) {
             width: 200px;
 
