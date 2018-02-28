@@ -5,10 +5,54 @@ let HistoryLoad = (option) => {
     let historyLoad = {
         $el,
         $main: $el.querySelector(option.main || '.main'),
+        animation(type, callback) {
+            let opacity = parseFloat(this.$main.style.opacity !== '' ? this.$main.style.opacity : 1) * 100;
+            let offset = 1;
+            let time = 100;
+
+            if (type === 'in') {
+                offset = (100 - opacity) / time;
+            } else if (type === 'out') {
+                offset = (0 - opacity) / time;
+            }
+
+            offset = offset / 100;
+
+            let timer = setInterval(() => {
+                let opacity = parseFloat(this.$main.style.opacity !== '' ? this.$main.style.opacity : 1) + offset;
+                opacity = opacity < 0 ? 0 : opacity;
+
+                this.$main.style.opacity = opacity;
+
+                if (opacity <= 0 || opacity >= 1) {
+                    clearInterval(timer);
+
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                }
+            }, 1);
+        },
         pajx(url) {
-            http.get(url, {headers: {'X-Requested-With': 'XMLHttpRequest'}}).then(resp => {
+            let option = {
+                headers: {'X-Requested-With': 'XMLHttpRequest'},
+            };
+
+            http.interceptors.request.use(function(config) {
+                historyLoad.animation('out');
+                return config;
+            });
+
+            http.get(url, option).then(resp => {
                 historyLoad.$main.innerHTML = resp.data;
-                historyLoad.listen();// 页面载入新html后需要重新监听事件
+                historyLoad.animation('in');
+
+                // 页面载入新html后需要重新监听事件
+                historyLoad.listen();
+
+                // 滚动条回到顶部
+                document.documentElement.scrollTop = 0;
+
             }, (a, b, c) => {
                 console.log(a, b, c);
             });
