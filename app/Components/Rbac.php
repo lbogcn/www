@@ -32,11 +32,55 @@ class Rbac
             $allMenus = (new RbacMenu())->getAll();
             $userRoleIds = array_column($this->admin->roles->toArray(), 'id');
             $menus = $this->formatUserMenus($allMenus, $userRoleIds);
+            $menus = $this->filterEmptyMenu($menus);
 
             Session::put('menus', $menus);
         }
 
         return Session::get('menus');
+    }
+
+    /**
+     * 过滤空菜单
+     * @param $menus
+     * @return array
+     */
+    private function filterEmptyMenu(array $menus): array
+    {
+        foreach ($menus as $name => $menu) {
+            if (isset($menu['childs'])) {
+                $menu['childs'] = $this->filterEmptyMenu($menu['childs']);
+                $menus[$name] = $menu;
+
+                if (!$this->hasChilds($menu['childs'])) {
+                    unset($menus[$name]);
+                }
+            }
+        }
+
+        return $menus;
+    }
+
+    /**
+     * 判断是否有子菜单
+     * @param array $menus
+     * @return bool
+     */
+    private function hasChilds(array $menus): bool
+    {
+        $has = false;
+        foreach ($menus as $menu) {
+            if (array_key_exists('childs', $menu)) {
+                if (count($menu['childs']) > 0) {
+                    $has = $this->hasChilds($menu['childs']);
+                }
+            } else {
+                $has = true;
+                break;
+            }
+        }
+
+        return $has;
     }
 
     /**
