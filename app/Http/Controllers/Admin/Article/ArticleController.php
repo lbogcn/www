@@ -144,9 +144,11 @@ class ArticleController extends Controller
     public function preview(Article $article)
     {
         $data = array(
-            'model' => $article
+            'article' => $article,
+            'title' => $article->title,
+            'type' => 'post',
         );
 
-        return view('web.article.article', $data);
+        return view('web.article.layout', $data);
     }
 }

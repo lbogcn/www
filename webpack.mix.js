@@ -11,11 +11,10 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/admin/js/index.js', 'public/js/admin.js').version();
+mix.js('resources/assets/admin/js/index.js', 'public/js/admin.js');
 
-mix.less('resources/assets/web/less/index.less', 'public/css/app.css').version();
-mix.js('resources/assets/web/js/index.js', 'public/js/app.js').version();
-mix.js('resources/assets/web/js/base.js', 'public/js/base.js').version();
+mix.less('resources/assets/web/less/index.less', 'public/css/app.css');
+mix.js('resources/assets/web/js/index.js', 'public/js/app.js');
 
 if (mix.inProduction()) {
     mix.version();

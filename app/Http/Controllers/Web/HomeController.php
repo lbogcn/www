@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         /** @var \Illuminate\Pagination\Paginator $articles */
         $articles = Article::where('display', Article::DISPLAY_SHOW)
@@ -19,32 +19,15 @@ class HomeController extends Controller
             ->simplePaginate(10);
         $data = array(
             'articles' => $articles,
+            'type' => 'list',
         );
 
-        return view('web.article.list', $data);
-    }
-
-    /**
-     * 统计pv
-     * @param Request $request
-     * @return string
-     * @throws \Throwable
-     */
-    public function pv(Request $request)
-    {
-        $id = $request->input('id');
-        /** @var Article $article */
-        $article = Article::select(['id', 'pv'])->findOrFail($id);
-        if ($request->input('read') == '1') {
-            $pv = $article->readPv();
+        if ($request->ajax()) {
+            return view('web.article.list', $data);
         } else {
-            $pv = $article->incrPv();
+            return view('web.article.layout', $data);
         }
 
-        $pv = intval($pv);
-        $js = "document.querySelector('{$request->input('dom')}').innerHTML = '{$pv}人浏览过'";
-
-        return $js;
     }
 
     /**

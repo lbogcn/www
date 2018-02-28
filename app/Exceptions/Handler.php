@@ -77,8 +77,11 @@ class Handler extends ExceptionHandler
      */
     private function renderWeb($request, Exception $exception)
     {
-        if ($exception instanceof NotFoundHttpException) {
-            return Response::view('web.404')->setStatusCode($exception->getStatusCode());
+        if ($exception instanceof NotFoundHttpException
+            || $exception instanceof ModelNotFoundException
+        ) {
+            return Response::view('web.404');
+//            return Response::view('web.404')->setStatusCode($exception->getStatusCode());
         }
 
         return parent::render($request, $exception);

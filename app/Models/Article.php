@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use App;
-use Cache;
+use App\Http\Controllers\Web\ArticleController;
 use Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -20,7 +19,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $weight
  * @property int $pv
  * @property int $display
- * @property bool $has_static
  * @property string $url
  * @property string $release_time
  * @property \Carbon\Carbon $created_at
@@ -41,7 +39,7 @@ class Article extends Eloquent
     ];
 
     public $appends = [
-        'has_static', 'url', 'release_time', 'first_category_id'
+        'url', 'release_time', 'first_category_id'
     ];
 
     /**
@@ -54,39 +52,12 @@ class Article extends Eloquent
     }
 
     /**
-     * 静态化并渲染输出
-     * @return string
-     * @throws \Throwable
-     */
-    public function staticRender()
-    {
-        if ($this->display == self::DISPLAY_SHOW) {
-            $data = array(
-                'model' => $this,
-            );
-            $page = view('web.article.article', $data)->render();
-
-            if (!config('app.debug')) {
-                file_put_contents($this->staticFilename(), $page);
-            }
-
-            return $page;
-        } else {
-            if (file_exists($this->staticFilename())) {
-                unlink($this->staticFilename());
-            }
-
-            return '';
-        }
-    }
-
-    /**
      * 获取访问地址
      * @return string
      */
     public function getUrlAttribute()
     {
-        return action("\\" . App\Http\Controllers\Web\ArticleController::class . '@index', $this->id);
+        return action("\\" . ArticleController::class . '@index', $this->id);
     }
 
     /**
@@ -124,15 +95,6 @@ class Article extends Eloquent
     }
 
     /**
-     * 是否已静态化
-     * @return bool
-     */
-    public function getHasStaticAttribute()
-    {
-        return file_exists($this->staticFilename());
-    }
-
-    /**
      * 获取类目ID列表
      * @return int
      */
@@ -148,54 +110,25 @@ class Article extends Eloquent
     }
 
     /**
-     * 获取静态化目录
-     * @return string
-     */
-    private function staticFilename(): string
-    {
-        $filename = App::publicPath() . "/static/article/{$this->id}.html";
-        if (!is_dir(dirname($filename))) {
-            mkdir(dirname($filename), 755, true);
-        }
-
-        return $filename;
-    }
-
-    /**
      * 递增pv
-     * @return int
-     * @throws \Throwable
+     * @return bool
      */
-    public function incrPv()
+    public function incrPv(): bool
     {
-        /** @var \Redis $redis */
-        $redis = App::make('redis.connection');
-        $key = Cache::getPrefix() . 'pv';
-        $pv = $redis->hIncrBy($key, $this->id, 1);
-        if ($pv % 10 == 0 || $pv == 1) {
-            if ($this->pv < $pv) {
-                $this->pv = $pv;
-                $this->saveOrFail();
-            } else {
-                $pv = $this->pv + 1;
-                $redis->hset($key, $this->id, $pv);
-            }
+        if (!$this->id) {
+            return false;
         }
 
-        return $pv;
-    }
+        $pv = $this->pv;
 
-    /**
-     * 获取pv
-     * @return string
-     */
-    public function readPv()
-    {
-        /** @var \Redis $redis */
-        $redis = App::make('redis.connection');
-        $key = Cache::getPrefix() . 'pv';
+        // 执行update后会导致pv变为字符串"pv + 1"，需要手动转回来
+        $this->update(array(
+            'pv' => \DB::raw('pv + 1'),
+        ));
 
-        return $redis->hGet($key, $this->id);
+        $this->pv = $pv + 1;
+
+        return true;
     }
 
 }

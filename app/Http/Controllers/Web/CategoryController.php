@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\ArticleCategory;
+use Illuminate\Http\Request;
 use Route;
 
 class CategoryController extends Controller
@@ -23,26 +25,31 @@ class CategoryController extends Controller
     }
 
     /**
-     * 获取第一页数据
+     * 列表
+     * @param Request $request
      * @param ArticleCategory $alias
      * @return string
-     * @throws \Throwable
      */
-    public function index(ArticleCategory $alias)
+    public function index(Request $request, ArticleCategory $alias)
     {
-        return $this->paginate($alias, 1);
+        $articles = Article::select('articles.*')
+            ->join('article_category', 'article_id', '=', 'id')
+            ->where('display', Article::DISPLAY_SHOW)
+            ->where('category_id', $alias->id)
+            ->simplePaginate(10);
+
+        $data = array(
+            'articles' => $articles,
+            'title' => $alias->title,
+            'type' => 'list',
+        );
+
+        if ($request->ajax()) {
+            return view('web.article.list', $data);
+        } else {
+            return view('web.article.layout', $data);
+        }
     }
 
-    /**
-     * 获取分页数据
-     * @param ArticleCategory $alias
-     * @param $page
-     * @return string
-     * @throws \Throwable
-     */
-    public function paginate(ArticleCategory $alias, $page)
-    {
-        return $alias->staticRender($page);
-    }
 
 }
