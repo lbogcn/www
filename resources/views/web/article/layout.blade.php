@@ -12,8 +12,10 @@
     @include('web.header')
 
     <section class="main">
-        @if($type == 'post')@include('web.article.post')@endif
-        @if($type == 'list')@include('web.article.list')@endif
+        <div class="pajx-container">
+            @if($type == 'post')@include('web.article.post')@endif
+            @if($type == 'list')@include('web.article.list')@endif
+        </div>
 
         @include('web.footer')
     </section>

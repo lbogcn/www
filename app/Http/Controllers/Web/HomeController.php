@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Components\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Cover;
@@ -10,6 +11,12 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
+    /**
+     * 首页
+     * @param Request $request
+     * @return mixed
+     * @throws \Throwable
+     */
     public function index(Request $request)
     {
         /** @var \Illuminate\Pagination\Paginator $articles */
@@ -23,7 +30,12 @@ class HomeController extends Controller
         );
 
         if ($request->ajax()) {
-            return view('web.article.list', $data);
+            $ajaxData = array(
+                'view' => view('web.article.list', $data)->render(),
+                'title' =>  config('app.name'),
+            );
+
+            return ApiResponse::success($ajaxData);
         } else {
             return view('web.article.layout', $data);
         }

@@ -24,9 +24,9 @@ Route::group(array(
 
     Route::any('qiniu', 'QiniuController@index');
 
+    Route::get('static/covers.json', 'HomeController@covers');
     Route::get('article/{article}', 'ArticleController@index');
     Route::get('blog/{article}', 'ArticleController@index');// 兼容旧版
-    Route::get('{alias}', 'CategoryController@index');
 
-    Route::get('static/covers.json', 'HomeController@covers');
+    Route::get('{alias}', 'CategoryController@index');
 });

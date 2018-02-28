@@ -4,7 +4,7 @@ let HistoryLoad = (option) => {
     let $el = document.querySelector(option.el);
     let historyLoad = {
         $el,
-        $main: $el.querySelector(option.main || '.main'),
+        $main: $el.querySelector(option.main || '.pajx-container'),
         animation(type, callback) {
             let opacity = parseFloat(this.$main.style.opacity !== '' ? this.$main.style.opacity : 1) * 100;
             let offset = 1;
@@ -44,7 +44,12 @@ let HistoryLoad = (option) => {
             });
 
             http.get(url, option).then(resp => {
-                historyLoad.$main.innerHTML = resp.data;
+                if (resp.data.code !== 0) {
+                    return;
+                }
+
+                historyLoad.$main.innerHTML = resp.data.data.view;
+                document.title = resp.data.data.title;
                 historyLoad.animation('in');
 
                 // 页面载入新html后需要重新监听事件

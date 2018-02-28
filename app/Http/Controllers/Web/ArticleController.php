@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Components\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class ArticleController extends Controller
      * @param Request $request
      * @param Article $article
      * @return mixed
+     * @throws \Throwable
      */
     public function index(Request $request, Article $article)
     {
@@ -30,7 +32,12 @@ class ArticleController extends Controller
         $article->incrPv();
 
         if ($request->ajax()) {
-            return view('web.article.post', $data);
+            $ajaxData = array(
+                'view' => view('web.article.post', $data)->render(),
+                'title' => $data['title'] . ' - ' . config('app.name'),
+            );
+
+            return ApiResponse::success($ajaxData);
         } else {
             return view('web.article.layout', $data);
         }
