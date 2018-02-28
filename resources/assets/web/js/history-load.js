@@ -33,7 +33,7 @@ let HistoryLoad = (option) => {
                 }
             }, 1);
         },
-        pajx(url) {
+        pajx(url, scrollTop) {
             let option = {
                 headers: {'X-Requested-With': 'XMLHttpRequest'},
             };
@@ -51,7 +51,9 @@ let HistoryLoad = (option) => {
                 historyLoad.listen();
 
                 // 滚动条回到顶部
-                document.documentElement.scrollTop = 0;
+                if (scrollTop) {
+                    document.documentElement.scrollTop = 0;
+                }
 
             }, (a, b, c) => {
                 console.log(a, b, c);
@@ -62,7 +64,7 @@ let HistoryLoad = (option) => {
             historyLoad.$el.querySelectorAll('a').forEach(node => {
                 node.onclick = (e) => {
                     window.history.pushState(null, null, node.href);
-                    historyLoad.pajx(node.href);
+                    historyLoad.pajx(node.href, true);
                     e.preventDefault();
                 };
             });
@@ -75,7 +77,7 @@ let HistoryLoad = (option) => {
 
         // 监听返回事件
         window.onpopstate = () => {
-            historyLoad.pajx(location.href);
+            historyLoad.pajx(location.href, false);
         };
     })();
 
