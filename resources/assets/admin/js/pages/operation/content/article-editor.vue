@@ -11,9 +11,7 @@
 
             <el-form-item label="封面">
                 <el-col style="width: auto">
-                    <el-button-upload @success="handleSuccessUploadCover">
-                        <el-button type="success" size="mini" icon="el-icon-upload">上传</el-button>
-                    </el-button-upload>
+                    <el-button-upload @success="handleSuccessUploadCover">上传</el-button-upload>
                 </el-col>
 
                 <el-col :span="10" :offset="1">
