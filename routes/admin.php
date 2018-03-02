@@ -21,6 +21,7 @@ Route::group(array(
     ), function() {
 
         Route::get('upload-token', 'HomeController@uploadToken');
+        Route::post('upload', 'HomeController@upload');
 
         Route::get('permission/node/init', 'Permission\NodeController@init');
         Route::get('permission/node/sync', 'Permission\NodeController@sync');

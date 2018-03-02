@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Components;
+namespace App\Components\Upload;
 
 use Qiniu\Auth;
 use Qiniu\Storage\BucketManager;
 
-class Qiniu
+class Qiniu implements Contracts
 {
+
     /** @var Auth */
     private $auth;
 
@@ -19,26 +20,27 @@ class Qiniu
     /** @var string */
     private $publicBucket;
 
-    /**
-     * Qiniu constructor.
-     */
-    public function __construct()
+    /** @var array */
+    private $config;
+
+    public function __construct($config)
     {
-        $this->auth = new Auth(config('global.qiniu.access_key'), config('global.qiniu.secret_key'));
+        $this->config = $config;
+
+        $this->auth = new Auth(config('upload.services.qiniu.access_key'), config('upload.services.qiniu.secret_key'));
         $this->bucketMgr = new BucketManager($this->auth);
-        $this->privateBucket = config('global.qiniu.private_bucket');
-        $this->publicBucket = config('global.qiniu.public_bucket');
+        $this->privateBucket = config('upload.services.qiniu.private_bucket');
+        $this->publicBucket = config('upload.services.qiniu.public_bucket');
     }
 
     /**
-     * 获取token
-     * @param $cbkUrl
+     * 获取 upload token
      * @return string
      */
-    public function token($cbkUrl)
+    public function getToken()
     {
         $policy = array(
-            'callbackUrl' => $cbkUrl,
+            'callbackUrl' => $this->config['callback'],
             'callbackBody' => json_encode(array(
                 'key' => '$(key)',
                 'etag' => '$(etag)',
@@ -54,6 +56,47 @@ class Qiniu
 
         return $this->auth->uploadToken($this->privateBucket, null, 3600, $policy);
     }
+
+    /**
+     * 获取上传 action
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->config['action'];
+    }
+
+    /**
+     * 存储
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     */
+    public function storage($request)
+    {
+        $body = $request->getContent();
+        $hash = json_decode($body, true);
+        $contentType = $request->server('HTTP_CONTENT_TYPE');
+        $authorization = $request->server('HTTP_AUTHORIZATION');
+        $url = config('upload.services.qiniu.callback');
+
+        if (is_array($hash) && $this->verify($contentType, $authorization, $url, $body)) {
+            $data = array(
+                'url' => $this->moveToPublic($hash),
+                'body' => array(
+                    'size' => $hash['size'],
+                    'height' => $hash['height'],
+                    'width' => $hash['width'],
+                    'ext' => $hash['ext'],
+                )
+            );
+
+            return $data;
+        }
+
+        abort(404);
+        return [];
+    }
+
 
     /**
      * 验证回调
@@ -110,7 +153,6 @@ class Qiniu
      */
     public function getUrl($key)
     {
-        return 'http://' . config('global.qiniu.public_domain') . '/' . $key;
+        return 'http://' . config('upload.services.qiniu.public_domain') . '/' . $key;
     }
-
 }

@@ -1,5 +1,5 @@
 <template>
-    <el-upload action="http://up-z2.qiniu.com/" :show-file-list="false" :http-request="httpRequest" :disabled="loading" class="el-button-upload">
+    <el-upload action="" :show-file-list="false" :http-request="httpRequest" :disabled="loading" class="el-button-upload">
         <el-button type="success" size="mini" :loading="loading" icon="el-icon-upload">
             <slot></slot>
         </el-button>
@@ -14,13 +14,13 @@
             };
         },
         computed: {
-            token() {return this.$store.state.uploadToken;},
+            uploadToken() {return this.$store.state.uploadToken;},
         },
         methods: {
-            upload(action, formData) {
+            upload(formData) {
                 let self = this;
-                formData.append('token', this.token);
-                this.$http.post(action, formData, {loading: false}).then(resp => {
+                formData.append('token', this.uploadToken.token);
+                this.$http.post(this.uploadToken.action, formData, {loading: false}).then(resp => {
                     self.loading = false;
 
                     if (resp.data.code === 0) {
@@ -32,7 +32,7 @@
                 let self = this;
                 return this.$http.get('/upload-token', {loading: false}).then(resp => {
                     if (resp.data.code === 0) {
-                        self.$store.commit('setUploadToken', resp.data.data.token);
+                        self.$store.commit('setUploadToken', resp.data.data);
                     } else {
                         throw resp.data.msg;
                     }
@@ -44,12 +44,12 @@
                 formData.append(option.filename, option.file);
                 this.loading = true;
 
-                if (!this.token) {
+                if (!this.uploadToken) {
                     this.getToken().then(() => {
-                        self.upload(option.action, formData);
+                        self.upload(formData);
                     });
                 } else {
-                    self.upload(option.action, formData);
+                    self.upload(formData);
                 }
             }
         }

@@ -3,18 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Components\ApiResponse;
-use App\Components\Qiniu;
 use App\Components\Rbac;
+use App\Components\Upload\Upload;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Auth;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     const PERMISSION = array(
         'title' => '公共',
         'nodes' => [
-            ['action' => 'uploadToken', 'name' => '上传资源'],
+            ['action' => 'uploadToken', 'name' => '获取上传配置'],
+            ['action' => 'upload', 'name' => '上传'],
         ],
     );
 
@@ -50,14 +52,23 @@ class HomeController extends Controller
 
     /**
      * 获取上传token
-     * @param Qiniu $qiniu
+     * @param Upload $upload
      * @return ApiResponse
      */
-    public function uploadToken(Qiniu $qiniu)
+    public function uploadToken(Upload $upload)
     {
-        $token = $qiniu->token(config('global.qiniu.callback'));
+        return ApiResponse::success($upload->uploadConfig());
+    }
 
-        return ApiResponse::success(compact('token'));
+    /**
+     * 上传（本地）
+     * @param Request $request
+     * @param Upload $upload
+     * @return ApiResponse
+     */
+    public function upload(Request $request, Upload $upload)
+    {
+         return ApiResponse::success($upload->storage($request));
     }
 
 }
