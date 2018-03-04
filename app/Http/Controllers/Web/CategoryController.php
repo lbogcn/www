@@ -38,6 +38,8 @@ class CategoryController extends Controller
             ->join('article_category', 'article_id', '=', 'id')
             ->where('display', Article::DISPLAY_SHOW)
             ->where('category_id', $alias->id)
+            ->orderBy('weight', 'desc')
+            ->orderBy('id', 'desc')
             ->simplePaginate(10);
 
         $data = array(
