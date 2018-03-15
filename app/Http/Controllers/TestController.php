@@ -8,6 +8,7 @@ class TestController extends Controller
 
     public function index()
     {
+        dd('a');
         if (!config('app.debug')) {
             abort(404);
         }
