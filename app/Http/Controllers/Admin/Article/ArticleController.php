@@ -149,6 +149,6 @@ class ArticleController extends Controller
             'type' => 'post',
         );
 
-        return view('web.article.layout', $data);
+        return view('web.layout', $data);
     }
 }

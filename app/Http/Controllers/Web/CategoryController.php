@@ -56,7 +56,7 @@ class CategoryController extends Controller
 
             return ApiResponse::success($ajaxData);
         } else {
-            return view('web.article.layout', $data);
+            return view('web.layout', $data);
         }
     }
 

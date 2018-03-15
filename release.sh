@@ -10,5 +10,3 @@ chmod -R 777 ./bootstrap/cache
 /usr/local/php/bin/php artisan optimize --force
 
 chown -R www:www $(cd `dirname $0`; pwd)
-
-sudo /etc/init.d/php-fpm reload

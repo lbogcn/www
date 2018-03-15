@@ -28,5 +28,7 @@ Route::group(array(
     Route::get('article/{article}', 'ArticleController@index');
     Route::get('blog/{article}', 'ArticleController@index');// 兼容旧版
 
+    Route::resource('message', 'MessageController');
+
     Route::get('{alias}', 'CategoryController@index');
 });

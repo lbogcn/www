@@ -4,36 +4,32 @@ namespace App\Http\Controllers\Web;
 
 use App\Components\ApiResponse;
 use App\Http\Controllers\Controller;
-use App\Models\Article;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
-class ArticleController extends Controller
+class MessageController extends Controller
 {
 
     /**
-     * 文章
+     * 获取留言
      * @param Request $request
-     * @param Article $article
-     * @return mixed
+     * @return ApiResponse|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Throwable
      */
-    public function index(Request $request, Article $article)
+    public function index(Request $request)
     {
-        if ($article->display != Article::DISPLAY_SHOW) {
-            return abort(404);
-        }
-
+        $messages = Message::where('display', Message::DISPLAY_SHOW)
+            ->orderBy('id', 'desc')
+            ->simplePaginate(20);
         $data = array(
-            'article' => $article,
-            'title' => $article->title,
-            'type' => 'post',
+            'messages' => $messages,
+            'type' => 'message',
+            'title' => '留言板',
         );
-
-        $article->incrPv();
 
         if ($request->ajax()) {
             $ajaxData = array(
-                'view' => view('web.article.post', $data)->render(),
+                'view' => view('web.message.list', $data)->render(),
                 'title' => $data['title'] . ' - ' . config('app.name'),
             );
 
@@ -42,5 +38,6 @@ class ArticleController extends Controller
             return view('web.layout', $data);
         }
     }
+
 
 }

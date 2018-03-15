@@ -32,12 +32,12 @@ class HomeController extends Controller
         if ($request->ajax()) {
             $ajaxData = array(
                 'view' => view('web.article.list', $data)->render(),
-                'title' =>  config('app.name'),
+                'title' => config('app.name'),
             );
 
             return ApiResponse::success($ajaxData);
         } else {
-            return view('web.article.layout', $data);
+            return view('web.layout', $data);
         }
 
     }
