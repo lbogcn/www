@@ -16,7 +16,6 @@
         <div class="pajx-container">
             @if($type == 'post')@include('web.article.post')@endif
             @if($type == 'list')@include('web.article.list')@endif
-            @if($type == 'message')@include('web.message.list')@endif
         </div>
 
         @include('web.footer')

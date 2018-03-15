@@ -21,8 +21,6 @@ class Message extends Eloquent
 
     use SoftDeletes;
 
-    const DISPLAY_SHOW = 1;
-
     public $fillable = [
         'email', 'nickname', 'ip', 'display', 'content'
     ];

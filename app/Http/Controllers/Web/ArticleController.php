@@ -39,7 +39,7 @@ class ArticleController extends Controller
 
             return ApiResponse::success($ajaxData);
         } else {
-            return view('web.layout', $data);
+            return view('web.article.layout', $data);
         }
     }
 
