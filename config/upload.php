@@ -27,7 +27,7 @@ return array(
             // 回调地址，设置不同回调地址可根据不同场影返回不同格式的上传结果数据
             'callback' => env('QINIU_CALLBACK'),
 
-            'action' => 'http://up-z2.qiniu.com/',
+            'action' => '//up-z2.qiniu.com/',
         ),
     ),
 );
