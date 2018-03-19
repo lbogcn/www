@@ -29,6 +29,7 @@ Route::group(array(
         Route::get('article-categories', 'Article\ArticleController@categories');
 
         Route::get('article/preview/{article}', 'Article\ArticleController@preview');
+        Route::put('article/meta/{article}', 'Article\ArticleController@updateMeta');
 
         Route::post('cover/static', 'CoverController@cache');
 

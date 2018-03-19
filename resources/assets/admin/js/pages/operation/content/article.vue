@@ -31,8 +31,13 @@
                     <el-table-column prop="pv" label="PV" width="80px"></el-table-column>
                     <el-table-column prop="display" label="状态">
                         <template slot-scope="scope">
-                            <el-tag size="small" type="success" v-if="scope.row.display === 1">显示</el-tag>
-                            <el-tag size="small" type="danger" v-if="scope.row.display !== 1">隐藏</el-tag>
+                            <a title="点击更改为隐藏" @click="handleChangeDisplay(scope.row)" href="javascript:void(0);">
+                                <el-tag size="small" type="success" v-if="scope.row.display === 1">显示</el-tag>
+                            </a>
+
+                            <a title="点击更改为显示" @click="handleChangeDisplay(scope.row)" href="javascript:void(0);">
+                                <el-tag size="small" type="danger" v-if="scope.row.display !== 1">隐藏</el-tag>
+                            </a>
                         </template>
                     </el-table-column>
                     <el-table-column prop="created_at" label="创建时间"></el-table-column>
@@ -124,6 +129,22 @@
             },
             handlePreview(id) {
                 window.open('/article/preview/' + id);
+            },
+            handleChangeDisplay(row) {
+                let self = this;
+                this.$confirm('确认更改？', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let data = {display: row.display === 1 ? 2 : 1};
+                    this.$http.put('/article/meta/' + row.id, data).then(resp => {
+                        if (resp.data.code === 0) {
+                            self.$message({type: 'success', message: '更改成功!'});
+                            row.display = data.display;
+                        }
+                    });
+                });
             }
         },
         mounted() {

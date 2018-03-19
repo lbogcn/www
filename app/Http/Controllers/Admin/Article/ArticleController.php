@@ -18,6 +18,7 @@ class ArticleController extends Controller
             ['action' => 'show', 'name' => '详情'],
             ['action' => 'store', 'name' => '保存'],
             ['action' => 'update', 'name' => '更新'],
+            ['action' => 'updateMeta', 'name' => '更新元字段'],
             ['action' => 'destroy', 'name' => '删除'],
             ['action' => 'categories', 'name' => '获取可用类目'],
             ['action' => 'preview', 'name' => '预览'],
@@ -85,6 +86,12 @@ class ArticleController extends Controller
         return ApiResponse::success($data);
     }
 
+    /**
+     * 更新
+     * @param Request $request
+     * @param Article $article
+     * @return ApiResponse
+     */
     public function update(Request $request, Article $article)
     {
         $this->validate($request, array(
@@ -101,6 +108,21 @@ class ArticleController extends Controller
         $article->update($data);
         $article->categories()->detach();
         $article->categories()->attach([$request->input('first_category_id')]);
+
+        return ApiResponse::success(null);
+    }
+
+    /**
+     * 更新元字段
+     * @param Request $request
+     * @param Article $article
+     * @return ApiResponse
+     */
+    public function updateMeta(Request $request, Article $article)
+    {
+        $keys = ['display'];
+        $data = $request->only($keys);
+        $article->update($data);
 
         return ApiResponse::success(null);
     }
