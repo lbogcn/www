@@ -153,6 +153,6 @@ class Qiniu implements Contracts
      */
     public function getUrl($key)
     {
-        return 'http://' . config('upload.services.qiniu.public_domain') . '/' . $key;
+        return '//' . config('upload.services.qiniu.public_domain') . '/' . $key;
     }
 }
