@@ -52,6 +52,11 @@
     "name": "control",
     "title": "控制中心",
     "childs": {
+      "keyvalue": {
+        "name": "keyvalue",
+        "title": "通用配置",
+        "icon": "el-icon-lb-yewucaozuoyingshe"
+      },
       "permission": {
         "name": "permission",
         "title": "权限管理",

@@ -32,6 +32,7 @@ Route::group(array(
         Route::put('article/meta/{article}', 'Article\ArticleController@updateMeta');
 
         Route::post('cover/static', 'CoverController@cache');
+        Route::post('key-value/static', 'KeyValueController@cache');
 
         Route::get('log/error/init', 'Log\ErrorController@init');
 
@@ -49,6 +50,7 @@ Route::group(array(
             'questionnaires' => 'QuestionnairesController',
             'message' => 'MessageController',
             'cover' => 'CoverController',
+            'key-value' => 'KeyValueController',
         ]);
     });
 });
