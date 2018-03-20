@@ -11,7 +11,7 @@ $cover = \App\Models\Cover::where('display', \App\Models\Cover::DISPLAY_SHOW)
 <header class="header" id="header" style="background-image: url({{url('/images/overlay-lba-x2.png')}}), url({{$cover->url or ''}})">
     <section class="headings">
         <a href="/">
-            <img src="http://cdn.lbog.cn/FtCx3GUQhmC1g2hyxvgRreIr2owN.jpg" class="avatar">
+            <img src="https://cdn.lbog.cn/FtCx3GUQhmC1g2hyxvgRreIr2owN.jpg" class="avatar">
         </a>
         <a href="/">
             <h1>{{config('app.name')}}</h1>
