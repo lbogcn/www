@@ -68,8 +68,13 @@ let HistoryLoad = (option) => {
             // 监听a标签的点击事件并拦截
             historyLoad.$el.querySelectorAll('a').forEach(node => {
                 node.onclick = (e) => {
-                    window.history.pushState(null, null, node.href);
-                    historyLoad.pajx(node.href, true);
+                    // 判断是否跨域
+                    if (node.href.indexOf(location.protocol + '//' + location.host + (location.port === '' || location.port === '80' ? '' : location.port)) === 0) {
+                        window.history.pushState(null, null, node.href);
+                        historyLoad.pajx(node.href, true);
+                    } else {
+                        window.open(node.href);
+                    }
                     e.preventDefault();
                 };
             });
