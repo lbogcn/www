@@ -46,3 +46,26 @@ $cover = \App\Models\Cover::where('display', \App\Models\Cover::DISPLAY_SHOW)
         <span class="corner">图片出处：<a href="{{$cover->source}}" target="_blank" class="cover-source">{{$cover->title}}</a></span>
     @endif
 </header>
+
+<div class="circle-loader" style="display: none;">
+    <div class="circle-line">
+        <div class="circle circle-blue"></div>
+        <div class="circle circle-blue"></div>
+        <div class="circle circle-blue"></div>
+    </div>
+    <div class="circle-line">
+        <div class="circle circle-yellow"></div>
+        <div class="circle circle-yellow"></div>
+        <div class="circle circle-yellow"></div>
+    </div>
+    <div class="circle-line">
+        <div class="circle circle-red"></div>
+        <div class="circle circle-red"></div>
+        <div class="circle circle-red"></div>
+    </div>
+    <div class="circle-line">
+        <div class="circle circle-green"></div>
+        <div class="circle circle-green"></div>
+        <div class="circle circle-green"></div>
+    </div>
+</div>

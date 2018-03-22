@@ -66,10 +66,21 @@
     color: #ccc;
     text-align: center;
     margin-top: 3em;
+
+    &.down {
+      position: fixed;
+      bottom: 30px;
+      left: 30%;
+      right: 0;
+    }
   }
 
   @media screen and (max-width: 992px) {
     margin-left: 0;
+
+    .copyright.down {
+      left: 0;
+    }
   }
 
   @media screen and (max-width: 768px) {

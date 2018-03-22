@@ -23,6 +23,7 @@ let HistoryLoad = (option) => {
                     return;
                 }
 
+                document.querySelector('.circle-loader').style.display = 'none';
                 historyLoad.$main.innerHTML = resp.data.data.view;
                 document.title = resp.data.data.title;
                 historyLoad.animation('show');
@@ -56,7 +57,9 @@ let HistoryLoad = (option) => {
 
             historyLoad.$main.addEventListener('animationend', function () {
                 if (historyLoad.$main.classList.contains('animation-hide')) {
+                    historyLoad.$main.innerHTML = '';
                     historyLoad.$main.style.opacity = 0;
+                    document.querySelector('.circle-loader').style.display = 'block';
                 }
 
                 if (historyLoad.$main.classList.contains('animation-show')) {
@@ -77,6 +80,14 @@ let HistoryLoad = (option) => {
         window.onpopstate = () => {
             historyLoad.pajx(location.href, false);
         };
+
+        setInterval(() => {
+            if (document.body.offsetHeight < window.innerHeight) {
+                document.querySelector('.copyright').classList.add('down');
+            } else {
+                document.querySelector('.copyright').classList.remove('down');
+            }
+        }, 100);
     })();
 
     return historyLoad;
