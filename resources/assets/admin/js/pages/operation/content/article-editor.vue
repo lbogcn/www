@@ -41,9 +41,13 @@
             </el-form-item>
 
             <el-form-item label="内容">
+                <el-row>
+                    <el-button-upload icon="el-icon-picture" type="default" @success="handleSuccessUploadArticleImage"> </el-button-upload>
+                </el-row>
+
                 <el-row class="editor">
                     <el-col class="markdown">
-                        <el-input v-model="storeData.markdown" type="textarea" :rows="20" placeholder="请输入正文内容" :style="{height: editorHeight}"></el-input>
+                        <el-input v-model="storeData.markdown" type="textarea" :rows="20" ref="markdown" placeholder="请输入正文内容" :style="{height: editorHeight}"></el-input>
                     </el-col>
 
                     <el-col class="content">
@@ -82,6 +86,22 @@
                 this.storeData.cover = data.url;
                 this.storeData.cover_width = parseInt(data.body.width);
                 this.storeData.cover_height = parseInt(data.body.height);
+            },
+            handleSuccessUploadArticleImage(data) {
+                let $ctn = this.$refs.markdown.$el.querySelector('textarea');
+                window.ctn = $ctn;
+                let selectionStart = $ctn.selectionStart;
+                let left  = this.storeData.markdown.substr(0, selectionStart);
+                let right = this.storeData.markdown.substr(selectionStart);
+                let image = `\n![](${data.url})\n`;
+
+                this.storeData.markdown = left + image + right;
+
+                this.$nextTick(() => {
+                    $ctn.focus();
+                    $ctn.selectionStart = selectionStart + 3;
+                    $ctn.selectionEnd = selectionStart + 3;
+                });
             },
             initStartData(id) {
                 let self = this;

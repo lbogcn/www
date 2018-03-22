@@ -1,6 +1,6 @@
 <template>
     <el-upload action="" :show-file-list="false" :http-request="httpRequest" :disabled="loading" class="el-button-upload">
-        <el-button type="success" size="mini" :loading="loading" icon="el-icon-upload">
+        <el-button :type="type || 'success'" size="mini" :loading="loading" :icon="icon || 'el-icon-upload'">
             <slot></slot>
         </el-button>
     </el-upload>
@@ -13,6 +13,7 @@
                 loading: false,
             };
         },
+        props: ['icon', 'type'],
         computed: {
             uploadToken() {return this.$store.state.uploadToken;},
         },
