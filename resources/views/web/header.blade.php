@@ -47,7 +47,7 @@ $cover = \App\Models\Cover::where('display', \App\Models\Cover::DISPLAY_SHOW)
     @endif
 </header>
 
-<div class="circle-loader" style="display: none;">
+<div class="circle-loader hide">
     <div class="circle-line">
         <div class="circle circle-blue"></div>
         <div class="circle circle-blue"></div>

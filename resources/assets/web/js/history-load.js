@@ -23,7 +23,6 @@ let HistoryLoad = (option) => {
                     return;
                 }
 
-                document.querySelector('.circle-loader').style.display = 'none';
                 historyLoad.$main.innerHTML = resp.data.data.view;
                 document.title = resp.data.data.title;
                 historyLoad.animation('show');
@@ -59,10 +58,11 @@ let HistoryLoad = (option) => {
                 if (historyLoad.$main.classList.contains('animation-hide')) {
                     historyLoad.$main.innerHTML = '';
                     historyLoad.$main.style.opacity = 0;
-                    document.querySelector('.circle-loader').style.display = 'block';
+                    document.querySelector('.circle-loader').classList.remove('hide');
                 }
 
                 if (historyLoad.$main.classList.contains('animation-show')) {
+                    document.querySelector('.circle-loader').classList.add('hide');
                     historyLoad.$main.style.opacity = 1;
                 }
 
