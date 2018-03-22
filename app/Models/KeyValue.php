@@ -22,7 +22,7 @@ class KeyValue extends Eloquent
     /**
      * 静态化
      */
-    public function cache()
+    public static function cache()
     {
         $rows = self::select(['key', 'value'])
             ->get()
@@ -41,12 +41,14 @@ class KeyValue extends Eloquent
      */
     public static function getValue($key, $default = null)
     {
-        if (Cache::has(self::CACHE_KEY)) {
-            $keyValues = Cache::get(self::CACHE_KEY);
+        if (!Cache::has(self::CACHE_KEY)) {
+            self::cache();
+        }
 
-            if (array_key_exists($key, $keyValues)) {
-                return $keyValues[$key];
-            }
+        $keyValues = Cache::get(self::CACHE_KEY);
+
+        if (array_key_exists($key, $keyValues)) {
+            return $keyValues[$key];
         }
 
         return $default;

@@ -94,12 +94,11 @@ class KeyValueController extends Controller
 
     /**
      * 静态化
-     * @param KeyValue $keyValue
      * @return ApiResponse
      */
-    public function cache(KeyValue $keyValue)
+    public function cache()
     {
-        $keyValue->cache();
+        KeyValue::cache();
 
         return ApiResponse::success(null);
     }
