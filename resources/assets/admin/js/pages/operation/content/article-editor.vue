@@ -85,19 +85,23 @@
             },
             initStartData(id) {
                 let self = this;
-                if (id) {
-                    this.$http.get('/article/' + id).then(resp => {
-                        if (resp.data.code === 0) {
-                            self.storeData = resp.data.data.article;
-                        }
-                    });
-                } else {
-                    this.storeData = {title: null, cover: null, cover_width: 0, cover_height: 0, excerpt: null, weight: 10, display: 1, markdown: '', content: null, first_category_id: null};
-                }
+
+                return new Promise((resolve) => {
+                    if (id) {
+                        this.$http.get('/article/' + id).then(resp => {
+                            if (resp.data.code === 0) {
+                                self.storeData = resp.data.data.article;
+                            }
+                        }).then(resolve, resolve);
+                    } else {
+                        this.storeData = {title: null, cover: null, cover_width: 0, cover_height: 0, excerpt: null, weight: 10, display: 1, markdown: '', content: null, first_category_id: null};
+                        resolve();
+                    }
+                });
             },
             loadCategory() {
                 let self = this;
-                this.$http.get('/article-categories').then(resp => {
+                return this.$http.get('/article-categories').then(resp => {
                     if (resp.data.code === 0) {
                         self.categories = resp.data.data.categories;
                     }
@@ -108,6 +112,10 @@
                 let cbk = resp => {
                     if (resp.data.code === 0) {
                         self.$message({type: 'success', message: '保存成功!'});
+
+                        // 删除本地备份
+                        localStorage.removeItem(this.backupKey());
+
                         this.$router.push({path: '/operation/content/article'});
                     }
                 };
@@ -117,16 +125,41 @@
                 } else {
                     this.$http.post('/article', this.storeData).then(cbk);
                 }
-            }
+            },
+            loadLocalStorage(backupData) {
+                let self = this;
+                if (backupData && backupData !== self.storeData.markdown) {
+                    this.$confirm('检测到本地有备份数据，是否恢复？', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        self.storeData.markdown = backupData;
+                    }, () => {
+                        localStorage.removeItem(this.backupKey());
+                    });
+                }
+            },
+            backupKey() {
+                return 'article-backup-' + this.$route.path.substr(16, this.$route.path.length);
+            },
         },
         watch: {
             'storeData.markdown': _.debounce(function (val) {
                 this.storeData.content = marked(val, {sanitize: true});
 
+                // 本地备份
+                localStorage.setItem(this.backupKey(), val.trim());
+
                 if (this.$refs.content) {
                     let self = this;
                     this.$nextTick(() => {
-                        self.editorHeight = self.$refs.content.offsetHeight + 'px';
+                        let height = self.$refs.content.offsetHeight;
+                        if (height < 300) {
+                            height = 300;
+                        }
+
+                        self.editorHeight = height + 'px';
                     });
                 }
             }, 300),
@@ -135,8 +168,14 @@
             },
         },
         mounted() {
-            this.initStartData(this.$route.params.id);
-            this.loadCategory();
+            let self = this;
+            let  backupData = localStorage.getItem(this.backupKey());
+
+            self.initStartData(this.$route.params.id).then(() => {
+                self.loadCategory().then(() => {
+                    self.loadLocalStorage(backupData);
+                });
+            });
         }
     }
 </script>
