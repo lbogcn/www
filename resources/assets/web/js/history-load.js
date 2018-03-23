@@ -55,19 +55,21 @@ let HistoryLoad = (option) => {
                 };
             });
 
-            historyLoad.$main.addEventListener('animationend', function (e) {
-                if (historyLoad.$main.classList.contains('animation-hide')) {
-                    // historyLoad.$main.innerHTML = '';
-                    historyLoad.$main.style.opacity = 0;
-                    document.querySelector('.circle-loader').classList.remove('hide');
-                }
+            window.addEventListener('animationend', function (e) {
+                if (e.target === historyLoad.$main) {
+                    if (historyLoad.$main.classList.contains('animation-hide')) {
+                        // historyLoad.$main.innerHTML = '';
+                        historyLoad.$main.style.opacity = 0;
+                        document.querySelector('.circle-loader').classList.remove('hide');
+                    }
 
-                if (historyLoad.$main.classList.contains('animation-show')) {
-                    historyLoad.$main.style.opacity = 1;
-                }
+                    if (historyLoad.$main.classList.contains('animation-show')) {
+                        historyLoad.$main.style.opacity = 1;
+                    }
 
-                historyLoad.$main.classList.remove('animation-hide');
-                historyLoad.$main.classList.remove('animation-show');
+                    historyLoad.$main.classList.remove('animation-hide');
+                    historyLoad.$main.classList.remove('animation-show');
+                }
             });
         }
     };
