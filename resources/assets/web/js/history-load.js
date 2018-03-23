@@ -54,9 +54,9 @@ let HistoryLoad = (option) => {
                 };
             });
 
-            historyLoad.$main.addEventListener('animationend', function () {
+            historyLoad.$main.addEventListener('animationend', function (e) {
                 if (historyLoad.$main.classList.contains('animation-hide')) {
-                    historyLoad.$main.innerHTML = '';
+                    // historyLoad.$main.innerHTML = '';
                     historyLoad.$main.style.opacity = 0;
                     document.querySelector('.circle-loader').classList.remove('hide');
                 }
