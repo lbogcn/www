@@ -26,6 +26,7 @@ let HistoryLoad = (option) => {
                 historyLoad.$main.innerHTML = resp.data.data.view;
                 document.title = resp.data.data.title;
                 historyLoad.animation('show');
+                document.querySelector('.circle-loader').classList.add('hide');
 
                 // 页面载入新html后需要重新监听事件
                 historyLoad.listen();
@@ -62,7 +63,6 @@ let HistoryLoad = (option) => {
                 }
 
                 if (historyLoad.$main.classList.contains('animation-show')) {
-                    document.querySelector('.circle-loader').classList.add('hide');
                     historyLoad.$main.style.opacity = 1;
                 }
 
