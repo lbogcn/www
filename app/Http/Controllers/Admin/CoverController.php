@@ -51,7 +51,7 @@ class CoverController extends Controller
     {
         $this->validate($request, array(
             'title' => ['required', 'max:50'],
-            'url' => ['required', 'url', 'max:500'],
+            'url' => ['required', 'max:500'],
             'source' => ['required', 'url', 'max:500'],
             'weight' => ['required', 'min:1', 'max:100', 'integer'],
             'display' => ['required', 'in:1,2'],
@@ -73,7 +73,7 @@ class CoverController extends Controller
     {
         $this->validate($request, array(
             'title' => ['required', 'max:50'],
-            'url' => ['required', 'url', 'max:500'],
+            'url' => ['required', 'max:500'],
             'source' => ['required', 'url', 'max:500'],
             'weight' => ['required', 'min:1', 'max:100', 'integer'],
             'display' => ['required', 'in:1,2'],
