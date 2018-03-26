@@ -168,7 +168,7 @@
     }
 
     .container{
-        position: absolute;
+        position: fixed;
         top: 61px;
         left: 0;
         right: 0;

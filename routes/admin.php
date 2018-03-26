@@ -20,6 +20,8 @@ Route::group(array(
         'middleware' => ['admin'],
     ), function() {
 
+        Route::get('stat', 'StatController@index');
+
         Route::get('upload-token', 'HomeController@uploadToken');
         Route::post('upload', 'HomeController@upload');
 

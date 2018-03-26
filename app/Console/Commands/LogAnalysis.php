@@ -60,6 +60,7 @@ class LogAnalysis extends Command
             config('enum.stat.aos_count.code') => "cat :file | grep ':date' | grep 'Android' | awk '{print \"value\"}' |uniq -c | head -n 1",
             config('enum.stat.ios_count.code') => "cat :file | grep ':date' | grep 'iPhone' | awk '{print \"value\"}' |uniq -c | head -n 1",
             config('enum.stat.wechat_count.code') => "cat :file | grep ':date' | grep 'MicroMessenger' | awk '{print \"value\"}' |uniq -c | head -n 1",
+            config('enum.stat.pv.code') => "cat :file | grep ':date' | awk '{print \"value\"}' | sort | uniq -c | sort -nr | head -n 10",
         );
     }
 

@@ -6,6 +6,7 @@ use Eloquent;
 
 /**
  * @property int $id
+ * @property int count
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  */
