@@ -26,21 +26,57 @@ class StatController extends Controller
         $daily = intval($request->input('daily')) - 1;
         $type = $request->input('type');
 
-        $statsConfig = config('enum.stat');
-
         if ($daily > 60) {
             return ApiResponse::fail('只允许查询60天内数据');
         }
 
-        if (!isset($statsConfig[$type]) && $type != '') {
+        $method = 'stat' . studly_case($type);
+        if (!method_exists($this, $method)) {
             return ApiResponse::fail('无效类型');
         }
 
-        $rows = array(
-            $type => $this->{'stat' . studly_case($type)}($daily),
+        $data = array(
+            $type => $this->$method($daily),
         );
 
-        return ApiResponse::success($rows);
+        return ApiResponse::success($data);
+    }
+
+    /**
+     * 移动流量
+     * @param $daily
+     * @return array
+     */
+    protected function statMobileTraffic($daily)
+    {
+        $enums = [
+            config('enum.stat.aos_count'),
+            config('enum.stat.ios_count'),
+            config('enum.stat.wechat_count'),
+        ];
+        $keys = array_column($enums, 'code');
+
+        $date = date('Y-m-d', strtotime("-{$daily} days"));
+        $stats = Stat::select(['type', \DB::raw('count(*) as count')])
+            ->where('date', '>=', $date)
+            ->whereIn('type', $keys)
+            ->groupBy('type')
+            ->get();
+        $rows = [];
+
+        foreach ($enums as $enum) {
+            /** @var Stat $row */
+            $row = $stats->where('type', $enum['code'])
+                ->first();
+
+            $value = empty($row) ? 0 : $row->count;
+            $rows[] = array(
+                'name' => $enum['label'],
+                'value' => intval($value),
+            );
+        }
+
+        return $rows;
     }
 
     /**

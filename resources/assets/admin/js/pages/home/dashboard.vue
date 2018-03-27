@@ -25,6 +25,20 @@
                 <div id="stat-baiduspider-chart" style="width: 100%; height: 300px;"></div>
             </el-col>
         </el-row>
+
+        <el-row>
+            <el-col :span="12" class="stat-box" id="stat-mobiletraffic">
+                <h3 class="title">移动流量</h3>
+
+                <el-radio-group v-model="stat.mobile_traffic.daily" size="mini">
+                    <el-radio-button :label="1">昨天</el-radio-button>
+                    <el-radio-button :label="7">最近7日</el-radio-button>
+                    <el-radio-button :label="30">最近30日</el-radio-button>
+                </el-radio-group>
+
+                <div id="stat-mobiletraffic-chart" style="width: 100%; height: 300px;"></div>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -37,6 +51,7 @@
                 stat: {
                     pv: {daily: 0, chart: null,},
                     baidu_spider: {daily: 0, chart: null,},
+                    mobile_traffic: {daily: 0, chart: null,},
                 }
             };
         },
@@ -54,14 +69,14 @@
                     });
                 });
             },
-            drawPv(axis, series){
+            drawPv(axis, series) {
                 this.stat.pv.chart.setOption({
                     //数据提示框配置
                     tooltip: {trigger: 'axis'},
                     //轴配置
                     xAxis: [{
                         type: 'category',
-                        data:  axis,
+                        data: axis,
                     }],
                     //Y轴配置
                     yAxis: [{
@@ -75,14 +90,14 @@
                     }]
                 });
             },
-            drawBaiduSpider(axis, series){
+            drawBaiduSpider(axis, series) {
                 this.stat.baidu_spider.chart.setOption({
                     //数据提示框配置
                     tooltip: {trigger: 'axis'},
                     //轴配置
                     xAxis: [{
                         type: 'category',
-                        data:  axis,
+                        data: axis,
                     }],
                     //Y轴配置
                     yAxis: [{
@@ -93,6 +108,28 @@
                         name: '浏览量（PV）',
                         type: 'line',
                         data: series,
+                    }]
+                });
+            },
+            drawMobileTraffic(data) {
+                this.stat.mobile_traffic.chart.setOption({
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    series: [{
+                        name: 'PV',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['40%', '50%'],
+                        data: data,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
                     }]
                 });
             }
@@ -110,6 +147,12 @@
                     self.drawBaiduSpider(Object.keys(data), Object.values(data));
                 });
             },
+            'stat.mobile_traffic.daily'(val) {
+                let self = this;
+                this.queryStat('mobile_traffic', val, '#stat-mobiletraffic').then(data => {
+                    self.drawMobileTraffic(data);
+                });
+            },
         },
         created() {
             this.$nextTick(function() {
@@ -117,6 +160,8 @@
                 this.stat.pv.daily = 7;
                 this.stat.baidu_spider.chart = echarts.init(document.getElementById('stat-baiduspider-chart'));
                 this.stat.baidu_spider.daily = 7;
+                this.stat.mobile_traffic.chart = echarts.init(document.getElementById('stat-mobiletraffic-chart'));
+                this.stat.mobile_traffic.daily = 7;
             })
         },
     }
