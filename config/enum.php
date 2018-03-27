@@ -1,6 +1,10 @@
 <?php
 
 return array(
+    'display' => array(
+        'show' => ['code' => 1, 'label' => '显示'],
+        'hide' => ['code' => 2, 'label' => '隐藏'],
+    ),
     'stat' => array(
         'top_url' =>        ['code' => 1, 'label' => 'URL访问量Top', 'key' => 'top_url'],
         'top_ip' =>         ['code' => 2, 'label' => 'IP访问量Top', 'key' => 'top_ip'],

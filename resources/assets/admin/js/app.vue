@@ -188,7 +188,7 @@
         z-index: 10001;
 
         &:not(.el-menu--collapse) {
-            width: 200px;
+            width: 201px;
 
             .menu-collapse{
                 text-align: right;

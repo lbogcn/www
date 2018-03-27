@@ -19,8 +19,6 @@ use Eloquent;
 class ArticleCategory extends Eloquent
 {
 
-    const DISPLAY_SHOW = 1;
-
     const TYPE_MODULE = 1;
 
     public $fillable = [

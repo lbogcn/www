@@ -20,7 +20,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         /** @var \Illuminate\Pagination\Paginator $articles */
-        $articles = Article::where('display', Article::DISPLAY_SHOW)
+        $articles = Article::where('display', config('enum.display.show.code'))
             ->orderBy('weight', 'desc')
             ->orderBy('id', 'desc')
             ->simplePaginate(10);

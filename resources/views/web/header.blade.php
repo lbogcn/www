@@ -1,9 +1,9 @@
 <?php
-$categories = \App\Models\ArticleCategory::where('display', \App\Models\ArticleCategory::DISPLAY_SHOW)
+$categories = \App\Models\ArticleCategory::where('display', config('enum.display.show.code'))
     ->orderBy('weight', 'desc')
     ->orderBy('id', 'desc')
     ->get();
-$cover = \App\Models\Cover::where('display', \App\Models\Cover::DISPLAY_SHOW)
+$cover = \App\Models\Cover::where('display', config('enum.display.show.code'))
     ->orderBy('weight', 'desc')
     ->orderBy('id', 'desc')
     ->first();

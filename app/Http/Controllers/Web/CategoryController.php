@@ -19,7 +19,7 @@ class CategoryController extends Controller
     {
         Route::bind('alias', function ($value) {
             return ArticleCategory::where('alias', $value)
-                ->where('display', ArticleCategory::DISPLAY_SHOW)
+                ->where('display', config('enum.display.show.code'))
                 ->where('type', ArticleCategory::TYPE_MODULE)
                 ->first();
         });
@@ -36,7 +36,7 @@ class CategoryController extends Controller
     {
         $articles = Article::select('articles.*')
             ->join('article_category', 'article_id', '=', 'id')
-            ->where('display', Article::DISPLAY_SHOW)
+            ->where('display', config('enum.display.show.code'))
             ->where('category_id', $alias->id)
             ->orderBy('weight', 'desc')
             ->orderBy('id', 'desc')

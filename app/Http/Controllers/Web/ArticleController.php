@@ -19,7 +19,7 @@ class ArticleController extends Controller
      */
     public function index(Request $request, Article $article)
     {
-        if ($article->display != Article::DISPLAY_SHOW) {
+        if ($article->display != config('enum.display.show.code')) {
             return abort(404);
         }
 

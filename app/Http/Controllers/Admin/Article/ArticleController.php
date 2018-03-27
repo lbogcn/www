@@ -146,7 +146,7 @@ class ArticleController extends Controller
      */
     public function categories()
     {
-        $rows = ArticleCategory::where('display', ArticleCategory::DISPLAY_SHOW)
+        $rows = ArticleCategory::where('display', config('enum.display.show.code'))
             ->where('type', ArticleCategory::TYPE_MODULE)
             ->orderBy('weight', 'desc')
             ->orderBy('id', 'desc')

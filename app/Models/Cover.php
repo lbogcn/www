@@ -17,8 +17,6 @@ use Eloquent;
 class Cover extends Eloquent
 {
 
-    const DISPLAY_SHOW = 1;
-
     public $fillable = [
         'title', 'url', 'weight', 'display', 'source'
     ];
@@ -29,7 +27,7 @@ class Cover extends Eloquent
     public function cache()
     {
         $covers = self::select(['url', 'source', 'title'])
-            ->where('display', Cover::DISPLAY_SHOW)
+            ->where('display', config('enum.display.show.code'))
             ->orderBy('weight', 'desc')
             ->orderBy('id', 'desc')
             ->get();

@@ -32,8 +32,6 @@ class Article extends Eloquent
 
     use SoftDeletes;
 
-    const DISPLAY_SHOW = 1;
-
     public $fillable = [
         'title', 'author', 'cover', 'cover_width', 'cover_height', 'excerpt', 'weight', 'pv', 'display', 'content', 'markdown'
     ];
