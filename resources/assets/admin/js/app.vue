@@ -138,8 +138,9 @@
     .el-header {
         background-color: #545c64;
         padding: 0;
-        position: relative;
-        z-index: 10001;
+        position: fixed;
+        z-index: 1999;
+        width: 100%;
 
         .brand{
             float: left;
