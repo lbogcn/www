@@ -4,7 +4,7 @@
             <i class="el-icon-arrow-left back" @click="back"></i>
         </header>
 
-        <el-form size="small" label-width="100px">
+        <el-form label-width="100px">
             <el-form-item label="标题" class="default-form-item">
                 <el-input v-model="storeData.title"></el-input>
             </el-form-item>
@@ -57,7 +57,7 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button type="primary" size="mini" @click="handleStore">保存</el-button>
+                <el-button type="primary" @click="handleStore">保存</el-button>
             </el-form-item>
         </el-form>
     </div>

@@ -4,7 +4,7 @@
             <span>修改密码</span>
         </div>
         <div class="text item">
-            <el-form size="small" label-width="80px">
+            <el-form label-width="80px">
                 <el-form-item label="原密码">
                     <el-input v-model="form.old_password" type="password"></el-input>
                 </el-form-item>
@@ -18,7 +18,7 @@
                 </el-form-item>
 
                 <el-form-item>
-                    <el-button size="mini" type="primary" @click="handleSubmit">提交</el-button>
+                    <el-button type="primary" @click="handleSubmit">提交</el-button>
                 </el-form-item>
             </el-form>
         </div>

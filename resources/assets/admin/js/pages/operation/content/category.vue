@@ -10,7 +10,7 @@
 
         <el-row>
             <el-col>
-                <el-table size="small" :data="paginate.data" stripe>
+                <el-table :data="paginate.data" stripe>
                     <el-table-column prop="alias" label="别名"></el-table-column>
                     <el-table-column prop="title" label="标题"></el-table-column>
                     <el-table-column label="链接">
@@ -24,21 +24,21 @@
                     <el-table-column prop="weight" label="权重" width="80px"></el-table-column>
                     <el-table-column prop="type" label="类型">
                         <template slot-scope="scope">
-                            <el-tag size="small" type="success" v-if="scope.row.type === 1">内部模块</el-tag>
-                            <el-tag size="small" v-if="scope.row.type === 2">外部链接</el-tag>
+                            <el-tag type="success" v-if="scope.row.type === 1">内部模块</el-tag>
+                            <el-tag v-if="scope.row.type === 2">外部链接</el-tag>
                         </template>
                     </el-table-column>
                     <el-table-column prop="display" label="状态">
                         <template slot-scope="scope">
-                            <el-tag size="small" type="success" v-if="scope.row.display === 1">显示</el-tag>
-                            <el-tag size="small" type="danger" v-if="scope.row.display !== 1">隐藏</el-tag>
+                            <el-tag type="success" v-if="scope.row.display === 1">显示</el-tag>
+                            <el-tag type="danger" v-if="scope.row.display !== 1">隐藏</el-tag>
                         </template>
                     </el-table-column>
                     <el-table-column prop="created_at" label="创建时间"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="mini">编辑</el-button>
-                            <el-button @click="handleDelete(scope.$index, scope.row)" type="text" size="mini">删除</el-button>
+                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text">编辑</el-button>
+                            <el-button @click="handleDelete(scope.$index, scope.row)" type="text">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -52,7 +52,7 @@
         </el-row>
 
         <el-dialog :visible.sync="dialogVisibleStore" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
-            <el-form size="small" label-width="80px">
+            <el-form label-width="80px">
                 <el-form-item label="别名">
                     <el-input v-model="storeData.alias" placeholder="英文且唯一，显示在url上" :disabled="!!storeData.id"></el-input>
                 </el-form-item>
@@ -85,7 +85,7 @@
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handleStore">保存</el-button>
+                <el-button type="primary" @click="handleStore">保存</el-button>
             </span>
         </el-dialog>
     </div>

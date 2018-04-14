@@ -16,7 +16,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import '../less/global.less';
 import '../../less/article-body.less';
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, {size: 'mini'});
 
 Vue.prototype.$http = http;
 

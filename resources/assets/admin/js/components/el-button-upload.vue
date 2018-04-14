@@ -1,6 +1,6 @@
 <template>
     <el-upload action="" :show-file-list="false" :http-request="httpRequest" :disabled="loading" class="el-button-upload">
-        <el-button :type="type || 'success'" size="mini" :loading="loading" :icon="icon || 'el-icon-upload'">
+        <el-button :type="type || 'success'" :loading="loading" :icon="icon || 'el-icon-upload'">
             <slot></slot>
         </el-button>
     </el-upload>

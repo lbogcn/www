@@ -11,13 +11,13 @@
 
         <el-row>
             <el-col>
-                <el-table size="small" :data="paginate.data" stripe>
+                <el-table :data="paginate.data" stripe>
                     <el-table-column prop="title" label="标题"></el-table-column>
                     <el-table-column prop="created_at" label="创建时间"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="mini">编辑</el-button>
-                            <el-button @click="handleDelete(scope.$index, scope.row)" type="text" size="mini">删除</el-button>
+                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text">编辑</el-button>
+                            <el-button @click="handleDelete(scope.$index, scope.row)" type="text">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -32,7 +32,7 @@
 
         <el-dialog :visible.sync="dialogVisibleStore" :modal-append-to-body="false" :close-on-click-modal="false" width="600px">
 
-            <el-form size="small" label-width="80px">
+            <el-form label-width="80px">
                 <el-form-item label="标题">
                     <el-input v-model="storeData.title"></el-input>
                 </el-form-item>
@@ -70,7 +70,7 @@
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handleStore">保存</el-button>
+                <el-button type="primary" @click="handleStore">保存</el-button>
             </span>
         </el-dialog>
 

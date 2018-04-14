@@ -11,16 +11,16 @@
 
         <el-row>
             <el-col>
-                <el-table size="small" :data="paginate.data" stripe>
+                <el-table :data="paginate.data" stripe>
                     <el-table-column prop="username" label="用户名"></el-table-column>
                     <el-table-column prop="name" label="姓名"></el-table-column>
                     <el-table-column prop="roles_text" label="所属角色"></el-table-column>
                     <el-table-column prop="created_at" label="创建时间"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="handleShowRole(scope.row)" type="text" size="mini">角色</el-button>
-                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="mini">编辑</el-button>
-                            <el-button @click="handleDelete(scope.$index, scope.row)" type="text" size="mini">删除</el-button>
+                            <el-button @click="handleShowRole(scope.row)" type="text">角色</el-button>
+                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text">编辑</el-button>
+                            <el-button @click="handleDelete(scope.$index, scope.row)" type="text">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -34,7 +34,7 @@
         </el-row>
 
         <el-dialog :visible.sync="dialogVisibleUser" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
-            <el-form size="small" label-width="80px">
+            <el-form label-width="80px">
                 <el-form-item label="用户名">
                     <el-input v-model="storeData.username" :disabled="!!storeData.id"></el-input>
                 </el-form-item>
@@ -49,14 +49,14 @@
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handleStore">保存</el-button>
+                <el-button type="primary" @click="handleStore">保存</el-button>
             </span>
         </el-dialog>
 
         <search-form :data.sync="searchFormData" @submit="search"></search-form>
 
         <el-dialog :visible.sync="dialogVisibleRole" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
-            <el-form size="small" label-width="80px">
+            <el-form label-width="80px">
                 <el-form-item label="用户">
                     <p>{{storeDataRole.user.username}} - {{storeDataRole.user.name}}</p>
                 </el-form-item>
@@ -69,7 +69,7 @@
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handleStoreRole">保存</el-button>
+                <el-button type="primary" @click="handleStoreRole">保存</el-button>
             </span>
         </el-dialog>
     </div>

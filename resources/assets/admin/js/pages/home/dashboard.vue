@@ -6,7 +6,7 @@
             <el-col :span="12" class="stat-box" id="stat-pv">
                 <h3 class="title">PV统计</h3>
 
-                <el-radio-group v-model="stat.pv.daily" size="mini">
+                <el-radio-group v-model="stat.pv.daily">
                     <el-radio-button :label="7">最近7日</el-radio-button>
                     <el-radio-button :label="30">最近30日</el-radio-button>
                 </el-radio-group>
@@ -17,7 +17,7 @@
             <el-col :span="12" class="stat-box" id="stat-baiduspider">
                 <h3 class="title">百度抓取次数</h3>
 
-                <el-radio-group v-model="stat.baidu_spider.daily" size="mini">
+                <el-radio-group v-model="stat.baidu_spider.daily">
                     <el-radio-button :label="7">最近7日</el-radio-button>
                     <el-radio-button :label="30">最近30日</el-radio-button>
                 </el-radio-group>
@@ -30,7 +30,7 @@
             <el-col :span="12" class="stat-box" id="stat-mobiletraffic">
                 <h3 class="title">移动流量</h3>
 
-                <el-radio-group v-model="stat.mobile_traffic.daily" size="mini">
+                <el-radio-group v-model="stat.mobile_traffic.daily">
                     <el-radio-button :label="1">昨天</el-radio-button>
                     <el-radio-button :label="7">最近7日</el-radio-button>
                     <el-radio-button :label="30">最近30日</el-radio-button>

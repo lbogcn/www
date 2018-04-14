@@ -1,6 +1,6 @@
 <template>
     <el-dialog :visible.sync="data.visible" :modal-append-to-body="false" :close-on-click-modal="false" title="搜索" class="default-dialog">
-        <el-form :model="data" ref="searchForm" size="small" label-width="80px" @submit.native.prevent>
+        <el-form :model="data" ref="searchForm" label-width="80px" @submit.native.prevent>
             <el-form-item v-for="(item, index) in data.formItem" :label="item.label" :key="index" :prop="'formData.' + item.field">
                 <el-input v-model="data.formData[item.field]" v-if="item.type === 'input'"></el-input>
 
@@ -11,8 +11,8 @@
         </el-form>
 
         <span slot="footer" class="dialog-footer">
-            <el-button type="primary" size="mini" @click="$emit('submit')">搜索</el-button>
-            <el-button size="mini" @click="resetForm">重置</el-button>
+            <el-button type="primary" @click="$emit('submit')">搜索</el-button>
+            <el-button @click="resetForm">重置</el-button>
         </span>
     </el-dialog>
 </template>

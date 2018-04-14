@@ -4,7 +4,7 @@
 
         <el-row>
             <el-col>
-                <el-select size="mini" v-model="searchFormData.file">
+                <el-select v-model="searchFormData.file">
                     <el-option v-for="(file, index) in files" :key="index" :label="file" :value="file"></el-option>
                 </el-select>
             </el-col>

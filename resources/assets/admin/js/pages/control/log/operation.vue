@@ -11,7 +11,7 @@
 
         <el-row>
             <el-col>
-                <el-table size="small" :data="paginate.data" stripe>
+                <el-table :data="paginate.data" stripe>
                     <el-table-column prop="username" label="用户名"></el-table-column>
                     <el-table-column label="请求地址">
                         <template slot-scope="scope">
@@ -24,7 +24,7 @@
 
                     <el-table-column prop="method" label="请求方式">
                         <template slot-scope="scope">
-                            <el-tag size="small" :type="methodColor(scope.row.method)">{{scope.row.method}}</el-tag>
+                            <el-tag :type="methodColor(scope.row.method)">{{scope.row.method}}</el-tag>
                         </template>
                     </el-table-column>
 

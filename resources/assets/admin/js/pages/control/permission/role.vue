@@ -10,15 +10,15 @@
 
         <el-row>
             <el-col>
-                <el-table size="small" :data="paginate.data" stripe>
+                <el-table :data="paginate.data" stripe>
                     <el-table-column prop="role" label="角色"></el-table-column>
                     <el-table-column prop="name" label="描述"></el-table-column>
                     <el-table-column prop="created_at" label="创建时间"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="handleShowPermission(scope.row)" type="text" size="mini">权限</el-button>
-                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="mini">编辑</el-button>
-                            <el-button @click="handleDelete(scope.$index, scope.row)" type="text" size="mini">删除</el-button>
+                            <el-button @click="handleShowPermission(scope.row)" type="text">权限</el-button>
+                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text">编辑</el-button>
+                            <el-button @click="handleDelete(scope.$index, scope.row)" type="text">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -32,7 +32,7 @@
         </el-row>
 
         <el-dialog :visible.sync="dialogVisibleStore" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
-            <el-form size="small" label-width="80px">
+            <el-form label-width="80px">
                 <el-form-item label="角色">
                     <el-input v-model="storeData.role" :disabled="!!storeData.id"></el-input>
                 </el-form-item>
@@ -43,12 +43,12 @@
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handleStore">保存</el-button>
+                <el-button type="primary" @click="handleStore">保存</el-button>
             </span>
         </el-dialog>
 
         <el-dialog :visible.sync="dialogVisiblePermission" :modal-append-to-body="false" :close-on-click-modal="false" width="600px">
-            <el-form size="small" label-width="160px">
+            <el-form label-width="160px">
                 <el-form-item v-for="(permissions, group) in permissionsGroups" :label="group" :key="group">
                     <el-checkbox-group v-model="storeDataPermission.node_id">
                         <el-checkbox v-for="permission in permissions" :label="permission.id" :key="permission.id" class="checkbox-permission-item">{{permission.node}}</el-checkbox>
@@ -57,7 +57,7 @@
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handleStorePermission">保存</el-button>
+                <el-button type="primary" @click="handleStorePermission">保存</el-button>
             </span>
         </el-dialog>
     </div>

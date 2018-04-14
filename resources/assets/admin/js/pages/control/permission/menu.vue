@@ -4,7 +4,7 @@
 
         <el-row>
             <el-col class="text-right">
-                <!--<el-button type="success" size="mini" @click="">新建</el-button>-->
+                <!--<el-button type="success" @click="">新建</el-button>-->
             </el-col>
         </el-row>
 
@@ -22,7 +22,7 @@
         </el-row>
 
         <el-dialog :visible.sync="dialogVisibleEdit" :modal-append-to-body="false" :close-on-click-modal="false">
-            <el-form size="small" label-width="80px">
+            <el-form label-width="80px">
                 <el-form-item label="菜单">
                     <p>{{storeData.menuTitle}}</p>
                 </el-form-item>
@@ -34,7 +34,7 @@
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handleStore">保存</el-button>
+                <el-button type="primary" @click="handleStore">保存</el-button>
             </span>
         </el-dialog>
     </div>
@@ -118,7 +118,7 @@
                         h('span', [
                             h('span', roleText),
                             h('el-button', {
-                                attrs: {size: 'mini', type: 'text'},
+                                attrs: {type: 'text'},
                                 on: {
                                     click: function () {
                                         self.handleEdit(data);

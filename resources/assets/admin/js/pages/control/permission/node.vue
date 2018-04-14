@@ -6,21 +6,21 @@
             <el-col class="text-right">
                 <el-button-search @click="searchFormData.visible = true">搜索</el-button-search>
                 <el-button-create @click="handleCreate">新建</el-button-create>
-                <el-button type="danger" size="mini" @click="handleSync" icon="el-icon-lb-sync">一键同步</el-button>
+                <el-button type="danger" @click="handleSync" icon="el-icon-lb-sync">一键同步</el-button>
             </el-col>
         </el-row>
 
         <el-row>
             <el-col>
-                <el-table size="small" :data="paginate.data" stripe>
+                <el-table :data="paginate.data" stripe>
                     <el-table-column prop="group" label="所在组"></el-table-column>
                     <el-table-column prop="node" label="名称"></el-table-column>
                     <el-table-column prop="route" label="路由"></el-table-column>
                     <el-table-column prop="created_at" label="创建时间"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="mini">编辑</el-button>
-                            <el-button @click="handleDelete(scope.$index, scope.row)" type="text" size="mini">删除</el-button>
+                            <el-button @click="handleEdit(scope.$index, scope.row)" type="text">编辑</el-button>
+                            <el-button @click="handleDelete(scope.$index, scope.row)" type="text">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -34,7 +34,7 @@
         </el-row>
 
         <el-dialog :visible.sync="userDialogVisible" :modal-append-to-body="false" :close-on-click-modal="false" class="default-dialog">
-            <el-form size="small" label-width="80px">
+            <el-form label-width="80px">
                 <el-form-item label="所在组">
                     <el-select v-model="storeData.group" filterable allow-create clearable>
                         <el-option v-for="item in groups" :key="item.group" :value="item.group" :label="item.group"></el-option>
@@ -51,7 +51,7 @@
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="handleStore">保存</el-button>
+                <el-button type="primary" @click="handleStore">保存</el-button>
             </span>
         </el-dialog>
 
