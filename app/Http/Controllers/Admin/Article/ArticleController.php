@@ -55,7 +55,7 @@ class ArticleController extends Controller
     {
         $this->validate($request, array(
             'title' => ['required', 'min:1', 'max:60'],
-            'cover' => ['required', 'url'],
+            'cover' => ['required'],
             'excerpt' => ['required', 'max:500'],
             'weight' => ['required', 'min:1', 'max:100', 'integer'],
             'display' => ['required', 'in:1,2'],
@@ -94,9 +94,13 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
+        if ($request->method() == Request::METHOD_PATCH) {
+            return $this->patch($request, $article);
+        }
+
         $this->validate($request, array(
             'title' => ['required', 'min:1', 'max:60'],
-            'cover' => ['required', 'url'],
+            'cover' => ['required'],
             'excerpt' => ['required', 'max:500'],
             'weight' => ['required', 'min:1', 'max:100', 'integer'],
             'display' => ['required', 'in:1,2'],
@@ -118,7 +122,7 @@ class ArticleController extends Controller
      * @param Article $article
      * @return ApiResponse
      */
-    public function updateMeta(Request $request, Article $article)
+    public function patch(Request $request, Article $article)
     {
         $keys = ['display'];
         $data = $request->only($keys);

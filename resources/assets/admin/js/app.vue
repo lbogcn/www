@@ -100,26 +100,23 @@
                 }
             },
             logout() {
-                let self = this;
-                this.$http.get('/logout').then(resp => {
-                    if (resp.data.code === 0) {
-                        self.$store.commit('afterLogout');// 置空菜单
-                        self.$router.push({path: '/login'});
-                    }
+                this.$http.get('/logout').then(() => {
+                    self.$store.commit('afterLogout');// 置空菜单
+                    self.$router.push({path: '/login'});
                 });
             },
             globalHttpResponse() {
                 let self = this;
-                this.$http.interceptors.response.use(resp => {
-                    switch (resp.data.code) {
-                        case -10001:
-                            self.$store.commit('afterLogout');// 置空菜单
-                            self.$router.push({path: '/login'});
-                            break;
-                    }
-
-                    return resp;
-                }, error => {return Promise.reject(error);});
+                // this.$http.interceptors.response.use(resp => {
+                //     switch (resp.data.code) {
+                //         case -10001:
+                //             self.$store.commit('afterLogout');// 置空菜单
+                //             self.$router.push({path: '/login'});
+                //             break;
+                //     }
+                //
+                //     return resp;
+                // }, error => {return Promise.reject(error);});
             }
         },
         watch: {

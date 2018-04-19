@@ -11,6 +11,20 @@ export default new Vuex.Store({
         user: {},
         appName: '',
         uploadToken: null,
+        resources: Object.assign({}, {
+            KeyValue: '/key-value',
+            LogOperation: '/log/operation',
+            LogError: '/log/error',
+            PermissionNode: '/permission/node',
+            PermissionRole: '/permission/role',
+            PermissionUser: '/permission/user',
+            PermissionMenu: '/permission/menu',
+            Article: '/article',
+            ArticleCategory: '/article/category',
+            Cover: '/cover',
+            Message: '/message',
+            Questionnaires: '/questionnaires',
+        }),
     },
     mutations: {
         setMenus(state, menus) {
@@ -29,6 +43,7 @@ export default new Vuex.Store({
             state.user = {};
             state.menus = {};
             state.verticalMenus = {};
+            window.sessionStorage.removeItem('user');
         },
         loadMenus(state, app) {
             let initData = null;
@@ -48,11 +63,14 @@ export default new Vuex.Store({
             };
 
             if (!initData) {
-                app.$http.get('/init').then(resp => {
-                    if (resp.data.code === 0) {
-                        cbk(resp.data.data);
-                        window.sessionStorage.setItem('init_data', JSON.stringify(resp.data.data));
-                    }
+                if (!window.sessionStorage.getItem('user')) {
+                    app.$router.push({path: '/login'});
+                    return;
+                }
+
+                app.$http.get('/init').then(data => {
+                    cbk(data);
+                    window.sessionStorage.setItem('init_data', JSON.stringify(data));
                 }, err => {});
             } else {
                 cbk(initData);

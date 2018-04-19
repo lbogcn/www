@@ -78,6 +78,9 @@
                 editorHeight: 'auto',
             };
         },
+        computed: {
+            action() {return this.$store.state.resources.Article;},
+        },
         methods: {
             back() {
                 window.history.back();
@@ -108,10 +111,8 @@
 
                 return new Promise((resolve) => {
                     if (id) {
-                        this.$http.get('/article/' + id).then(resp => {
-                            if (resp.data.code === 0) {
-                                self.storeData = resp.data.data.article;
-                            }
+                        this.$http.resource.get(this.action, {id}).then(data => {
+                            self.storeData = data.article;
                         }).then(resolve, resolve);
                     } else {
                         this.storeData = {title: null, cover: null, cover_width: 0, cover_height: 0, excerpt: null, weight: 10, display: 1, markdown: '', content: null, first_category_id: null};
@@ -121,30 +122,21 @@
             },
             loadCategory() {
                 let self = this;
-                return this.$http.get('/article-categories').then(resp => {
-                    if (resp.data.code === 0) {
-                        self.categories = resp.data.data.categories;
-                    }
+                return this.$http.get('/article-categories').then(data => {
+                    self.categories = data.categories;
                 });
             },
             handleStore() {
                 let self = this;
-                let cbk = resp => {
-                    if (resp.data.code === 0) {
-                        self.$message({type: 'success', message: '保存成功!'});
+                let method = this.storeData.id ? 'put' : 'post';
+                this.$http.resource[method](this.action, this.storeData).then(() => {
+                    self.$message({type: 'success', message: '保存成功!'});
 
-                        // 删除本地备份
-                        localStorage.removeItem(this.backupKey());
+                    // 删除本地备份
+                    localStorage.removeItem(this.backupKey());
 
-                        this.$router.push({path: '/operation/content/article'});
-                    }
-                };
-
-                if (this.storeData.id) {
-                    this.$http.put('/article/' + this.storeData.id, this.storeData).then(cbk);
-                } else {
-                    this.$http.post('/article', this.storeData).then(cbk);
-                }
+                    this.$router.push({path: '/operation/content/article'});
+                });
             },
             loadLocalStorage(backupData) {
                 let self = this;

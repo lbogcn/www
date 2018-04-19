@@ -30,7 +30,6 @@
 </template>
 
 <script>
-    import qs from 'qs';
     export default {
         data() {
             return {
@@ -48,28 +47,27 @@
                 files: [],
             };
         },
+        computed: {
+            action() {return this.$store.state.resources.LogError;},
+        },
         methods: {
             search() {
                 let self = this;
-                let action = '/log/error?' + qs.stringify({
+                let params = {
                     search: this.searchFormData,
                     page: this.paginate.current_page,
-                });
+                };
 
-                this.$http.get(action).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.paginate = resp.data.data.paginate;
-                    }
+                this.$http.resource.get(this.action, null, {params}).then(data => {
+                    self.paginate = data.paginate;
                 });
             },
             init() {
                 let self = this;
-                return this.$http.get('/log/error/init').then(resp => {
-                    if (resp.data.code === 0) {
-                        self.files = resp.data.data.files;
-                        if (self.files.length > 0) {
-                            self.searchFormData.file = self.files[0]
-                        }
+                return this.$http.resource.get(this.action, {id: 'init'}).then(data => {
+                    self.files = data.files;
+                    if (self.files.length > 0) {
+                        self.searchFormData.file = self.files[0]
                     }
                 });
             },

@@ -60,7 +60,6 @@
 </template>
 
 <script>
-    import qs from 'qs';
     export default {
         data() {
             return {
@@ -98,28 +97,27 @@
                 groups: []
             };
         },
+        computed: {
+            action() {return this.$store.state.resources.PermissionNode;},
+        },
         methods: {
             init() {
                 let self = this;
-                this.$http.get('/permission/node/init').then(resp => {
-                    if (resp.data.code === 0) {
-                        self.groups = resp.data.data.groups;
-                        self.searchFormData.formItem[0].options = self.groups;
-                    }
+                this.$http.resource.get(this.action, {id: 'init'}).then(data => {
+                    self.groups = data.groups;
+                    self.searchFormData.formItem[0].options = self.groups;
                 });
             },
             search() {
                 let self = this;
-                let action = '/permission/node?' + qs.stringify({
+                let params = {
                     search: this.searchFormData.formData,
                     page: this.paginate.current_page,
-                });
+                };
 
-                this.$http.get(action).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.paginate = resp.data.data.paginate;
-                        self.searchFormData.visible = false;
-                    }
+                this.$http.resource.get(this.action, null, {params}).then(data => {
+                    self.paginate = data.paginate;
+                    self.searchFormData.visible = false;
                 });
             },
             handleDelete(index, row) {
@@ -129,11 +127,9 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.delete('/permission/node/' + row.id).then(resp => {
-                        if (resp.data.code === 0) {
-                            self.paginate.data.splice(index, 1);
-                            self.$message({type: 'success', message: '删除成功!'});
-                        }
+                    this.$http.resource.delete(this.action, row).then(() => {
+                        self.paginate.data.splice(index, 1);
+                        self.$message({type: 'success', message: '删除成功!'});
                     });
                 });
             },
@@ -149,19 +145,13 @@
             },
             handleStore() {
                 let self = this;
-                let cbk = function(resp) {
-                    if (resp.data.code === 0) {
-                        self.$message({type: 'success', message: '保存成功!'});
-                        self.userDialogVisible = false;
-                        self.search();
-                    }
-                };
+                let method = this.storeData.id ? 'put' : 'post';
 
-                if (this.storeData.id) {
-                    this.$http.put('/permission/node/' + this.storeData.id, this.storeData).then(cbk);
-                } else {
-                    this.$http.post('/permission/node', this.storeData).then(cbk);
-                }
+                this.$http.resource[method](this.action, this.storeData).then(() => {
+                    self.$message({type: 'success', message: '保存成功!'});
+                    self.userDialogVisible = false;
+                    self.search();
+                });
             },
             handleSync() {
                 let self = this;
@@ -170,17 +160,14 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    self.$http.get('/permission/node/sync').then(resp => {
-                        if (resp.data.code === 0) {
-                            let data = resp.data.data;
-                            let msgs = [
-                                '新增节点' + data.c + '个',
-                                '更新节点' + data.u + '个',
-                                '删除节点' + data.d + '个',
-                            ];
+                    self.$http.resource.post(`${this.action}/sync`).then(data => {
+                        let msgs = [
+                            '新增节点' + data.c + '个',
+                            '更新节点' + data.u + '个',
+                            '删除节点' + data.d + '个',
+                        ];
 
-                            self.$message({type: 'success', message: '同步成功！' + msgs.join('；') + ''});
-                        }
+                        self.$message({type: 'success', message: '同步成功！' + msgs.join('；') + ''});
                     });
                 }).catch(() => {});
             }

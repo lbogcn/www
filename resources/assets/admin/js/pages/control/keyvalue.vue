@@ -70,8 +70,6 @@
 </template>
 
 <script>
-    import qs from 'qs';
-
     export default {
         data() {
             return {
@@ -102,19 +100,20 @@
                 },
             };
         },
+        computed: {
+            action() {return this.$store.state.resources.KeyValue;},
+        },
         methods: {
             search() {
                 let self = this;
-                let action = '/key-value?' + qs.stringify({
+                let params = {
                     search: this.searchFormData.formData,
                     page: this.paginate.current_page,
-                });
+                };
 
-                this.$http.get(action).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.paginate = resp.data.data.paginate;
-                        self.searchFormData.visible = false;
-                    }
+                this.$http.resource.get(this.action, null, {params}).then(data => {
+                    self.paginate = data.paginate;
+                    self.searchFormData.visible = false;
                 });
             },
             handleDelete(index, row) {
@@ -124,11 +123,9 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.delete('/key-value/' + row.id).then(resp => {
-                        if (resp.data.code === 0) {
-                            self.paginate.data.splice(index, 1);
-                            self.$message({type: 'success', message: '删除成功!'});
-                        }
+                    this.$http.resource.delete(this.action, row).then(() => {
+                        self.paginate.data.splice(index, 1);
+                        self.$message({type: 'success', message: '删除成功!'});
                     });
                 });
             },
@@ -140,19 +137,13 @@
             },
             handleStore() {
                 let self = this;
-                let cbk = resp => {
-                    if (resp.data.code === 0) {
-                        self.$message({type: 'success', message: '保存成功!'});
-                        self.dialogVisibleStore = false;
-                        self.search();
-                    }
-                };
+                let method = this.storeData.id ? 'put' : 'post';
 
-                if (this.storeData.id) {
-                    this.$http.put('/key-value/' + this.storeData.id, this.storeData).then(cbk);
-                } else {
-                    this.$http.post('/key-value', this.storeData).then(cbk);
-                }
+                this.$http.resource[method](this.action, this.storeData).then(() => {
+                    self.$message({type: 'success', message: '保存成功!'});
+                    self.dialogVisibleStore = false;
+                    self.search();
+                });
             },
             handleEdit(index, row) {
                 this.storeData = JSON.parse(JSON.stringify(row));
@@ -160,10 +151,8 @@
             },
             handleStatic() {
                 let self = this;
-                this.$http.post('/key-value/static').then(resp => {
-                    if (resp.data.code === 0) {
-                        self.$message({type: 'success', message: '操作成功!'});
-                    }
+                this.$http.post('/key-value/static').then(() => {
+                    self.$message({type: 'success', message: '操作成功!'});
                 });
             }
         },

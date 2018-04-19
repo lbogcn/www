@@ -64,7 +64,6 @@
 </template>
 
 <script>
-    import qs from 'qs';
     export default {
         data() {
             return {
@@ -91,19 +90,20 @@
                 },
             };
         },
+        computed: {
+            action() {return this.$store.state.resources.Article;},
+        },
         methods: {
             search() {
                 let self = this;
-                let action = '/article?' + qs.stringify({
+                let params = {
                     search: this.searchFormData.formData,
                     page: this.paginate.current_page,
-                });
+                };
 
-                this.$http.get(action).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.paginate = resp.data.data.paginate;
-                        self.searchFormData.visible = false;
-                    }
+                this.$http.resource.get(this.action, null, {params}).then(data => {
+                    self.paginate = data.paginate;
+                    self.searchFormData.visible = false;
                 });
             },
             handleDelete(index, row) {
@@ -113,11 +113,9 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.delete('/article/' + row.id).then(resp => {
-                        if (resp.data.code === 0) {
-                            self.paginate.data.splice(index, 1);
-                            self.$message({type: 'success', message: '删除成功!'});
-                        }
+                    this.$http.resource.delete(this.action, row).then(() => {
+                        self.paginate.data.splice(index, 1);
+                        self.$message({type: 'success', message: '删除成功!'});
                     });
                 });
             },
@@ -138,11 +136,11 @@
                     type: 'warning'
                 }).then(() => {
                     let data = {display: row.display === 1 ? 2 : 1};
-                    this.$http.put('/article/meta/' + row.id, data).then(resp => {
-                        if (resp.data.code === 0) {
-                            self.$message({type: 'success', message: '更改成功!'});
-                            row.display = data.display;
-                        }
+                    data.id = row.id;
+
+                    this.$http.resource.patch(this.action, data).then(() => {
+                        self.$message({type: 'success', message: '更改成功!'});
+                        row.display = data.display;
                     });
                 });
             }

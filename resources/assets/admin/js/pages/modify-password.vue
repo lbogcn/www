@@ -39,11 +39,9 @@
         methods: {
             handleSubmit() {
                 let self = this;
-                this.$http.post('/modify-password', this.form).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.$message({message: '修改成功，请重新登录', type: 'success',});
-                        self.$router.push({path: '/login'});
-                    }
+                this.$http.post('/modify-password', this.form).then(() => {
+                    self.$message({message: '修改成功，请重新登录', type: 'success',});
+                    self.$router.push({path: '/login'});
                 });
             }
         },

@@ -54,15 +54,15 @@
                 storeData: {}
             };
         },
+        computed: {
+            action() {return this.$store.state.resources.PermissionMenu;},
+        },
         methods: {
             load() {
                 let self = this;
-                let action = '/permission/menu';
-                this.$http.get(action).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.menu = resp.data.data.menu;
-                        self.roles = resp.data.data.roles;
-                    }
+                this.$http.resource.get(this.action).then(data => {
+                    self.menu = data.menu;
+                    self.roles = data.roles;
                 });
             },
             handleEdit(menu) {
@@ -82,12 +82,10 @@
             },
             handleStore() {
                 let self = this;
-                this.$http.post('/permission/menu', this.storeData).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.$message({type: 'success', message: '保存成功!'});
-                        self.dialogVisibleEdit = false;
-                        self.load();
-                    }
+                this.$http.resource.post(this.action, this.storeData).then(() => {
+                    self.$message({type: 'success', message: '保存成功!'});
+                    self.dialogVisibleEdit = false;
+                    self.load();
                 });
             },
             renderContent(h, {node, data, store}) {

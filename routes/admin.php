@@ -26,12 +26,11 @@ Route::group(array(
         Route::post('upload', 'HomeController@upload');
 
         Route::get('permission/node/init', 'Permission\NodeController@init');
-        Route::get('permission/node/sync', 'Permission\NodeController@sync');
+        Route::post('permission/node/sync', 'Permission\NodeController@sync');
 
         Route::get('article-categories', 'Article\ArticleController@categories');
 
         Route::get('article/preview/{article}', 'Article\ArticleController@preview');
-        Route::put('article/meta/{article}', 'Article\ArticleController@updateMeta');
 
         Route::post('cover/static', 'CoverController@cache');
         Route::post('key-value/static', 'KeyValueController@cache');

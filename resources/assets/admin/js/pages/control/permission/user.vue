@@ -76,7 +76,6 @@
 </template>
 
 <script>
-    import qs from 'qs';
     export default {
         data() {
             return {
@@ -112,19 +111,20 @@
                 roles: [],
             };
         },
+        computed: {
+            action() {return this.$store.state.resources.PermissionUser;},
+        },
         methods: {
             search() {
                 let self = this;
-                let action = '/permission/user?' + qs.stringify({
+                let params = {
                     search: this.searchFormData.formData,
                     page: this.paginate.current_page,
-                });
+                };
 
-                this.$http.get(action).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.paginate = resp.data.data.paginate;
-                        self.searchFormData.visible = false;
-                    }
+                this.$http.resource.get(this.action, null, {params}).then(data => {
+                    self.paginate = data.paginate;
+                    self.searchFormData.visible = false;
                 });
             },
             handleDelete(index, row) {
@@ -134,11 +134,9 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.delete('/permission/user/' + row.id).then(resp => {
-                        if (resp.data.code === 0) {
-                            self.paginate.data.splice(index, 1);
-                            self.$message({type: 'success', message: '删除成功!'});
-                        }
+                    this.$http.resource.delete(this.action, row).then(() => {
+                        self.paginate.data.splice(index, 1);
+                        self.$message({type: 'success', message: '删除成功!'});
                     });
                 });
             },
@@ -154,42 +152,30 @@
             },
             handleStore() {
                 let self = this;
-                let cbk = function(resp) {
-                    if (resp.data.code === 0) {
-                        self.$message({type: 'success', message: '保存成功!'});
-                        self.dialogVisibleUser = false;
-                        self.search();
-                    }
-                };
+                let method = this.storeData.id ? 'put' : 'post';
 
-                if (this.storeData.id) {
-                    this.$http.put('/permission/user/' + this.storeData.id, this.storeData).then(cbk);
-                } else {
-                    this.$http.post('/permission/user', this.storeData).then(cbk);
-                }
+                this.$http.resource[method](this.action, this.storeData).then(() => {
+                    self.$message({type: 'success', message: '保存成功!'});
+                    self.dialogVisibleUser = false;
+                    self.search();
+                });
             },
             handleShowRole(row) {
                 let self = this;
-                this.$http.get('/permission/user/' + row.id + '/role').then(resp => {
-                    if (resp.data.code === 0) {
-                        let data = resp.data.data;
-
-                        self.storeDataRole.user = row;
-                        self.storeDataRole.user_id = row.id;
-                        self.storeDataRole.role_id = data.role_id;
-                        self.roles = data.roles;
-                        self.dialogVisibleRole = true;
-                    }
+                this.$http.get(`/permission/user/${row.id}/role`).then(data => {
+                    self.storeDataRole.user = row;
+                    self.storeDataRole.user_id = row.id;
+                    self.storeDataRole.role_id = data.role_id;
+                    self.roles = data.roles;
+                    self.dialogVisibleRole = true;
                 });
             },
             handleStoreRole() {
                 let self = this;
-                this.$http.post('/permission/user/' + this.storeDataRole.user_id + '/role', this.storeDataRole).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.$message({type: 'success', message: '保存成功!'});
-                        self.search();
-                        self.dialogVisibleRole = false;
-                    }
+                this.$http.post(`/permission/user/${this.storeDataRole.user_id}/role`, this.storeDataRole).then(() => {
+                    self.$message({type: 'success', message: '保存成功!'});
+                    self.search();
+                    self.dialogVisibleRole = false;
                 });
             }
         },

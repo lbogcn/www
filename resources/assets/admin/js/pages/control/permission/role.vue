@@ -64,7 +64,6 @@
 </template>
 
 <script>
-    import qs from 'qs';
     export default {
         data() {
             return {
@@ -84,17 +83,18 @@
                 permissionsGroups: {},
             };
         },
+        computed: {
+            action() {return this.$store.state.resources.PermissionRole;},
+        },
         methods: {
             search() {
                 let self = this;
-                let action = '/permission/role?' + qs.stringify({
+                let params = {
                     page: this.paginate.current_page,
-                });
+                };
 
-                this.$http.get(action).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.paginate = resp.data.data.paginate;
-                    }
+                this.$http.resource.get(this.action, null, {params}).then(data => {
+                    self.paginate = data.paginate;
                 });
             },
             handleDelete(index, row) {
@@ -104,11 +104,9 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.delete('/permission/role/' + row.id).then(resp => {
-                        if (resp.data.code === 0) {
-                            self.paginate.data.splice(index, 1);
-                            self.$message({type: 'success', message: '删除成功!'});
-                        }
+                    this.$http.resource.delete(this.action, row).then(() => {
+                        self.paginate.data.splice(index, 1);
+                        self.$message({type: 'success', message: '删除成功!'});
                     });
                 });
             },
@@ -124,41 +122,29 @@
             },
             handleStore() {
                 let self = this;
-                let cbk = function(resp) {
-                    if (resp.data.code === 0) {
-                        self.$message({type: 'success', message: '保存成功!'});
-                        self.dialogVisibleStore = false;
-                        self.search();
-                    }
-                };
+                let method = this.storeData.id ? 'put' : 'post';
 
-                if (this.storeData.id) {
-                    this.$http.put('/permission/role/' + this.storeData.id, this.storeData).then(cbk);
-                } else {
-                    this.$http.post('/permission/role', this.storeData).then(cbk);
-                }
+                this.$http.resource[method](this.action, this.storeData).then(() => {
+                    self.$message({type: 'success', message: '保存成功!'});
+                    self.dialogVisibleStore = false;
+                    self.search();
+                });
             },
             handleShowPermission(row) {
                 let self = this;
-                this.$http.get('/permission/role/' + row.id + '/permission').then(resp => {
-                    if (resp.data.code === 0) {
-                        let data = resp.data.data;
-
-                        self.storeDataPermission.role_id = row.id;
-                        self.storeDataPermission.node_id = data.role_permission_id;
-                        self.permissionsGroups = data.groups;
-                        self.dialogVisiblePermission = true;
-                    }
+                this.$http.resource.get(`/permission/role/${row.id}/permission`).then(data => {
+                    self.storeDataPermission.role_id = row.id;
+                    self.storeDataPermission.node_id = data.role_permission_id;
+                    self.permissionsGroups = data.groups;
+                    self.dialogVisiblePermission = true;
                 });
             },
             handleStorePermission() {
                 let self = this;
-                this.$http.post('/permission/role/' + this.storeDataPermission.role_id + '/permission', this.storeDataPermission).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.$message({type: 'success', message: '保存成功!'});
-                        self.search();
-                        self.dialogVisiblePermission = false;
-                    }
+                this.$http.post(`/permission/role/${this.storeDataPermission.role_id}/permission`, this.storeDataPermission).then(() => {
+                    self.$message({type: 'success', message: '保存成功!'});
+                    self.search();
+                    self.dialogVisiblePermission = false;
                 });
             }
         },

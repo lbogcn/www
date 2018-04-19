@@ -34,19 +34,16 @@
         methods: {
             handleSubmit() {
                 let self = this;
-                this.$http.post('/login', this.form).then(resp => {
-                    if (resp.data.code === 0) {
-                        window.sessionStorage.removeItem('init_data');
-                        self.$store.commit('loadMenus', self);
-                        self.$store.commit('setUser', resp.data.data.user);
-                        self.$router.back(-1);
-                        self.$message({message: '登录成功', type: 'success',});
-                    }
+                this.$http.post('/login', this.form).then(data => {
+                    window.sessionStorage.removeItem('init_data');
+                    window.sessionStorage.setItem('user', JSON.stringify(data.user));
+                    self.$store.commit('loadMenus', self);
+                    self.$store.commit('setUser', data.user);
+                    self.$router.back(-1);
+                    self.$message({message: '登录成功', type: 'success',});
                 });
             }
         },
-        mounted() {
-        }
     }
 </script>
 

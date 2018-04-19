@@ -90,8 +90,6 @@
 </template>
 
 <script>
-    import qs from 'qs';
-
     export default {
         data() {
             return {
@@ -108,17 +106,18 @@
                 },
             };
         },
+        computed: {
+            action() {return this.$store.state.resources.Cover;},
+        },
         methods: {
             search() {
                 let self = this;
-                let action = '/cover?' + qs.stringify({
+                let params = {
                     page: this.paginate.current_page,
-                });
+                };
 
-                this.$http.get(action).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.paginate = resp.data.data.paginate;
-                    }
+                this.$http.get(this.action, null, {params}).then(data => {
+                    self.paginate = data.paginate;
                 });
             },
             handleDelete(index, row) {
@@ -128,11 +127,9 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.delete('/cover/' + row.id).then(resp => {
-                        if (resp.data.code === 0) {
-                            self.paginate.data.splice(index, 1);
-                            self.$message({type: 'success', message: '删除成功!'});
-                        }
+                    this.$http.resource.delete(this.action, row).then(() => {
+                        self.paginate.data.splice(index, 1);
+                        self.$message({type: 'success', message: '删除成功!'});
                     });
                 });
             },
@@ -144,19 +141,12 @@
             },
             handleStore() {
                 let self = this;
-                let cbk = resp => {
-                    if (resp.data.code === 0) {
-                        self.$message({type: 'success', message: '保存成功!'});
-                        self.dialogVisibleStore = false;
-                        self.search();
-                    }
-                };
-
-                if (this.storeData.id) {
-                    this.$http.put('/cover/' + this.storeData.id, this.storeData).then(cbk);
-                } else {
-                    this.$http.post('/cover', this.storeData).then(cbk);
-                }
+                let method = this.storeData.id ? 'put' : 'post';
+                this.$http.resource[method](this.action, this.storeData).then(() => {
+                    self.$message({type: 'success', message: '保存成功!'});
+                    self.dialogVisibleStore = false;
+                    self.search();
+                });
             },
             handleEdit(index, row) {
                 this.storeData = JSON.parse(JSON.stringify(row));
@@ -167,10 +157,8 @@
             },
             handleStatic() {
                 let self = this;
-                this.$http.post('/cover/static').then(resp => {
-                    if (resp.data.code === 0) {
-                        self.$message({type: 'success', message: '操作成功!'});
-                    }
+                this.$http.post('/cover/static').then(() => {
+                    self.$message({type: 'success', message: '操作成功!'});
                 });
             }
         },

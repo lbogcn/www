@@ -79,7 +79,6 @@
 </template>
 
 <script>
-    import qs from 'qs';
     export default {
         data() {
             return {
@@ -110,19 +109,20 @@
                 },
             };
         },
+        computed: {
+            action() {return this.$store.state.resources.Questionnaires;},
+        },
         methods: {
             search() {
                 let self = this;
-                let action = '/questionnaires?' + qs.stringify({
+                let params = {
                     search: this.searchFormData.formData,
                     page: this.paginate.current_page,
-                });
+                };
 
-                this.$http.get(action).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.paginate = resp.data.data.paginate;
-                        self.searchFormData.visible = false;
-                    }
+                this.$http.get(this.action, null, {params}).then(data => {
+                    self.paginate = data.paginate;
+                    self.searchFormData.visible = false;
                 });
             },
             handleDelete(index, row) {
@@ -132,11 +132,9 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.delete('/questionnaires/' + row.id).then(resp => {
-                        if (resp.data.code === 0) {
-                            self.paginate.data.splice(index, 1);
-                            self.$message({type: 'success', message: '删除成功!'});
-                        }
+                    this.$http.resource.delete(this.action, row).then(() => {
+                        self.paginate.data.splice(index, 1);
+                        self.$message({type: 'success', message: '删除成功!'});
                     });
                 });
             },
@@ -154,21 +152,14 @@
             },
             handleStore() {
                 let self = this;
-                let req = null;
+                let method = this.storeData.id ? 'put' : 'post';
 
-                if (this.storeData.id) {
-                    req = this.$http.put('/questionnaires/' + this.storeData.id, this.storeData);
-                } else {
-                    req = this.$http.post('/questionnaires', this.storeData);
-                }
-
-                req.then(resp => {
-                    if (resp.data.code === 0) {
-                        self.dialogVisibleStore = false;
-                        self.$message({type: 'success', message: '保存成功!'});
-                        self.search();
-                    }
+                this.$http.resource[method](this.action, this.storeData).then(() => {
+                    self.dialogVisibleStore = false;
+                    self.$message({type: 'success', message: '保存成功!'});
+                    self.search();
                 });
+
             },
             handleEdit(index, row) {
                 let questions = [];
@@ -246,22 +237,6 @@
         mounted() {
             this.$http.defaults.loadTarget = '.wrapper';
             this.search();
-
-            // this.storeData = {
-            //     title: null,
-            //     questions: [{
-            //         type: 1,
-            //         title: '您的住址',
-            //         required: true,
-            //         options: [{id: 1, option: 'aaa'}, {id: 2, option: 'bbb'}]
-            //     }, {
-            //         type: 1,
-            //         title: '您的年龄',
-            //         required: true,
-            //         options: [{id: 1, option: 'ccc'}, {id: 2, option: 'ddd'}]
-            //     }]
-            // };
-            // this.dialogVisibleStore = true;
         }
     };
 </script>

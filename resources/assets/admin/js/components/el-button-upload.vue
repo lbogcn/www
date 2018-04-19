@@ -21,22 +21,15 @@
             upload(formData) {
                 let self = this;
                 formData.append('token', this.uploadToken.token);
-                this.$http.post(this.uploadToken.action, formData, {loading: false}).then(resp => {
+                this.$http.post(this.uploadToken.action, formData, {loading: false}).then(data => {
                     self.loading = false;
-
-                    if (resp.data.code === 0) {
-                        self.$emit('success', resp.data.data);
-                    }
+                    self.$emit('success', data);
                 });
             },
             getToken() {
                 let self = this;
-                return this.$http.get('/upload-token', {loading: false}).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.$store.commit('setUploadToken', resp.data.data);
-                    } else {
-                        throw resp.data.msg;
-                    }
+                return this.$http.get('/upload-token', {loading: false}).then(data => {
+                    self.$store.commit('setUploadToken', data);
                 });
             },
             httpRequest(option) {

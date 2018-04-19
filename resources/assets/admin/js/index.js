@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import ElementUI from 'element-ui'
 
-import http from './http';
+import http from './http/index';
 import App from './app';
 import store from './store';
 

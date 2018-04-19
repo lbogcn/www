@@ -62,10 +62,8 @@
             queryStat(type, daily, loadTarget) {
                 let self = this;
                 return new Promise((resolve) => {
-                    self.$http.get('/stat?type=' + type + '&daily=' + daily, {loadTarget}).then(resp => {
-                        if (resp.data.code === 0) {
-                            resolve(resp.data.data[type]);
-                        }
+                    self.$http.get('/stat?type=' + type + '&daily=' + daily, {loadTarget}).then(data => {
+                        resolve(data[type]);
                     });
                 });
             },
@@ -162,7 +160,7 @@
                 this.stat.baidu_spider.daily = 7;
                 this.stat.mobile_traffic.chart = echarts.init(document.getElementById('stat-mobiletraffic-chart'));
                 this.stat.mobile_traffic.daily = 7;
-            })
+            });
         },
     }
 </script>

@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('test', 'TestController@index');
+Route::any('test', 'TestController@index');
 
 require __DIR__ . '/admin.php';
 

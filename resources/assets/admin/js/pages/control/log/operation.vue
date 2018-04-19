@@ -62,7 +62,6 @@
 </template>
 
 <script>
-    import qs from 'qs';
     export default {
         data() {
             return {
@@ -101,19 +100,20 @@
                 },
             };
         },
+        computed: {
+            action() {return this.$store.state.resources.LogOperation;},
+        },
         methods: {
             search() {
                 let self = this;
-                let action = '/log/operation?' + qs.stringify({
+                let params = {
                     search: this.searchFormData.formData,
                     page: this.paginate.current_page,
-                });
+                };
 
-                this.$http.get(action).then(resp => {
-                    if (resp.data.code === 0) {
-                        self.paginate = resp.data.data.paginate;
-                        self.searchFormData.visible = false;
-                    }
+                this.$http.resource.get(this.action, null, {params}).then(data => {
+                    self.paginate = data.paginate;
+                    self.searchFormData.visible = false;
                 });
             },
             methodColor(method) {
@@ -141,23 +141,21 @@
             recursionClear() {
                 let self = this;
 
-                self.$http.delete('/log/operation/-1').then(resp => {
-                    if (resp.data.code === 0) {
-                        if (!resp.data.data.done) {
-                            let msg = '<p>清理中，请勿进行其他操作!</p><p>本次清理' + resp.data.data.clear_count + '条，还剩' + resp.data.data.total + '条</p>';
-                            self.$message({
-                                type: 'warning',
-                                dangerouslyUseHTMLString: true,
-                                message: msg,
-                                duration: 800,
-                                onClose: function() {
-                                    self.recursionClear();
-                                }
-                            });
-                        } else {
-                            self.$message({type: 'success', message: '清理完毕!'});
-                            self.search();
-                        }
+                self.$http.resource.delete(this.action, {id: -1}).then(data => {
+                    if (!data.done) {
+                        let msg = '<p>清理中，请勿进行其他操作!</p><p>本次清理' + data.clear_count + '条，还剩' + data.total + '条</p>';
+                        self.$message({
+                            type: 'warning',
+                            dangerouslyUseHTMLString: true,
+                            message: msg,
+                            duration: 800,
+                            onClose: function() {
+                                self.recursionClear();
+                            }
+                        });
+                    } else {
+                        self.$message({type: 'success', message: '清理完毕!'});
+                        self.search();
                     }
                 });
             }
