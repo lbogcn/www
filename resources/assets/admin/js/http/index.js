@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Loading, Message } from 'element-ui';
 import resource from './resource';
+import store from '../store';
 
 // 生成一个loading对象
 let loading = (config) => {
@@ -33,6 +34,15 @@ let showError = (config, msg) => {
     }
 };
 
+// 全局 code 处理
+let handleGlobalCode = (code) => {
+    switch (parseInt(code)) {
+        case -10001:
+            store.commit('logout');
+            break;
+    }
+};
+
 let http = axios.create();
 
 http.resource = new resource(http);
@@ -56,9 +66,12 @@ http.interceptors.response.use(resp => {
     return Promise.reject(error);
 });
 
+// 解析响应数据，处理错误
 http.interceptors.response.use(resp => {
     if (resp.data.code === 0) {
         return resp.data.data;
+    } else {
+        handleGlobalCode(resp.data.code);
     }
 
     let msg = resp.data.msg || '响应数据异常';

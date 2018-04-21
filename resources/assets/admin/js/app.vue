@@ -100,24 +100,11 @@
                 }
             },
             logout() {
+                let self = this;
                 this.$http.get('/logout').then(() => {
-                    self.$store.commit('afterLogout');// 置空菜单
-                    self.$router.push({path: '/login'});
+                    self.$store.commit('logout');
                 });
             },
-            globalHttpResponse() {
-                let self = this;
-                // this.$http.interceptors.response.use(resp => {
-                //     switch (resp.data.code) {
-                //         case -10001:
-                //             self.$store.commit('afterLogout');// 置空菜单
-                //             self.$router.push({path: '/login'});
-                //             break;
-                //     }
-                //
-                //     return resp;
-                // }, error => {return Promise.reject(error);});
-            }
         },
         watch: {
             isCollapse(val) {
@@ -125,8 +112,7 @@
             }
         },
         created() {
-            this.globalHttpResponse();
-            this.$store.commit('loadMenus', this);
+            this.$store.commit('init');
         }
     }
 </script>

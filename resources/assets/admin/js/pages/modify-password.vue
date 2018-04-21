@@ -46,6 +46,7 @@
             }
         },
         mounted() {
+            this.$http.defaults.loadTarget = '.wrapper';
         }
     }
 </script>
